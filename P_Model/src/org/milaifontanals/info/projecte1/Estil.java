@@ -14,6 +14,14 @@ public class Estil {
     private long id;
     private String nom;
 
+    public Estil(long id, String nom) {
+        this.id = id;
+        this.nom = nom;
+    }
+
+    
+    
+    
     public long getId() {
         return id;
     }

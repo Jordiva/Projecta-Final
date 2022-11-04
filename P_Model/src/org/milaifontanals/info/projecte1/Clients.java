@@ -14,6 +14,22 @@ public class Clients {
     private String dmini2;
     private String poblacio;
     private Pais pais;
+
+    public Clients() {
+    }
+
+    public Clients(long id, String nom, String cognom) {
+        this.id = id;
+        this.nom = nom;
+        this.cognom = cognom;
+    }
+
+    public Clients(long id, String nom) {
+        this.id = id;
+        this.nom = nom;
+    }
+    
+    
     
     public Clients(long id, String email, String nom, String cognom, Date dataNaixement, String cp, String dmini1,
             String dmini2, String poblacio, Pais pais) {

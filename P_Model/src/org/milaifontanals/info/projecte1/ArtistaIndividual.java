@@ -10,23 +10,35 @@ import java.util.Date;
  *
  * @author joval
  */
-public class ArtistaIndividual {
+public class ArtistaIndividual extends Artiste{
     
-    private Date dataNaix;
+    private Date dataNaixement;
+    private String nom;
+    private String nacionalitat;
 
-    public ArtistaIndividual(Date dataNaix) {
-        this.dataNaix = dataNaix;
+    public ArtistaIndividual(Date dataNaixement, String nom, String nacionalitat) {
+        super();
+        this.dataNaixement = dataNaixement;
+        this.nom = nom;
+        this.nacionalitat = nacionalitat;
     }
-
-    public Date getDataNaix() {
-        return dataNaix;
-    }
-
-    public void setDataNaix(Date dataNaix) {
-        this.dataNaix = dataNaix;
-    }
-
+   
     
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getNacionalitat() {
+        return nacionalitat;
+    }
+
+    public void setNacionalitat(String nacionalitat) {
+        this.nacionalitat = nacionalitat;
+    }
     
     
 }

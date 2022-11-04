@@ -21,14 +21,10 @@ public class Album extends Producte{
         this.anyCreacio = anyCreacio;
     }
 
-    public Album(int anyCreacio, TipusProducte tipus, int id, String titol, Estil estil, boolean actiu) {
-        super(tipus, id, titol, estil, actiu);
+    public Album(int anyCreacio) {
+        super();
         this.anyCreacio = anyCreacio;
     }
-
-    
-    
-    
 
     
     @Override

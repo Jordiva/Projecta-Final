@@ -1,5 +1,6 @@
 package org.milaifontanals.info.projecte1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -7,17 +8,11 @@ public abstract class Artiste  {
 
     private long id;
     private String nom;
-    private Canso interpreta;
-    private TipusArtiste tipusArtiste;
+   
     public long getId() {
         return id;
     }
-    public TipusArtiste getTipusArtiste() {
-        return tipusArtiste;
-    }
-    public void setTipusArtiste(TipusArtiste tipusArtiste) {
-        this.tipusArtiste = tipusArtiste;
-    }
+    
     public void setId(long id) {
         this.id = id;
     }
@@ -27,21 +22,22 @@ public abstract class Artiste  {
     public void setNom(String nom) {
         this.nom = nom;
     }
-    public Canso getInterpreta() {
-        return interpreta;
-    }
-    public void setInterpreta(Canso interpreta) {
-        this.interpreta = interpreta;
-    }
-    public Artiste(long id, String nom, Canso interpreta, TipusArtiste tipusArtiste) {
+    
+    public Artiste(long id, String nom) {
         this.id = id;
         this.nom = nom;
-        this.interpreta = interpreta;
-        this.tipusArtiste = tipusArtiste;
+     
     }
+
+    public Artiste() {
+    }
+    
+    
+    
     private List<Canso> getCansosInterpretats() {
-        return null;
-    }
+        List <Canso> resultat = new ArrayList<Canso>();
+        
+        return resultat;    }
 
     
     enum TipusArtiste {

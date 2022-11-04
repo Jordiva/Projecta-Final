@@ -9,7 +9,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -56,11 +60,11 @@ public class BDReproduccio {
         
          String inst = null;
         try {
-            inst = "INSERT INTO Producte (prod_num, descripcio) VALUES (?,?)";
+            inst = "INSERT INTO reproducio (rep_id_client,rep_moment_temporal , rep_id_catalag) VALUES ( ?,'?',?);";
             qAddReproduccio = conn.prepareStatement(inst);
-            inst = "UPDATE Producte SET descripcio=? WHERE prod_num=?";
+            inst = "UPDATE reproducio set rep_id_catalag = ? where rep_id_catalag = ? and rep_id_client = ?";
             qUpdReproduccio = conn.prepareStatement(inst);
-            inst = "DELETE FROM PRODUCTE WHERE prod_num IN ?";
+            inst = "DELETE from reproducio where rep_id_catalag in ?";
             /* Alerta: El paràmetre ha de ser una llista de valors numèrics*/
             qDelReproduccio = conn.prepareStatement(inst);
         } catch (SQLException ex) {
@@ -84,7 +88,38 @@ public class BDReproduccio {
         }
     }
     
+     public List<Reproduccio> getListReproducio() throws GestorBDReproduccioJdbcException {
+        List<Reproduccio> llRep = new ArrayList<Reproduccio>();
+        Statement q = null;
+        try {
+            q = conn.createStatement();
+            ResultSet rs = q.executeQuery("select rep_id_client ,rep_moment_temporal ,rep_id_catalag from reproducio");
+            while (rs.next()) {
+                llRep.add(new Reproduccio(rs.getDate("rep_moment_temporal")));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
+        } finally {
+            if (q != null) {
+                try {
+                    q.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+            }
+        }
+        return llRep;
+    }
+    
+    
+    
             
             
+    
+    
+    
+    
+    
 
 }
