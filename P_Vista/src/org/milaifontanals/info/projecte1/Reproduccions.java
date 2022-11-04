@@ -180,7 +180,7 @@ public class Reproduccions extends javax.swing.JPanel {
                 try {
                     List<Reproduccio> llRep = gbd.getListReproducio();
                     for (Reproduccio p : llRep) {
-                    tableReproduccio.
+                    //tableReproduccio.
                     }
                     System.out.println("Cerca de productes efectuada.");
                     return;
