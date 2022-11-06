@@ -154,7 +154,7 @@ BEGIN
   if inserting or updating THEN
     SELECT CAT_TIPUS INTO v_tipus FROM CATALEG WHERE CAT_ID = :new.ALCO_ID_ALBUM;
     IF (v_tipus = 'C') THEN
-      SELECT CAN_DURADA INTO v_durada FROM CANCO where CAN_ID = :new.ALCO_ID_CANÇO;
+      SELECT CAN_DURADA INTO v_durada FROM CANÇO where CAN_ID = :new.ALCO_ID_CANÇO;
       UPDATE ALBUM SET ALB_DURADA = ALB_DURADA + v_durada WHERE ALB_ID = :new.ALCO_ID_ALBUM;
     END IF;
   END IF;
@@ -162,7 +162,7 @@ BEGIN
   if deleting or updating then
     select CAT_TIPUS into v_tipus from CATALEG where CAT_ID = :old.ALCO_ID_ALBUM;
     if (v_tipus = 'C') then
-      select CAN_DURADA into v_durada from canco where CAN_ID = :old.ALCO_ID_CANÇO;
+      select CAN_DURADA into v_durada from CANÇO where CAN_ID = :old.ALCO_ID_CANÇO;
       update ALBUM set ALB_DURADA = ALB_DURADA - v_durada where ALB_ID = :old.ALCO_ID_ALBUM;
     end if;
   end if;
@@ -182,64 +182,3 @@ BEGIN
                      WHERE ALCO_ID_CANÇO = :old.CAN_ID);
 END;
 
-
-/*
-CREATE OR REPLACE TRIGGER trigger_durada_llista_contingut
-  AFTER INSERT OR DELETE OR UPDATE OF llista_con_id_canco
-  ON LLISTA_CONTINGUT
-  FOR EACH ROW
-DECLARE
-  v_durada number;
-  v_tipus char(1);
-BEGIN
-  if INSERTING OR UPDATING THEN
-    select producte_tipus into v_tipus from PRODUCTE where producte_id = :new.llista_con_id_canco;
-    IF (v_tipus = 'C') THEN
-      select canco_durada into v_durada from CANCO where CAN_ID = :new.llista_con_id_canco;
-      update LLISTA set llista_durada = llista_durada + v_durada where llista_id = :new.llista_con_id_llista;
-    END IF;
-    IF (v_tipus = 'A') THEN
-      select album_durada into v_durada from ALBUM where album_id = :new.llista_con_id_canco;
-      update LLISTA set llista_durada = llista_durada + v_durada where llista_id = :new.llista_con_id_llista;
-    END IF;
-  END IF;
-
-  if DELETING OR UPDATING then
-    select producte_tipus into v_tipus from PRODUCTE where producte_id = :old.llista_con_id_canco;
-    if (v_tipus = 'C') then
-      select canco_durada into v_durada from CANCO where canco_id = :old.llista_con_id_canco;
-      update LLISTA set llista_durada = llista_durada - v_durada where llista_id = :old.llista_con_id_llista;
-    end if;
-    if (v_tipus = 'A') then
-      select album_durada into v_durada from ALBUM where album_id = :old.llista_con_id_canco;
-      update LLISTA set llista_durada = llista_durada - v_durada where llista_id = :old.llista_con_id_llista;
-    end if;
-  end if;
-END;
-
-CREATE OR REPLACE TRIGGER trigger_durada_llista_after_update_durada_canco
-  AFTER UPDATE OF canco_durada
-  ON CANCO
-  FOR EACH ROW
-DECLARE
-BEGIN
-  UPDATE LLISTA
-  SET llista_durada = llista_durada - :old.canco_durada + :new.canco_durada
-  WHERE llista_id IN (SELECT llista_con_id_llista 
-                      FROM LLISTA_CONTINGUT 
-                      WHERE llista_con_id_canco = :old.canco_id);
-END;
-
-CREATE OR REPLACE TRIGGER trigger_durada_llista_after_update_durada_album
-  AFTER UPDATE OF album_durada
-  ON ALBUM
-  FOR EACH ROW
-DECLARE
-BEGIN
-  UPDATE LLISTA
-  SET llista_durada = llista_durada - :old.album_durada + :new.album_durada
-  WHERE llista_id IN (SELECT llista_con_id_llista 
-                      FROM LLISTA_CONTINGUT 
-                      WHERE llista_con_id_canco = :old.album_id);
-END;
-*/
