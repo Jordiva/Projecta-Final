@@ -18,6 +18,11 @@ public class Clients {
     public Clients() {
     }
 
+    public Clients(long id) {
+        this.id = id;
+    }
+    
+
     public Clients(long id, String nom, String cognom) {
         this.id = id;
         this.nom = nom;
@@ -28,6 +33,7 @@ public class Clients {
         this.id = id;
         this.nom = nom;
     }
+    
     
     
     

@@ -5,25 +5,18 @@ import java.util.Date;
 
 public class Reproduccio {
 
-    private Clients idCli;
+    private int idCli;
     private Date date;
-    private Producte idProd;
+    private int idProd;
 
-    public Clients getIdCli() {
-        return idCli;
-    }
-
-    public void setIdCli(Clients idCli) {
+    public Reproduccio(int idCli, Date date, int idProd) {
         this.idCli = idCli;
-    }
-
-    public Producte getIdProd() {
-        return idProd;
-    }
-
-    public void setIdProd(Producte idProd) {
+        this.date = date;
         this.idProd = idProd;
     }
+
+    
+    
     
     
 

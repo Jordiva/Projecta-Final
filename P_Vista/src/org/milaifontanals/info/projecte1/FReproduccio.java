@@ -5,6 +5,8 @@
  */
 package org.milaifontanals.info.projecte1;
 
+import java.util.List;
+
 /**
  *
  * @author Usuari
@@ -14,8 +16,23 @@ public class FReproduccio extends javax.swing.JPanel {
     /**
      * Creates new form CReproduccio
      */
+     private BDReproduccio gbd = null;
     public FReproduccio() {
         initComponents();
+
+        CBXompleClient();
+      
+        
+    }
+    
+    
+    
+    private void CBXompleClient(){
+     
+            clientsCombobox.removeAllItems();
+                    
+                   
+               
     }
 
     /**
@@ -79,9 +96,14 @@ public class FReproduccio extends javax.swing.JPanel {
     private void estilsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estilsComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_estilsComboBoxActionPerformed
+        
 
     private void clientsComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientsComboboxActionPerformed
         // TODO add your handling code here:
+        
+       
+        
+        
     }//GEN-LAST:event_clientsComboboxActionPerformed
 
     private void FiltraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FiltraActionPerformed

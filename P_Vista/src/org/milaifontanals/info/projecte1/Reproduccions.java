@@ -180,9 +180,9 @@ public class Reproduccions extends javax.swing.JPanel {
                 try {
                     List<Reproduccio> llRep = gbd.getListReproducio();
                     for (Reproduccio p : llRep) {
-                    //tableReproduccio.
+                        System.out.println(p);
                     }
-                    System.out.println("Cerca de productes efectuada.");
+                    System.out.println("Cerca de reproducions efectuada.");
                     return;
                 } catch (GestorBDReproduccioJdbcException ex) {
                     System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());

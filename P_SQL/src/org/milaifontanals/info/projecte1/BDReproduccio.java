@@ -5,6 +5,7 @@
 package org.milaifontanals.info.projecte1;
 
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,42 +34,41 @@ public class BDReproduccio {
 
 
     public BDReproduccio() throws GestorBDReproduccioJdbcException{
-        this("ConnectionOracle.properties");
+        this("Oracle.properties");
     }
     
 
     public BDReproduccio(String nomFitxerPropietats) throws GestorBDReproduccioJdbcException {
     
+        Properties p = new Properties();
         try {
-            Properties props = new Properties();
-            props.load(new FileInputStream(nomFitxerPropietats));
-            String[] claus = {"url", "user", "password"};
-            String[] valors = new String[3];
-            for (int i = 0; i < claus.length; i++) {
-                valors[i] = props.getProperty(claus[i]);
-                if (valors[i] == null || valors[i].isEmpty()) {
-                    throw new GestorBDReproduccioJdbcException("L'arxiu " + nomFitxerPropietats + " no troba la clau " + claus[i]);
-                }
-            }
-            conn = DriverManager.getConnection(valors[0], valors[1], valors[2]);
-            conn.setAutoCommit(false);
+            p.load(new FileReader(nomFitxerPropietats));
         } catch (IOException ex) {
-            throw new GestorBDReproduccioJdbcException("Problemes en recuperar l'arxiu de configuració " + nomFitxerPropietats + "\n" + ex.getMessage());
-        } catch (SQLException ex) {
-            throw new GestorBDReproduccioJdbcException("No es pot establir la connexió.\n" + ex.getMessage());
+            System.out.println("Problemes en carregar el fitxer de configuració");
+            System.out.println("Més info: " + ex.getMessage());
+            System.exit(1);
         }
-        
-         String inst = null;
+        // p conté les propietats necessàries per la connexió
+        String url = p.getProperty("url");
+        String usu = p.getProperty("usuari");
+        String pwd = p.getProperty("contrasenya");
+        if (url == null || usu == null || pwd == null) {
+            System.out.println("Manca alguna de les propietats: url, usuari, contrasenya");
+            System.exit(1);
+        }
+        // Ja tenim les 3 propietats
         try {
-            inst = "INSERT INTO reproducio (rep_id_client,rep_moment_temporal , rep_id_catalag) VALUES ( ?,'?',?);";
-            qAddReproduccio = conn.prepareStatement(inst);
-            inst = "UPDATE reproducio set rep_id_catalag = ? where rep_id_catalag = ? and rep_id_client = ?";
-            qUpdReproduccio = conn.prepareStatement(inst);
-            inst = "DELETE from reproducio where rep_id_catalag in ?";
-            /* Alerta: El paràmetre ha de ser una llista de valors numèrics*/
-            qDelReproduccio = conn.prepareStatement(inst);
+            // Podem intentar establir connexió
+            conn = DriverManager.getConnection(url, usu, pwd);
+            System.out.println("Connexió establerta");
+            conn.setAutoCommit(false);
+            System.out.println("Autocommit desactivat");
         } catch (SQLException ex) {
-            throw new GestorBDReproduccioJdbcException("No es pot crear el PreparedStatement:\n " + inst + "\n" + ex.getMessage());
+            System.out.println("Error: " + ex.getMessage());
+            if (ex.getCause() != null) {
+                System.out.println("Cause: " + ex.getCause().getMessage());
+            }
+            System.exit(1);
         }
     }
     
@@ -95,7 +95,7 @@ public class BDReproduccio {
             q = conn.createStatement();
             ResultSet rs = q.executeQuery("select rep_id_client ,rep_moment_temporal ,rep_id_catalag from reproducio");
             while (rs.next()) {
-                llRep.add(new Reproduccio(rs.getDate("rep_moment_temporal")));
+                llRep.add(new Reproduccio(rs.getInt("rep_id_client"),rs.getDate("rep_moment_temporal"),rs.getInt("rep_id_catalag")));
             }
             rs.close();
         } catch (SQLException ex) {
@@ -113,7 +113,31 @@ public class BDReproduccio {
     }
     
     
-    
+     public List<Clients> getListIdCliens() throws GestorBDReproduccioJdbcException {
+        List<Clients> llidcli = new ArrayList<Clients>();
+        Statement q = null;
+        try {
+            q = conn.createStatement();
+            ResultSet rs = q.executeQuery(" select cli_id from client ");
+            while (rs.next()) {
+                llidcli.add(new Clients(rs.getInt("cli_id")));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+                       // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        } finally {
+            if (q != null) {
+                try {
+                    q.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+                
+            }
+        }
+        return llidcli;
+    }
             
             
     
