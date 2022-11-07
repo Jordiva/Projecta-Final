@@ -33,42 +33,31 @@ public class BDReproduccio {
 
 
 
+   
+    
     public BDReproduccio() throws GestorBDReproduccioJdbcException{
         this("Oracle.properties");
     }
     
 
     public BDReproduccio(String nomFitxerPropietats) throws GestorBDReproduccioJdbcException {
-    
-        Properties p = new Properties();
-        try {
-            p.load(new FileReader(nomFitxerPropietats));
-        } catch (IOException ex) {
-            System.out.println("Problemes en carregar el fitxer de configuració");
-            System.out.println("Més info: " + ex.getMessage());
-            System.exit(1);
-        }
-        // p conté les propietats necessàries per la connexió
-        String url = p.getProperty("url");
-        String usu = p.getProperty("usuari");
-        String pwd = p.getProperty("contrasenya");
-        if (url == null || usu == null || pwd == null) {
-            System.out.println("Manca alguna de les propietats: url, usuari, contrasenya");
-            System.exit(1);
-        }
-        // Ja tenim les 3 propietats
-        try {
-            // Podem intentar establir connexió
-            conn = DriverManager.getConnection(url, usu, pwd);
-            System.out.println("Connexió establerta");
-            conn.setAutoCommit(false);
-            System.out.println("Autocommit desactivat");
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            if (ex.getCause() != null) {
-                System.out.println("Cause: " + ex.getCause().getMessage());
+     try {
+            Properties props = new Properties();
+            props.load(new FileInputStream(nomFitxerPropietats));
+            String[] claus = {"url", "user", "password"};
+            String[] valors = new String[3];
+            for (int i = 0; i < claus.length; i++) {
+                valors[i] = props.getProperty(claus[i]);
+                if (valors[i] == null || valors[i].isEmpty()) {
+                    System.out.println("L'arxiu " + nomFitxerPropietats + " no troba la clau " + claus[i]);
+                }
             }
-            System.exit(1);
+            conn = DriverManager.getConnection(valors[0], valors[1], valors[2]);
+            conn.setAutoCommit(false);
+        } catch (IOException ex) {
+            System.out.println("Problemes en recuperar l'arxiu de configuració " + nomFitxerPropietats + "\n" + ex.getMessage());
+        } catch (SQLException ex) {
+            System.out.println("No es pot establir la connexió.\n" + ex.getMessage());
         }
     }
     
@@ -118,9 +107,9 @@ public class BDReproduccio {
         Statement q = null;
         try {
             q = conn.createStatement();
-            ResultSet rs = q.executeQuery(" select cli_id from client ");
+            ResultSet rs = q.executeQuery(" select cli_nom from client ");
             while (rs.next()) {
-                llidcli.add(new Clients(rs.getInt("cli_id")));
+                llidcli.add(new Clients(rs.getString("cli_nom")));
             }
             rs.close();
         } catch (SQLException ex) {
@@ -133,7 +122,7 @@ public class BDReproduccio {
                 } catch (SQLException ex) {
                     throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
-                
+
             }
         }
         return llidcli;

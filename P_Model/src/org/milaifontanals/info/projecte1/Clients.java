@@ -21,6 +21,11 @@ public class Clients {
     public Clients(long id) {
         this.id = id;
     }
+
+    public Clients(String nom) {
+        this.nom = nom;
+    }
+    
     
 
     public Clients(long id, String nom, String cognom) {
@@ -110,6 +115,11 @@ public class Clients {
     }
     public void setPais(Pais pais) {
         this.pais = pais;
+    }
+
+    @Override
+    public String toString() {
+        return nom ;
     }
 
 

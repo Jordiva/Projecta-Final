@@ -17,7 +17,8 @@ public class FReproduccio extends javax.swing.JPanel {
      * Creates new form CReproduccio
      */
      private BDReproduccio gbd = null;
-    public FReproduccio() {
+     
+     public FReproduccio() {
         initComponents();
 
         CBXompleClient();
@@ -25,13 +26,20 @@ public class FReproduccio extends javax.swing.JPanel {
         
     }
     
-    
-    
     private void CBXompleClient(){
      
             clientsCombobox.removeAllItems();
                     
-                   
+                   try {
+                    List<Clients> llCli = gbd.getListIdCliens();
+                    for (Clients p : llCli) {
+                       clientsCombobox.addItem(p.toString());
+                    }
+                    System.out.println("Cerca de reproducions efectuada.");
+                    return;
+                } catch (GestorBDReproduccioJdbcException ex) {
+                    System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+                }
                
     }
 

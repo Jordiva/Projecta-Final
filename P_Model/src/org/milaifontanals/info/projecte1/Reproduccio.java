@@ -15,6 +15,11 @@ public class Reproduccio {
         this.idProd = idProd;
     }
 
+    @Override
+    public String toString() {
+        return "Reproduccio{" + "idCli=" + idCli + ", date=" + date + ", idProd=" + idProd + '}';
+    }
+
     
     
     
