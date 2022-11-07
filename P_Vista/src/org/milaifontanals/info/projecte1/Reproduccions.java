@@ -20,16 +20,7 @@ public class Reproduccions extends javax.swing.JPanel {
     public Reproduccions() {
         initComponents();
         
-        try {
-            if (arguments.length == 0) {
-                gbd = new GestorBDEmpresaJdbc();
-            } else {
-                gbd = new GestorBDEmpresaJdbc(arguments[0]);
-            }
-        } catch (GestorBDEmpresaJdbcException ex) {
-            System.out.println("Error en crear GestorBDEmpresa: " + ex.getMessage());
-            System.exit(1);
-        }
+      
 
     }
 
