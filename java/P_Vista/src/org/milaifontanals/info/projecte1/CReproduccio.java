@@ -5,6 +5,10 @@
  */
 package org.milaifontanals.info.projecte1;
 
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Usuari
@@ -16,8 +20,55 @@ public class CReproduccio extends javax.swing.JPanel {
      */
     public CReproduccio() {
         initComponents();
+        Conection();
+        CBXompleClient();
+        OmpleEstils();
     }
 
+    
+           BDReproduccio gbd = null;
+
+     private void Conection() {
+
+        try {
+            gbd = new BDReproduccio();
+        } catch (GestorBDReproduccioJdbcException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    private void CBXompleClient(){
+     
+            clientsCombobox.removeAllItems();
+                   try {
+                    List<Clients> llCli = gbd.getListIdCliens();
+                    for (Clients p : llCli) {
+                       clientsCombobox.addItem(p.toString());
+                    }
+                    
+                    return;
+                } catch (GestorBDReproduccioJdbcException ex) {
+                    System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+                }
+                   
+               
+    }
+    
+    private void OmpleEstils(){
+        
+        estilsComboBox.removeAllItems();
+                   try {
+                    List<Estil> llEs = gbd.getListEstils();
+                    for (Estil p : llEs) {
+                       estilsComboBox.addItem(p.toString());
+                    }
+                    
+                    return;
+                } catch (GestorBDReproduccioJdbcException ex) {
+                    System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+                }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

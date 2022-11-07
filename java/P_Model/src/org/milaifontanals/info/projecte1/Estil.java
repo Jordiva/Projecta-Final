@@ -14,6 +14,14 @@ public class Estil {
     private long id;
     private String nom;
 
+    public Estil(String nom) {
+        this.nom = nom;
+    }
+    
+    
+    
+
+    
     public Estil(long id, String nom) {
         this.id = id;
         this.nom = nom;
@@ -37,5 +45,12 @@ public class Estil {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    @Override
+    public String toString() {
+        return  nom;
+    }
+    
+    
     
 }

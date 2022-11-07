@@ -5,7 +5,10 @@
  */
 package org.milaifontanals.info.projecte1;
 
+import java.sql.Connection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,31 +19,57 @@ public class FReproduccio extends javax.swing.JPanel {
     /**
      * Creates new form CReproduccio
      */
-     private BDReproduccio gbd = null;
+      Panel pan = new Panel();
      
      public FReproduccio() {
         initComponents();
-
+        Conection();
         CBXompleClient();
-      
-        
+        OmpleEstils();
+ 
     }
-    
+     
+           BDReproduccio gbd = null;
+
+     private void Conection() {
+
+        try {
+            gbd = new BDReproduccio();
+        } catch (GestorBDReproduccioJdbcException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     private void CBXompleClient(){
      
             clientsCombobox.removeAllItems();
-                    
-//                   try {
-//                    List<Clients> llCli = gbd.getListIdCliens();
-//                    for (Clients p : llCli) {
-//                       clientsCombobox.addItem(p.toString());
-//                    }
-//                    System.out.println("Cerca de reproducions efectuada.");
-//                    return;
-//                } catch (GestorBDReproduccioJdbcException ex) {
-//                    System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
-//                }
+                   try {
+                    List<Clients> llCli = gbd.getListIdCliens();
+                    for (Clients p : llCli) {
+                       clientsCombobox.addItem(p.toString());
+                    }
+                    System.out.println("Cerca de reproducions efectuada.");
+                    return;
+                } catch (GestorBDReproduccioJdbcException ex) {
+                    System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+                }
+                   
                
+    }
+    
+    private void OmpleEstils(){
+        
+        estilsComboBox.removeAllItems();
+                   try {
+                    List<Estil> llEs = gbd.getListEstils();
+                    for (Estil p : llEs) {
+                       estilsComboBox.addItem(p.toString());
+                    }
+                    System.out.println("Cerca de reproducions efectuada.");
+                    return;
+                } catch (GestorBDReproduccioJdbcException ex) {
+                    System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+                }
     }
 
     /**

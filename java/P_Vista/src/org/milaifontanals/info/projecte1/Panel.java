@@ -7,6 +7,8 @@ package org.milaifontanals.info.projecte1;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,8 +19,28 @@ public class Panel extends javax.swing.JFrame {
     /**
      * Creates new form Panel
      */
+        private BDReproduccio gbd = null;
+
     public Panel() {
+        
         initComponents();
+        Conection();
+    }
+
+    public void setConection(BDReproduccio cbd) {
+
+        cbd = gbd;
+
+    }
+
+    private void Conection() {
+
+        try {
+            gbd = new BDReproduccio();
+        } catch (GestorBDReproduccioJdbcException ex) {
+            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -221,31 +243,29 @@ public class Panel extends javax.swing.JFrame {
         catalegMenu.doClick();
     }//GEN-LAST:event_catalegMenuMouseEntered
 
-    
-    private void todo(){
+    private void todo() {
         TODO t = new TODO();
         t.setSize(845, 594);
-        t.setLocation(0,0);
-        
+        t.setLocation(0, 0);
+
         jPanel1.removeAll();
-        jPanel1.add(t,BorderLayout.CENTER);
+        jPanel1.add(t, BorderLayout.CENTER);
         jPanel1.revalidate();
         jPanel1.repaint();
-    }
-    
-    private void reproduccions(){
-        Reproduccions rep = new Reproduccions();
-        rep.setSize(845, 594);
-        rep.setLocation(0,0);
-        
-        jPanel1.removeAll();
-        jPanel1.add(rep,BorderLayout.CENTER);
-        jPanel1.revalidate();
-        jPanel1.repaint();
-        
     }
 
-    
+    private void reproduccions() {
+        Reproduccions rep = new Reproduccions();
+        rep.setSize(845, 594);
+        rep.setLocation(0, 0);
+
+        jPanel1.removeAll();
+        jPanel1.add(rep, BorderLayout.CENTER);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -282,7 +302,6 @@ public class Panel extends javax.swing.JFrame {
     }
 
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu ajudaMenu;
     private javax.swing.JMenu artisteMenu;
