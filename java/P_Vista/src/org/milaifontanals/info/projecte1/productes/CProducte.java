@@ -27,7 +27,6 @@ public class CProducte extends javax.swing.JPanel {
     public CProducte() {
         initComponents();
         Conection();
-        CBXompleClient();
         OmpleEstils();
     }
 
@@ -43,22 +42,7 @@ public class CProducte extends javax.swing.JPanel {
         }
 
     }
-    private void CBXompleClient(){
-     
-            clientsCombobox.removeAllItems();
-                   try {
-                    List<Clients> llCli = gbd.getListIdCliens();
-                    for (Clients p : llCli) {
-                       clientsCombobox.addItem(p.toString());
-                    }
-                    
-                    return;
-                } catch (GestorBDReproduccioJdbcException ex) {
-                    System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
-                }
-                   
-               
-    }
+    
     
     private void OmpleEstils(){
         
@@ -85,44 +69,45 @@ public class CProducte extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        estilsComboBox = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        estilsComboBox = new javax.swing.JComboBox<>();
-        clientsCombobox = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         Crear = new javax.swing.JButton();
+        ActiuComboxob = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        TipusCombobox = new javax.swing.JComboBox<>();
+        estilsComboBox3 = new javax.swing.JComboBox<>();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Clients");
+        jLabel1.setText("Titol");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 39, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setText("Estils");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 77, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("Producte Nom");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 115, -1, -1));
-
-        estilsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        estilsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Llista", "Canço", "Artista" }));
         estilsComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 estilsComboBoxActionPerformed(evt);
             }
         });
-        add(estilsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 77, 94, -1));
+        add(estilsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 94, -1));
 
-        clientsCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        clientsCombobox.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Actiu");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setText("Estil");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, -1, -1));
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clientsComboboxActionPerformed(evt);
+                jTextField1ActionPerformed(evt);
             }
         });
-        add(clientsCombobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 39, 94, -1));
-        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 115, 94, -1));
+        add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 94, -1));
 
         Crear.setText("Crear");
         Crear.addActionListener(new java.awt.event.ActionListener() {
@@ -130,29 +115,72 @@ public class CProducte extends javax.swing.JPanel {
                 CrearActionPerformed(evt);
             }
         });
-        add(Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(231, 171, -1, -1));
+        add(Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
+
+        ActiuComboxob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "Y" }));
+        ActiuComboxob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActiuComboxobActionPerformed(evt);
+            }
+        });
+        add(ActiuComboxob, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 77, 94, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Tipus ");
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+
+        TipusCombobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Llista", "Canço", "Artista" }));
+        TipusCombobox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TipusComboboxActionPerformed(evt);
+            }
+        });
+        add(TipusCombobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 94, -1));
+
+        estilsComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Llista", "Canço", "Artista" }));
+        estilsComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                estilsComboBox3ActionPerformed(evt);
+            }
+        });
+        add(estilsComboBox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 94, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void estilsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estilsComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_estilsComboBoxActionPerformed
 
-    private void clientsComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientsComboboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_clientsComboboxActionPerformed
-
     private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CrearActionPerformed
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void ActiuComboxobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActiuComboxobActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ActiuComboxobActionPerformed
+
+    private void TipusComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipusComboboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TipusComboboxActionPerformed
+
+    private void estilsComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estilsComboBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_estilsComboBox3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ActiuComboxob;
     private javax.swing.JButton Crear;
-    private javax.swing.JComboBox<String> clientsCombobox;
+    private javax.swing.JComboBox<String> TipusCombobox;
     private javax.swing.JComboBox<String> estilsComboBox;
+    private javax.swing.JComboBox<String> estilsComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

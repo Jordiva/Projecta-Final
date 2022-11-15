@@ -8,7 +8,7 @@ public abstract class Producte {
 
     private long id;
     private String titol;
-    private boolean actiu;
+    private String actiu;
 
     public Producte() {
     }
@@ -18,15 +18,29 @@ public abstract class Producte {
         this.titol = titol;
     }
 
+    public Producte(String titol) {
+        this.titol = titol;
+    }
+
     
     
     
-    public Producte(long id, String titol, boolean actiu) {
+    
+    public Producte(long id, String titol, String actiu) {
         this.id = id;
         this.titol = titol;
         this.actiu = actiu;
     }
+
+    public String getActiu() {
+        return actiu;
+    }
+
+    public void setActiu(String actiu) {
+        this.actiu = actiu;
+    }
    
+    
     
 
     public void setId(int id) {
@@ -41,16 +55,18 @@ public abstract class Producte {
         this.titol = titol;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     
 
 
-    public boolean isActiu() {
-        return actiu;
-    }
-
-    public void setActiu(boolean actiu) {
-        this.actiu = actiu;
-    }
+  
     
     
     

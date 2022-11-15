@@ -98,6 +98,11 @@ public class Principal extends javax.swing.JFrame {
                 paisosMenuMousePressed(evt);
             }
         });
+        paisosMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paisosMenuActionPerformed(evt);
+            }
+        });
         artisteMenu.add(paisosMenu);
 
         jMenuBar1.add(artisteMenu);
@@ -243,6 +248,10 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         catalegMenu.doClick();
     }//GEN-LAST:event_catalegMenuMouseEntered
+
+    private void paisosMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paisosMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_paisosMenuActionPerformed
 
     private void todo() {
         TODO t = new TODO();

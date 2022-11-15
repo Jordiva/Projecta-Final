@@ -6,7 +6,11 @@
 package org.milaifontanals.info.projecte1;
 
 import java.awt.BorderLayout;
-import javax.swing.table.DefaultTableColumnModel;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import org.milaifontanals.info.projecte1.productes.*;
 import org.milaifontanals.info.projecte1.reproduccio.AReproduccio;
 import org.milaifontanals.info.projecte1.reproduccio.BReproduccio;
 import org.milaifontanals.info.projecte1.reproduccio.CReproduccio;
@@ -23,8 +27,22 @@ public class PProducte extends javax.swing.JPanel {
      */
     public PProducte() {
         initComponents();
+        Conection();
     }
+         private BDProducte gbd = null;
 
+    
+     private void Conection() {
+
+        try {
+            gbd = new BDProducte();
+        } catch (GestorBDProducteJdbcException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -178,12 +196,28 @@ public class PProducte extends javax.swing.JPanel {
 
     private void MostraTotBotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MostraTotBotoActionPerformed
         // TODO add your handling code here:
-        
+         DefaultTableModel model = new DefaultTableModel();
+
+                model.addColumn("ID Client");
+                model.addColumn("Titol");
+                model.addColumn("Actiu");
+                
+                
+        try {
+            List<Producte> llRep = gbd.getListProducte();
+            for (Producte p : llRep) {
+              model.addRow(new Object[]{p.getId(), p.getTitol(),p.getActiu() });
+            }
+            tableProducte.setModel(model);
+            return;
+        } catch (GestorBDProducteJdbcException ex) {
+            System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+        }
     }//GEN-LAST:event_MostraTotBotoActionPerformed
 
     
     private void filtre(){
-        FReproduccio rep = new FReproduccio();
+        FProducte rep = new FProducte();
         rep.setSize(358, 226);
         rep.setLocation(0,0);
         
@@ -194,7 +228,7 @@ public class PProducte extends javax.swing.JPanel {
     }
     
      private void Crear(){
-        CReproduccio rep = new CReproduccio();
+        CProducte rep = new CProducte();
         rep.setSize(358, 226);
         rep.setLocation(0,0);
         
@@ -205,7 +239,7 @@ public class PProducte extends javax.swing.JPanel {
     }
     
     private void Actualitza(){
-        AReproduccio rep = new AReproduccio();
+        AProducte rep = new AProducte();
         rep.setSize(358, 226);
         rep.setLocation(0,0);
         
@@ -216,7 +250,7 @@ public class PProducte extends javax.swing.JPanel {
     }
     
     private void Borrar(){
-        BReproduccio rep = new BReproduccio();
+        BProducte rep = new BProducte();
         rep.setSize(358, 226);
         rep.setLocation(0,0);
         
@@ -227,7 +261,6 @@ public class PProducte extends javax.swing.JPanel {
     }
     
     
-         private BDProducte gbd = null;
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
