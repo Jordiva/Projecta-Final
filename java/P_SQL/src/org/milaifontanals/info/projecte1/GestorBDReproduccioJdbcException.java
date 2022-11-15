@@ -8,7 +8,7 @@ package org.milaifontanals.info.projecte1;
  *
  * @author joval
  */
-class GestorBDReproduccioJdbcException extends Exception {
+public class GestorBDReproduccioJdbcException extends Exception {
     
     public GestorBDReproduccioJdbcException(String message) {
         super(message);
