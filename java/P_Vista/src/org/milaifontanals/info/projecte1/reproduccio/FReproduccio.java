@@ -13,7 +13,7 @@ import org.milaifontanals.info.projecte1.BDReproduccio;
 import org.milaifontanals.info.projecte1.Clients;
 import org.milaifontanals.info.projecte1.Estil;
 import org.milaifontanals.info.projecte1.GestorBDReproduccioJdbcException;
-import org.milaifontanals.info.projecte1.Panel;
+import org.milaifontanals.info.projecte1.Principal;
 
 /**
  *
@@ -24,7 +24,7 @@ public class FReproduccio extends javax.swing.JPanel {
     /**
      * Creates new form CReproduccio
      */
-      Panel pan = new Panel();
+      Principal pan = new Principal();
      
      public FReproduccio() {
         initComponents();
@@ -41,7 +41,7 @@ public class FReproduccio extends javax.swing.JPanel {
         try {
             gbd = new BDReproduccio();
         } catch (GestorBDReproduccioJdbcException ex) {
-            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -53,7 +53,6 @@ public class FReproduccio extends javax.swing.JPanel {
                     for (Clients p : llCli) {
                        clientsCombobox.addItem(p.toString());
                     }
-                    System.out.println("Cerca de reproducions efectuada.");
                     return;
                 } catch (GestorBDReproduccioJdbcException ex) {
                     System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
@@ -70,7 +69,6 @@ public class FReproduccio extends javax.swing.JPanel {
                     for (Estil p : llEs) {
                        estilsComboBox.addItem(p.toString());
                     }
-                    System.out.println("Cerca de reproducions efectuada.");
                     return;
                 } catch (GestorBDReproduccioJdbcException ex) {
                     System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());

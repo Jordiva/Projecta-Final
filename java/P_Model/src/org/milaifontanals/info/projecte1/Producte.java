@@ -13,6 +13,14 @@ public abstract class Producte {
     public Producte() {
     }
 
+    public Producte(long id, String titol) {
+        this.id = id;
+        this.titol = titol;
+    }
+
+    
+    
+    
     public Producte(long id, String titol, boolean actiu) {
         this.id = id;
         this.titol = titol;

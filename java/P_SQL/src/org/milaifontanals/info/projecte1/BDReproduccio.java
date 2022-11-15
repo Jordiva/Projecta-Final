@@ -49,15 +49,15 @@ public class BDReproduccio {
             for (int i = 0; i < claus.length; i++) {
                 valors[i] = props.getProperty(claus[i]);
                 if (valors[i] == null || valors[i].isEmpty()) {
-                    System.out.println("L'arxiu " + nomFitxerPropietats + " no troba la clau " + claus[i]);
+                    throw new GestorBDReproduccioJdbcException("L'arxiu " + nomFitxerPropietats + " no troba la clau " + claus[i]);
                 }
             }
             conn = DriverManager.getConnection(valors[0], valors[1], valors[2]);
             conn.setAutoCommit(false);
         } catch (IOException ex) {
-            System.out.println("Problemes en recuperar l'arxiu de configuració " + nomFitxerPropietats + "\n" + ex.getMessage());
+            throw new GestorBDReproduccioJdbcException("Problemes en recuperar l'arxiu de configuració " + nomFitxerPropietats + "\n" + ex.getMessage());
         } catch (SQLException ex) {
-            System.out.println("No es pot establir la connexió.\n" + ex.getMessage());
+            throw new GestorBDReproduccioJdbcException("No es pot establir la connexió.\n" + ex.getMessage());
         }
     }
     

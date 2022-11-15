@@ -17,12 +17,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author joval
  */
-public class Reproduccions extends javax.swing.JPanel {
+public class PReproduccions extends javax.swing.JPanel {
 
     /**
      * Creates new form Reproduccions
      */
-    public Reproduccions() {
+    public PReproduccions() {
         initComponents();
         Conection();
       
@@ -33,7 +33,7 @@ public class Reproduccions extends javax.swing.JPanel {
         try {
             gbd = new BDReproduccio();
         } catch (GestorBDReproduccioJdbcException ex) {
-            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }   
     }
     /**

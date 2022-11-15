@@ -14,14 +14,14 @@ import java.util.logging.Logger;
  *
  * @author joval
  */
-public class Panel extends javax.swing.JFrame {
+public class Principal extends javax.swing.JFrame {
 
     /**
-     * Creates new form Panel
+     * Creates new form Principal
      */
         private BDReproduccio gbd = null;
 
-    public Panel() {
+    public Principal() {
         
         initComponents();
         Conection();
@@ -38,7 +38,7 @@ public class Panel extends javax.swing.JFrame {
         try {
             gbd = new BDReproduccio();
         } catch (GestorBDReproduccioJdbcException ex) {
-            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -198,6 +198,7 @@ public class Panel extends javax.swing.JFrame {
 
     private void producteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_producteMenuActionPerformed
         // TODO add your handling code here:
+        productes();
     }//GEN-LAST:event_producteMenuActionPerformed
 
     private void reproduccionsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reproduccionsMenuActionPerformed
@@ -255,7 +256,19 @@ public class Panel extends javax.swing.JFrame {
     }
 
     private void reproduccions() {
-        Reproduccions rep = new Reproduccions();
+        PReproduccions rep = new PReproduccions();
+        rep.setSize(845, 594);
+        rep.setLocation(0, 0);
+
+        jPanel1.removeAll();
+        jPanel1.add(rep, BorderLayout.CENTER);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+
+    }
+    
+    private void productes() {
+        PProducte rep = new PProducte();
         rep.setSize(845, 594);
         rep.setLocation(0, 0);
 
@@ -283,20 +296,21 @@ public class Panel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Panel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Panel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Panel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Panel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Panel().setVisible(true);
+                new Principal().setVisible(true);
             }
         });
     }

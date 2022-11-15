@@ -13,7 +13,7 @@ import org.milaifontanals.info.projecte1.BDReproduccio;
 import org.milaifontanals.info.projecte1.Clients;
 import org.milaifontanals.info.projecte1.Estil;
 import org.milaifontanals.info.projecte1.GestorBDReproduccioJdbcException;
-import org.milaifontanals.info.projecte1.Panel;
+import org.milaifontanals.info.projecte1.Principal;
 
 /**
  *
@@ -39,7 +39,7 @@ public class CProducte extends javax.swing.JPanel {
         try {
             gbd = new BDReproduccio();
         } catch (GestorBDReproduccioJdbcException ex) {
-            Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

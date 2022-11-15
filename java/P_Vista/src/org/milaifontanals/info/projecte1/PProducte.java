@@ -16,12 +16,12 @@ import org.milaifontanals.info.projecte1.reproduccio.FReproduccio;
  *
  * @author isard
  */
-public class Producte extends javax.swing.JPanel {
+public class PProducte extends javax.swing.JPanel {
 
     /**
      * Creates new form Producte
      */
-    public Producte() {
+    public PProducte() {
         initComponents();
     }
 
