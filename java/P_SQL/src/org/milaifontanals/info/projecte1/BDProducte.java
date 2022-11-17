@@ -151,12 +151,23 @@ public class BDProducte {
     
     
     
+    // Llista falta el where like 
+
+     //select c.cat_titol , c.cat_id,l.lli_id ,l.lli_durada  from cataleg c join llista l on l.lli_id = c.cat_id;
      
      
      
+    
+    // canso no falta res crec
+    
+//    select  ca.can_any_creacio, ar.art_nom ,ca.can_durada  from cataleg c join CANÇO ca on ca.can_id=c.cat_id join artista ar on ar.art_id= c.cat_id 
+//    where c.cat_id like 1;
              
              
              
+     
+     
+     
              
              
         
