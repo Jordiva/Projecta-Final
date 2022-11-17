@@ -9,6 +9,17 @@ public abstract class Producte {
     private long id;
     private String titol;
     private String actiu;
+    private String estil;
+    private String estat;
+
+    public Producte(String titol, String actiu, String estil, String estat) {
+        this.titol = titol;
+        this.actiu = actiu;
+        this.estil = estil;
+        this.estat = estat;
+    }
+
+       
 
     public Producte() {
     }
@@ -41,7 +52,21 @@ public abstract class Producte {
     }
    
     
-    
+    public String getEstil() {
+        return estil;
+    }
+
+    public void setEstil(String estil) {
+        this.estil = estil;
+    }
+
+    public String getEstat() {
+        return estat;
+    }
+
+    public void setEstat(String estat) {
+        this.estat = estat;
+    }
 
     public void setId(int id) {
         this.id = id;

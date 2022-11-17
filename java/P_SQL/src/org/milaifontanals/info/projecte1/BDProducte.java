@@ -77,9 +77,9 @@ public class BDProducte {
         Statement q = null;
         try {
             q = conn.createStatement();
-            ResultSet rs = q.executeQuery("select cat_id , cat_titol , cat_actiu from cataleg");
+            ResultSet rs = q.executeQuery("select c.cat_titol, c.cat_actiu , e.est_nom  , c.cat_tipus from cataleg c join estil e on e.est_id = c.cat_estil  ");
             while (rs.next()) {
-                llRep.add(new Producte(rs.getInt("cat_id"), rs.getString("cat_titol"), rs.getString("cat_actiu")) {
+                llRep.add(new Producte(rs.getString("cat_titol"), rs.getString("cat_actiu"),rs.getString("est_nom"),rs.getString("cat_tipus")) {
                 });
             }
             rs.close();
@@ -150,4 +150,14 @@ public class BDProducte {
     }  
     
     
+    
+     
+     
+     
+             
+             
+             
+             
+             
+        
 }
