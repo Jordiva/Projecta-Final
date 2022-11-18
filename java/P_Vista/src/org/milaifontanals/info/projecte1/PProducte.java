@@ -6,6 +6,7 @@
 package org.milaifontanals.info.projecte1;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +39,7 @@ public class PProducte extends javax.swing.JPanel {
 
     }
     private BDProducte gbd = null;
+    private DefaultTableModel info = new DefaultTableModel();
 
     private void borrainfo() {
 
@@ -49,8 +51,6 @@ public class PProducte extends javax.swing.JPanel {
     }
 
     private void informacio() {
-
-        DefaultTableModel info = new DefaultTableModel();
 
         ListSelectionModel listSelectionModel = tableProducte.getSelectionModel();
         listSelectionModel.addListSelectionListener(
@@ -65,34 +65,10 @@ public class PProducte extends javax.swing.JPanel {
 
                 String Tipus = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
 
-            tableInfo.removeAll();
-
-                
-                if (Tipus.equals("L")) {
-
-
-                    info.addColumn("Titol");
-                    info.addColumn("Durada");
-
-                    tableInfo.setModel(info);
-
-                }
-                if (Tipus.equals("C")) {
-
-
-                    info.addColumn("Any Creacio");
-                    info.addColumn("Artista");
-                    info.addColumn("Durada");
-
-                    tableInfo.setModel(info);
-
-                }
-                if (Tipus.equals("A")) {
-
-                }
-
             }
+
         });
+
     }
 
     private void Conection() {
@@ -162,6 +138,11 @@ public class PProducte extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Productes");
 
+        tableProducte.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableProducteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableProducte);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -340,6 +321,53 @@ public class PProducte extends javax.swing.JPanel {
         // TODO add your handling code here:
         Borrar();
     }//GEN-LAST:event_BorrarBotoActionPerformed
+
+    private void tableProducteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProducteMouseClicked
+        // TODO add your handling code here:
+
+        String Tipus = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
+
+        System.out.println(Tipus);
+
+        
+        
+                info.setColumnCount(0);
+                tableInfo.setModel(info);
+
+                
+                if (Tipus.equals("L")) {
+
+                    
+                    info.addColumn("Titol");
+                    info.addColumn("Durada");
+                    
+                    tableInfo.setModel(info);
+
+                }
+                if (Tipus.equals("C")) {
+
+
+                    info.addColumn("Any Creacio");
+                    info.addColumn("Artista");
+                    info.addColumn("Durada");
+
+                    tableInfo.setModel(info);
+
+
+                }
+                if (Tipus.equals("A")) {
+
+                    
+                    info.addColumn("Any Creacio");
+                    info.addColumn("Durada");
+
+                    tableInfo.setModel(info);
+                    
+                }
+
+
+
+    }//GEN-LAST:event_tableProducteMouseClicked
 
     private void filtre() {
         FProducte rep = new FProducte();
