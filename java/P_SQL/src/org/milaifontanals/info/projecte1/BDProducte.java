@@ -150,10 +150,68 @@ public class BDProducte {
     }  
     
     
+     
+     
+     public int getId(String nom)throws GestorBDReproduccioJdbcException{
+         int id = 0;
+            PreparedStatement ps;
+         try{
+             String sql = "select cat_id from cataleg where cat_titol like '?'";
+             ps = conn.prepareStatement(sql);
+             ps.setString(1, nom);
+             ResultSet rs = ps.executeQuery();
+             while(rs.next()){
+                 id = rs.getInt("cat_id");
+                 System.out.println(" "+id);
+             }   
+            return id;   
+
+         }
+         catch(SQLException e){
+               throw new GestorBDReproduccioJdbcException("Error en la consulta de la llista de productes:\n" + e.getMessage());
+         }      
+     }
+     
+     
+     
+     
+      public List<Llista> getLlista(String nom) throws GestorBDReproduccioJdbcException {
+        List<Llista> llest = new ArrayList<Llista>();
+        Statement q = null;
+        PreparedStatement ps;
+        int id = getId(nom);
+        try {
+            String sql =  " select c.cat_titol ,l.lli_durada  from cataleg c join llista l on l.lli_id = c.cat_id where c.cat_id like '?'";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery(sql);
+            while (rs.next()) {
+                llest.add(new Llista(rs.getString("cat_titol"),rs.getInt("lli_durada")));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+                       // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        } finally {
+            if (q != null) {
+                try {
+                    q.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+
+            }
+        }
+        return llest;
+    }  
+     
+     
+ 
+     
     
     // Llista falta el where like 
 
-     //select c.cat_titol , c.cat_id,l.lli_id ,l.lli_durada  from cataleg c join llista l on l.lli_id = c.cat_id;
+     //
      
      
      

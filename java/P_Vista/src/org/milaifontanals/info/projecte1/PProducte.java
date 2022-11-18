@@ -326,8 +326,9 @@ public class PProducte extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         String Tipus = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
+        String titol = tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString();
 
-        System.out.println(Tipus);
+        System.out.println( titol +Tipus);
 
         
         
@@ -341,7 +342,17 @@ public class PProducte extends javax.swing.JPanel {
                     info.addColumn("Titol");
                     info.addColumn("Durada");
                     
+                   try {
+                    List<Llista> llRep = gbd.getLlista(titol);
+                    for (Llista p : llRep) {
+                      info.addRow(new Object[]{p.getTitol(),p.getDurada()});
+                    }
                     tableInfo.setModel(info);
+                    return;
+                } catch (GestorBDReproduccioJdbcException ex) {
+                    System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+                }
+                    
 
                 }
                 if (Tipus.equals("C")) {
