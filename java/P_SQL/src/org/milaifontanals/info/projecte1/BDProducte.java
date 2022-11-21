@@ -79,7 +79,7 @@ public class BDProducte {
             q = conn.createStatement();
             ResultSet rs = q.executeQuery("select c.cat_titol, c.cat_actiu , e.est_nom  , c.cat_tipus from cataleg c join estil e on e.est_id = c.cat_estil  ");
             while (rs.next()) {
-                llRep.add(new Producte(rs.getString("cat_titol"), rs.getString("cat_actiu"),rs.getString("est_nom"),rs.getString("cat_tipus")) {
+                llRep.add(new Producte(rs.getString("cat_titol"), rs.getString("cat_actiu"), rs.getString("est_nom"), rs.getString("cat_tipus")) {
                 });
             }
             rs.close();
@@ -96,7 +96,7 @@ public class BDProducte {
         }
         return llRep;
     }
-    
+
     public List<Producte> getTitol() throws GestorBDProducteJdbcException {
         List<Producte> llRep = new ArrayList<Producte>();
         Statement q = null;
@@ -122,8 +122,7 @@ public class BDProducte {
         return llRep;
     }
 
-    
-     public List<Estil> getListEstils() throws GestorBDReproduccioJdbcException {
+    public List<Estil> getListEstils() throws GestorBDReproduccioJdbcException {
         List<Estil> llest = new ArrayList<Estil>();
         Statement q = null;
         try {
@@ -135,7 +134,7 @@ public class BDProducte {
             rs.close();
         } catch (SQLException ex) {
             System.out.println("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
-                       // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (q != null) {
                 try {
@@ -147,55 +146,46 @@ public class BDProducte {
             }
         }
         return llest;
-    }  
-    
-    
-     
-     
-     public int getId(String nom)throws GestorBDReproduccioJdbcException{
-         int id = 0;
-            PreparedStatement ps;
-         try{
-             String sql = "select cat_id from cataleg where cat_titol like '?'";
-             ps = conn.prepareStatement(sql);
-             ps.setString(1, nom);
-             ResultSet rs = ps.executeQuery();
-             while(rs.next()){
-                 id = rs.getInt("cat_id");
-                 System.out.println(" "+id);
-             }   
-            return id;   
+    }
 
-         }
-         catch(SQLException e){
-               throw new GestorBDReproduccioJdbcException("Error en la consulta de la llista de productes:\n" + e.getMessage());
-         }      
-     }
-     
-     
-     
-     
-      public List<Llista> getLlista(String nom) throws GestorBDReproduccioJdbcException {
+    public int getId(String nom) throws GestorBDReproduccioJdbcException {
+        
+        PreparedStatement ps;
+        try {
+            String sql = "select cat_id from cataleg where cat_titol like ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,nom);
+            ResultSet rs = ps.executeQuery();
+                rs.next();
+               // id = rs.getInt("cat_id");
+               return  rs.getInt("cat_id");
+
+        } catch (SQLException e) {
+            throw new GestorBDReproduccioJdbcException("Error en la consulta de la llista de get id:\n" + e.getMessage());
+        }
+    }
+
+    public List<Llista> getLlista(String nom) throws GestorBDReproduccioJdbcException {
         List<Llista> llest = new ArrayList<Llista>();
         Statement q = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         int id = getId(nom);
         try {
-            String sql =  " select c.cat_titol ,l.lli_durada  from cataleg c join llista l on l.lli_id = c.cat_id where c.cat_id like '?'";
+            String sql = " select c.cat_titol ,l.lli_durada  from cataleg c join llista l on l.lli_id = c.cat_id where c.cat_id like ?";
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery(sql);
             while (rs.next()) {
-                llest.add(new Llista(rs.getString("cat_titol"),rs.getInt("lli_durada")));
+                llest.add(new Llista(rs.getString("cat_titol"), rs.getInt("lli_durada")));
             }
             rs.close();
         } catch (SQLException ex) {
             System.out.println("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
-                       // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
-            if (q != null) {
+            if (ps != null) {
                 try {
-                    q.close();
+                    ps.close();
                 } catch (SQLException ex) {
                     throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
@@ -203,32 +193,15 @@ public class BDProducte {
             }
         }
         return llest;
-    }  
-     
-     
- 
-     
+    }
+
+    
+    
+    
     
     // Llista falta el where like 
-
-     //
-     
-     
-     
-    
+    //
     // canso no falta res crec
-    
 //    select  ca.can_any_creacio, ar.art_nom ,ca.can_durada  from cataleg c join CANÇO ca on ca.can_id=c.cat_id join artista ar on ar.art_id= c.cat_id 
 //    where c.cat_id like 1;
-             
-             
-             
-     
-     
-     
-     
-     
-             
-             
-        
 }

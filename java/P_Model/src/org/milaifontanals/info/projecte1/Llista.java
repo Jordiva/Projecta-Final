@@ -14,6 +14,7 @@ public class Llista {
     
     private String Titol;
     private int durada;
+    
 
     public Llista(String Titol, int durada) {
         this.Titol = Titol;
