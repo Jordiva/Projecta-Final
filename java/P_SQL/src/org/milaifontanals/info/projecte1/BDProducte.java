@@ -52,6 +52,7 @@ public class BDProducte {
             throw new GestorBDProducteJdbcException("No es pot establir la connexió.\n" + ex.getMessage());
         }
     }
+    
 
     public void tancar() throws GestorBDProducteJdbcException {
         if (conn != null) {
@@ -174,13 +175,13 @@ public class BDProducte {
             String sql = " select c.cat_titol ,l.lli_durada  from cataleg c join llista l on l.lli_id = c.cat_id where c.cat_id like ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1,id);
-            ResultSet rs = ps.executeQuery(sql);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 llest.add(new Llista(rs.getString("cat_titol"), rs.getInt("lli_durada")));
             }
             rs.close();
         } catch (SQLException ex) {
-            System.out.println("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
             // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
@@ -196,12 +197,108 @@ public class BDProducte {
     }
 
     
+       
+    public List<Canso> getCanco(String nom) throws GestorBDReproduccioJdbcException {
+        List<Canso> can = new ArrayList<Canso>();
+        Statement q = null;
+        PreparedStatement ps = null;
+        int id = getId(nom);
+        try {
+            String sql = " select  ca.can_any_creacio, ar.art_nom ,ca.can_durada  from cataleg c join CANÇO ca on ca.can_id=c.cat_id join artista ar on ar.art_id= c.cat_id where c.cat_id like ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                can.add(new Canso( rs.getLong("can_durada"),rs.getDate("can_any_creacio"), rs.getString("art_nom")));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+
+            }
+        }
+        return can;
+    }
     
     
     
-    // Llista falta el where like 
-    //
-    // canso no falta res crec
-//    select  ca.can_any_creacio, ar.art_nom ,ca.can_durada  from cataleg c join CANÇO ca on ca.can_id=c.cat_id join artista ar on ar.art_id= c.cat_id 
-//    where c.cat_id like 1;
+    
+    
+       
+    public List<Album> getAlbum(String nom) throws GestorBDReproduccioJdbcException {
+        List<Album> alb = new ArrayList<Album>();
+        Statement q = null;
+        PreparedStatement ps = null;
+        int id = getId(nom);
+        try {
+            String sql = "select c.cat_titol , a.alb_any_creacio , a.alb_durada  from cataleg c join album a on a.alb_id = c.cat_id where c.cat_id like ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                alb.add(new Album( rs.getString("cat_titol"),rs.getInt("alb_durada"),rs.getDate("alb_any_creacio")));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+
+            }
+        }
+        return alb;
+    }
+    
+    public List<Album> getAlbumCont(String nom) throws GestorBDReproduccioJdbcException {
+        List<Album> alb = new ArrayList<Album>();
+        Statement q = null;
+        PreparedStatement ps = null;
+        int id = getId(nom);
+        try {
+            String sql = "select c.cat_titol from cataleg c join album_contingut abc on c.cat_id=abc.alco_id_canço where abc.alco_id_album like ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                alb.add(new Album( rs.getString("cat_titol")));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+
+            }
+        }
+        return alb;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

@@ -5,33 +5,59 @@
  */
 package org.milaifontanals.info.projecte1;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Usuari
  */
 public class Album extends Producte{
-    private int anyCreacio;
+  
+    public String titol;
+    public int durada;
+    public Date dataCreacio;
 
-    
-    public int getAnyCreacio() {
-        return anyCreacio;
-    }
-
-    public void setAnyCreacio(int anyCreacio) {
-        this.anyCreacio = anyCreacio;
-    }
-
-    public Album(int anyCreacio) {
-        super();
-        this.anyCreacio = anyCreacio;
-    }
-
-    
-    @Override
     public int getDurada() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return durada;
+    }
+
+    public Album(String titol) {
+        this.titol = titol;
     }
     
-   
     
+    public void setDurada(int durada) {
+        this.durada = durada;
+    }
+
+    public Album(String titol, int durada, Date dataCreacio) {
+        this.titol = titol;
+        this.durada = durada;
+        this.dataCreacio = dataCreacio;
+    }
+
+    public String getTitol() {
+        return titol;
+    }
+
+    public void setTitol(String titol) {
+        this.titol = titol;
+    }
+
+    public String getDataCreacio() {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+        String resultat = null;
+
+        resultat = df.format(dataCreacio);
+
+        return resultat;
+    }
+
+    public void setDataCreacio(Date dataCreacio) {
+        this.dataCreacio = dataCreacio;
+    }
+    
+ 
 }
