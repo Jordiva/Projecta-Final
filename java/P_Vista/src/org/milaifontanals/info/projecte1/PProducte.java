@@ -93,10 +93,9 @@ public class PProducte extends javax.swing.JPanel {
         }
 
     }
+    DefaultTableModel model = new DefaultTableModel();
 
     private void ompletabla() {
-
-        DefaultTableModel model = new DefaultTableModel();
 
         model.addColumn("Titol");
         model.addColumn("Actiu");
@@ -494,12 +493,21 @@ public class PProducte extends javax.swing.JPanel {
 
         if (Tipus.equals("L")) {
 
+            info.setRowCount(0);
+            info.addColumn("Tiol Canço");
+            tableInfo.setModel(info);
             try {
                 List<Llista> llRep;
                 llRep = gbd.getLlista(titol);
+                List<Llista> ll = gbd.getLlistaCont(titol);
+
                 for (Llista p : llRep) {
                     DuradaTxt.setText("" + p.getDurada());
                 }
+                for (Llista p : ll) {
+                    info.addRow(new Object[]{p.getTitol()});
+                }
+                tableInfo.setModel(info);
                 return;
             } catch (GestorBDReproduccioJdbcException ex) {
                 ex.printStackTrace();
@@ -516,13 +524,14 @@ public class PProducte extends javax.swing.JPanel {
             try {
                 List<Canso> ll;
                 ll = gbd.getCanco(titol);
+
                 for (Canso p : ll) {
 
                     ArtTxt.setText(p.getArt());
                     AnyTxt.setText(p.getAnyCreacio());
                     DuradaTxt.setText("" + p.getDurada());
-
                 }
+
                 return;
             } catch (GestorBDReproduccioJdbcException ex) {
                 ex.printStackTrace();
@@ -565,37 +574,54 @@ public class PProducte extends javax.swing.JPanel {
     private void bntFiltreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntFiltreActionPerformed
         // TODO add your handling code here:
 
-        char Actiu;
-        String Tipus = "";
+        String Actiu = null;
+        String L = null;
+        String C = null;
+        String A = null;
 
         if (Inactiurb.isSelected()) {
             System.out.println("inactiu");
-            Actiu = 'N';
+            Actiu = "N";
 
         }
         if (Actiu_inacT_RB.isSelected()) {
             System.out.println("dos");
+            Actiu = "dos";
 
         }
         if (actiurb.isSelected()) {
             System.out.println("actiu");
-            Actiu = 'S';
+            Actiu = "S";
         }
-        
-        
+
         if (RbLlista.isSelected()) {
-            System.out.println("Llista");
-            Tipus = "Llista";
+            // System.out.println("Llista");
+            L = "L";
         }
         if (rbAlbum.isSelected()) {
-            System.out.println("Album");
-            Tipus = Tipus+"Album";
+            //System.out.println("Album");
+            A = "A";
         }
         if (rbCanco.isSelected()) {
-            System.out.println("Canço");
-            Tipus = Tipus+"Canço";
+            // System.out.println("Canço");
+            C = "C";
         }
-        
+
+        model.setRowCount(0);
+        tableProducte.setModel(model);
+
+        try {
+            List<Producte> llRep = gbd.getFiltre(C, A, L, Actiu);
+            for (Producte p : llRep) {
+                model.addRow(new Object[]{p.getTitol(), p.getActiu(), p.getEstil(), p.getEstat()});
+            }
+            tableInfo.setDefaultEditor(Object.class, null);
+            tableProducte.setDefaultEditor(Object.class, null);
+            tableProducte.setModel(model);
+            return;
+        } catch (GestorBDReproduccioJdbcException ex) {
+            System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+        }
 
 
     }//GEN-LAST:event_bntFiltreActionPerformed
