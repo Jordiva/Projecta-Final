@@ -131,7 +131,6 @@ public class PProducte extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableProducte = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        BotoFiltre = new javax.swing.JButton();
         CrearButo = new javax.swing.JButton();
         ActualitzaBoto = new javax.swing.JButton();
         BorrarBoto = new javax.swing.JButton();
@@ -185,13 +184,6 @@ public class PProducte extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 226, Short.MAX_VALUE)
         );
-
-        BotoFiltre.setText("Filtres");
-        BotoFiltre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotoFiltreActionPerformed(evt);
-            }
-        });
 
         CrearButo.setText("Crear");
         CrearButo.addActionListener(new java.awt.event.ActionListener() {
@@ -351,7 +343,6 @@ public class PProducte extends javax.swing.JPanel {
                             .addComponent(rbAlbum))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BotoFiltre)
                             .addComponent(CrearButo)
                             .addComponent(ActualitzaBoto)
                             .addComponent(BorrarBoto))
@@ -412,15 +403,10 @@ public class PProducte extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(BotoFiltre))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7)))
+                        .addGap(5, 5, 5)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
@@ -453,11 +439,6 @@ public class PProducte extends javax.swing.JPanel {
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 600));
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BotoFiltreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotoFiltreActionPerformed
-        // TODO add your handling code here:
-        filtre();
-    }//GEN-LAST:event_BotoFiltreActionPerformed
 
     private void CrearButoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearButoActionPerformed
         // TODO add your handling code here:
@@ -580,17 +561,17 @@ public class PProducte extends javax.swing.JPanel {
         String A = null;
 
         if (Inactiurb.isSelected()) {
-            System.out.println("inactiu");
+           // System.out.println("inactiu");
             Actiu = "N";
 
         }
         if (Actiu_inacT_RB.isSelected()) {
-            System.out.println("dos");
+          //  System.out.println("dos");
             Actiu = "dos";
 
         }
         if (actiurb.isSelected()) {
-            System.out.println("actiu");
+          //  System.out.println("actiu");
             Actiu = "S";
         }
 
@@ -647,16 +628,6 @@ public class PProducte extends javax.swing.JPanel {
         actiurb.setSelected(false);
     }//GEN-LAST:event_Actiu_inacT_RBActionPerformed
 
-    private void filtre() {
-        FProducte rep = new FProducte();
-        rep.setSize(358, 226);
-        rep.setLocation(0, 0);
-
-        jPanel2.removeAll();
-        jPanel2.add(rep, BorderLayout.CENTER);
-        jPanel2.revalidate();
-        jPanel2.repaint();
-    }
 
     private void Crear() {
         CProducte rep = new CProducte();
@@ -699,7 +670,6 @@ public class PProducte extends javax.swing.JPanel {
     private javax.swing.JLabel AnyTxt;
     private javax.swing.JLabel ArtTxt;
     private javax.swing.JButton BorrarBoto;
-    private javax.swing.JButton BotoFiltre;
     private javax.swing.JButton CrearButo;
     private javax.swing.JLabel DuradaTxt;
     private javax.swing.JLabel Estilbox;
