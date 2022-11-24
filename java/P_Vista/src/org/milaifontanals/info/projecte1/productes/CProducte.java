@@ -115,7 +115,7 @@ public class CProducte extends javax.swing.JPanel {
                 CrearActionPerformed(evt);
             }
         });
-        add(Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
+        add(Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
 
         ActiuComboxob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "Y" }));
         ActiuComboxob.addActionListener(new java.awt.event.ActionListener() {

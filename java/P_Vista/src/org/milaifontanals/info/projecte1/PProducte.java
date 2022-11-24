@@ -631,7 +631,7 @@ public class PProducte extends javax.swing.JPanel {
 
     private void Crear() {
         CProducte rep = new CProducte();
-        rep.setSize(358, 226);
+        rep.setSize(400, 300);
         rep.setLocation(0, 0);
 
         jPanel2.removeAll();
