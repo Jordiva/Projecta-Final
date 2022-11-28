@@ -752,4 +752,39 @@ public class BDProducte {
 
     }
 
+    
+    
+    
+    
+    
+    
+    public void updateProducte(String titol , String actiu , String estil , String tipus ) throws GestorBDReproduccioJdbcException {
+        Statement q = null;
+        PreparedStatement ps = null;
+        try {
+            String sql = "update cataleg set cat_titol = ?, cat_actiu = ?, cat_estil = (select estil.est_id from estil where estil.est_nom = ?), cat_tipus = ? where cat_id = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,titol);
+            ps.setString(2,actiu);
+            ps.setString(3,estil);
+            ps.setString(4,tipus);
+            ps.executeUpdate();     
+            ps.close();
+        } catch (SQLException ex) {
+            throw new GestorBDReproduccioJdbcException("Error en intentar a fer el update .\n" + ex.getMessage());
+            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+            }
+        }  
+    }
+
+    
+    
+    
 }

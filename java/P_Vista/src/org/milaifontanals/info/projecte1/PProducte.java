@@ -656,6 +656,7 @@ public class PProducte extends javax.swing.JPanel {
         rep.setSize(358, 226);
         rep.setLocation(0, 0);
 
+        
         jPanel2.removeAll();
         jPanel2.add(rep, BorderLayout.CENTER);
         jPanel2.revalidate();
