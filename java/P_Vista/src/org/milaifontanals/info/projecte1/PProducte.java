@@ -36,6 +36,10 @@ public class PProducte extends javax.swing.JPanel {
         borrainfo();
         ompletabla();
         informacio();
+        bntFiltre.setEnabled(false);
+        ActualitzaBoto.setEnabled(false);
+        BorrarBoto.setEnabled(false);
+        
 
     }
     private BDProducte gbd = null;
@@ -51,10 +55,12 @@ public class PProducte extends javax.swing.JPanel {
         AnyTxt.setText("");
         artviw.setVisible(false);
         ArtTxt.setText("");
+        
+
 
     }
 
-    private void informacio() {
+    public void informacio() {
 
         ListSelectionModel listSelectionModel = tableProducte.getSelectionModel();
         listSelectionModel.addListSelectionListener(
@@ -277,10 +283,25 @@ public class PProducte extends javax.swing.JPanel {
         jLabel8.setText("Tipus");
 
         rbAlbum.setText("Album");
+        rbAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbAlbumActionPerformed(evt);
+            }
+        });
 
         RbLlista.setText("Llista");
+        RbLlista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RbLlistaActionPerformed(evt);
+            }
+        });
 
         rbCanco.setText("Canço");
+        rbCanco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbCancoActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Titol");
 
@@ -463,8 +484,8 @@ public class PProducte extends javax.swing.JPanel {
         String Tipus = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
         String titol = tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString();
 
-        System.out.println(titol + Tipus);
-
+        ActualitzaBoto.setEnabled(true);
+        BorrarBoto.setEnabled(true);
         info.setColumnCount(0);
         tableInfo.setModel(info);
         artviw.setVisible(false);
@@ -490,7 +511,7 @@ public class PProducte extends javax.swing.JPanel {
                 }
                 tableInfo.setModel(info);
                 return;
-            } catch (GestorBDReproduccioJdbcException ex) {
+            } catch (GestorBDProducteJdbcException ex) {
                 ex.printStackTrace();
                 System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
             }
@@ -514,7 +535,7 @@ public class PProducte extends javax.swing.JPanel {
                 }
 
                 return;
-            } catch (GestorBDReproduccioJdbcException ex) {
+            } catch (GestorBDProducteJdbcException ex) {
                 ex.printStackTrace();
                 System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
             }
@@ -542,7 +563,7 @@ public class PProducte extends javax.swing.JPanel {
                 tableInfo.setModel(info);
 
                 return;
-            } catch (GestorBDReproduccioJdbcException ex) {
+            } catch (GestorBDProducteJdbcException ex) {
                 ex.printStackTrace();
                 System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
             }
@@ -559,11 +580,11 @@ public class PProducte extends javax.swing.JPanel {
         String L = null;
         String C = null;
         String A = null;
-
+        
         if (Inactiurb.isSelected()) {
            // System.out.println("inactiu");
             Actiu = "N";
-
+            
         }
         if (Actiu_inacT_RB.isSelected()) {
           //  System.out.println("dos");
@@ -600,7 +621,7 @@ public class PProducte extends javax.swing.JPanel {
             tableProducte.setDefaultEditor(Object.class, null);
             tableProducte.setModel(model);
             return;
-        } catch (GestorBDReproduccioJdbcException ex) {
+        } catch (GestorBDProducteJdbcException ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
 
@@ -609,7 +630,8 @@ public class PProducte extends javax.swing.JPanel {
 
     private void actiurbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actiurbActionPerformed
         // TODO add your handling code here:
-
+        
+        bntFiltre.setEnabled(true);
         Inactiurb.setSelected(false);
         Actiu_inacT_RB.setSelected(false);
 
@@ -618,15 +640,40 @@ public class PProducte extends javax.swing.JPanel {
 
     private void InactiurbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InactiurbActionPerformed
         // TODO add your handling code here:
+         bntFiltre.setEnabled(true);
         actiurb.setSelected(false);
         Actiu_inacT_RB.setSelected(false);
     }//GEN-LAST:event_InactiurbActionPerformed
 
     private void Actiu_inacT_RBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actiu_inacT_RBActionPerformed
         // TODO add your handling code here:
+         bntFiltre.setEnabled(true);
         Inactiurb.setSelected(false);
         actiurb.setSelected(false);
     }//GEN-LAST:event_Actiu_inacT_RBActionPerformed
+
+    private void RbLlistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RbLlistaActionPerformed
+        // TODO add your handling code here:
+        if (RbLlista.isSelected()) {
+            bntFiltre.setEnabled(true);
+        }
+         
+    }//GEN-LAST:event_RbLlistaActionPerformed
+
+    private void rbAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAlbumActionPerformed
+        // TODO add your handling code here:
+        if (rbAlbum.isSelected()) {
+            bntFiltre.setEnabled(true);
+        }
+        
+    }//GEN-LAST:event_rbAlbumActionPerformed
+
+    private void rbCancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCancoActionPerformed
+        // TODO add your handling code here:
+        if (rbCanco.isSelected()) {
+            bntFiltre.setEnabled(true);
+        }
+    }//GEN-LAST:event_rbCancoActionPerformed
 
 
     private void Crear() {
@@ -641,7 +688,7 @@ public class PProducte extends javax.swing.JPanel {
     }
 
     private void Actualitza() {
-        AProducte rep = new AProducte();
+        AProducte rep = new AProducte(tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString(), tableProducte.getValueAt(tableProducte.getSelectedRow(), 1).toString(), tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString(), tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString());
         rep.setSize(358, 226);
         rep.setLocation(0, 0);
 
@@ -651,17 +698,6 @@ public class PProducte extends javax.swing.JPanel {
         jPanel2.repaint();
     }
 
-    private void Borrar() {
-        BProducte rep = new BProducte();
-        rep.setSize(358, 226);
-        rep.setLocation(0, 0);
-
-        
-        jPanel2.removeAll();
-        jPanel2.add(rep, BorderLayout.CENTER);
-        jPanel2.revalidate();
-        jPanel2.repaint();
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

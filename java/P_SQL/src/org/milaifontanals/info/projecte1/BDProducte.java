@@ -15,6 +15,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -134,7 +136,7 @@ public class BDProducte {
         return llRep;
     }
 
-    public List<Estil> getListEstils() throws GestorBDReproduccioJdbcException {
+    public List<Estil> getListEstils() throws GestorBDProducteJdbcException {
         List<Estil> llest = new ArrayList<Estil>();
         Statement q = null;
         try {
@@ -145,14 +147,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            System.out.println("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
             // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (q != null) {
                 try {
                     q.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -160,7 +162,7 @@ public class BDProducte {
         return llest;
     }
 
-    public int getId(String nom) throws GestorBDReproduccioJdbcException {
+    public int getId(String nom) throws GestorBDProducteJdbcException {
 
         PreparedStatement ps;
         try {
@@ -172,11 +174,26 @@ public class BDProducte {
             // id = rs.getInt("cat_id");
             return rs.getInt("cat_id");
         } catch (SQLException e) {
-            throw new GestorBDReproduccioJdbcException("Error en la consulta de la llista de get id:\n" + e.getMessage());
+            throw new GestorBDProducteJdbcException("Error en la consulta de la llista de get id:\n" + e.getMessage());
         }
     }
 
-    public List<Llista> getLlista(String nom) throws GestorBDReproduccioJdbcException {
+    public int getIDestil(String nom) throws GestorBDProducteJdbcException {
+
+        PreparedStatement ps;
+        try {
+            String sql = "select est_id from estil where  est_nom like ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, nom);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt("est_id");
+        } catch (SQLException e) {
+            throw new GestorBDProducteJdbcException("Error en la consulta de la llista de get id Estil:\n" + e.getMessage());
+        }
+    }
+    
+    public List<Llista> getLlista(String nom) throws GestorBDProducteJdbcException {
         List<Llista> llest = new ArrayList<Llista>();
         Statement q = null;
         PreparedStatement ps = null;
@@ -191,14 +208,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
             // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -206,7 +223,7 @@ public class BDProducte {
         return llest;
     }
 
-    public List<Canso> getCanco(String nom) throws GestorBDReproduccioJdbcException {
+    public List<Canso> getCanco(String nom) throws GestorBDProducteJdbcException {
         List<Canso> can = new ArrayList<Canso>();
         Statement q = null;
         PreparedStatement ps = null;
@@ -221,14 +238,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
             // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -236,7 +253,7 @@ public class BDProducte {
         return can;
     }
 
-    public List<Album> getAlbum(String nom) throws GestorBDReproduccioJdbcException {
+    public List<Album> getAlbum(String nom) throws GestorBDProducteJdbcException {
         List<Album> alb = new ArrayList<Album>();
         Statement q = null;
         PreparedStatement ps = null;
@@ -251,14 +268,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
             // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -266,7 +283,7 @@ public class BDProducte {
         return alb;
     }
 
-    public List<Album> getAlbumCont(String nom) throws GestorBDReproduccioJdbcException {
+    public List<Album> getAlbumCont(String nom) throws GestorBDProducteJdbcException {
         List<Album> alb = new ArrayList<Album>();
         Statement q = null;
         PreparedStatement ps = null;
@@ -281,14 +298,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
             // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -296,7 +313,7 @@ public class BDProducte {
         return alb;
     }
 
-    public List<Llista> getLlistaCont(String nom) throws GestorBDReproduccioJdbcException {
+    public List<Llista> getLlistaCont(String nom) throws GestorBDProducteJdbcException {
         List<Llista> alb = new ArrayList<Llista>();
         Statement q = null;
         PreparedStatement ps = null;
@@ -311,14 +328,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
             // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -326,7 +343,7 @@ public class BDProducte {
         return alb;
     }
 
-    public List<Producte> getFiltre(String C, String A, String L, String Actiu) throws GestorBDReproduccioJdbcException {
+    public List<Producte> getFiltre(String C, String A, String L, String Actiu) throws GestorBDProducteJdbcException {
         List<Producte> alb = new ArrayList<Producte>();
         Statement q = null;
         PreparedStatement ps = null;
@@ -340,7 +357,7 @@ public class BDProducte {
             boolean tipus = false;
             boolean fet = true;
 
-            if (Actiu != null && C != null || A != null || L != null) {
+            if ((Actiu != null) && (C != null || A != null || L != null) == true) {
 
                 if (Actiu.equals("dos")) {
 
@@ -620,7 +637,7 @@ public class BDProducte {
                         ps = conn.prepareStatement(sql);
                     }
                 }
-                if (C != null || A != null || L != null) {
+            //    if (C != null || A != null || L != null) {
 
                     sql += " where ";
 
@@ -722,8 +739,10 @@ public class BDProducte {
                         }
                     }
 
-                }
+                    
+                //}
             }
+            
 
             String resultat = sql;
 
@@ -735,14 +754,14 @@ public class BDProducte {
             rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
             // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -758,7 +777,7 @@ public class BDProducte {
     
     
     
-    public void updateProducte(String titol , String actiu , String estil , String tipus ) throws GestorBDReproduccioJdbcException {
+    public void updateProducte(String titol , String actiu , String estil , String tipus ) throws GestorBDProducteJdbcException {
         Statement q = null;
         PreparedStatement ps = null;
         try {
@@ -769,21 +788,47 @@ public class BDProducte {
             ps.setString(3,estil);
             ps.setString(4,tipus);
             ps.executeUpdate();     
-            ps.close();
+            ps.close();           
         } catch (SQLException ex) {
-            throw new GestorBDReproduccioJdbcException("Error en intentar a fer el update .\n" + ex.getMessage());
+            throw new GestorBDProducteJdbcException("Error en intentar a fer el update .\n" + ex.getMessage());
             // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
             }
-        }  
+        }
     }
 
+    public void createProducte(String titol , String actiu , String estil , String tipus ) throws GestorBDProducteJdbcException {
+        Statement q = null;
+        PreparedStatement ps = null;
+        int idestil = getIDestil(estil);
+        try {
+            String sql = "INSERT INTO CATALEG (CAT_TITOL,CAT_ACTIU,CAT_ESTIL,CAT_TIPUS) VALUES(?,?,?,?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1,titol);
+            ps.setString(2,actiu);
+            ps.setInt(3,idestil);
+            ps.setString(4,tipus);
+            ps.executeUpdate();     
+            validarCanvis();
+            ps.close();
+        } catch (SQLException ex) {
+            throw new GestorBDProducteJdbcException("Error en intentar a fer el update .\n" + ex.getMessage());
+            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        } 
+    }
+    
+    public void borra(){
+        
+        
+        
+    }
+    
     
     
     

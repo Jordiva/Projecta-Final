@@ -9,10 +9,12 @@ import org.milaifontanals.info.projecte1.reproduccio.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import org.milaifontanals.info.projecte1.BDProducte;
 import org.milaifontanals.info.projecte1.BDReproduccio;
 import org.milaifontanals.info.projecte1.Clients;
 import org.milaifontanals.info.projecte1.Estil;
-import org.milaifontanals.info.projecte1.GestorBDReproduccioJdbcException;
+import org.milaifontanals.info.projecte1.GestorBDProducteJdbcException;
 import org.milaifontanals.info.projecte1.Principal;
 
 /**
@@ -31,13 +33,13 @@ public class CProducte extends javax.swing.JPanel {
     }
 
     
-           BDReproduccio gbd = null;
+           BDProducte gbd = null;
 
      private void Conection() {
 
         try {
-            gbd = new BDReproduccio();
-        } catch (GestorBDReproduccioJdbcException ex) {
+            gbd = new BDProducte();
+        } catch (GestorBDProducteJdbcException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -53,7 +55,7 @@ public class CProducte extends javax.swing.JPanel {
                     }
                     
                     return;
-                } catch (GestorBDReproduccioJdbcException ex) {
+                } catch (GestorBDProducteJdbcException ex) {
                     System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
                 }
     }
@@ -118,7 +120,7 @@ public class CProducte extends javax.swing.JPanel {
         });
         add(Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
 
-        ActiuComboxob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "Y" }));
+        ActiuComboxob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "S" }));
         ActiuComboxob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ActiuComboxobActionPerformed(evt);
@@ -162,14 +164,34 @@ public class CProducte extends javax.swing.JPanel {
         String tipos = Tipus_combo.getSelectedItem().toString();
         String estil = estilsComboBox.getSelectedItem().toString();
         
-        System.out.println(titol);
+       // System.out.println(titol);
         
         
-        System.out.println(actiu);
-        System.out.println(tipos);
-        System.out.println(estil);
+        //System.out.println(tipos);
+        String sort = null;
+        if (tipos.equals("Canço")) {
+            sort = "C";
+        }
+        if (tipos.equals("Artista")) {
+            sort = "A";
+        }
+        if (tipos.equals("Llista")) {
+            sort = "L";
+        }
+        
+
+        
         if (titol.equals("")) {
             System.out.println("Tens de ficar un Titol");
+        }
+        else{
+             try {
+                 gbd.createProducte(titol,actiu,estil,sort);
+             } catch (GestorBDProducteJdbcException ex) {
+                 System.out.println("Error al crear el producte "+ex.getMessage());
+             }
+             System.out.println("fi");
+             
         }
         
         

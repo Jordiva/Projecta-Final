@@ -9,7 +9,7 @@ package org.milaifontanals.info.projecte1;
  *
  * @author isard
  */
-class GestorBDProducteJdbcException extends Exception {
+public class GestorBDProducteJdbcException extends Exception {
      public GestorBDProducteJdbcException(String message) {
         super(message);
     }
