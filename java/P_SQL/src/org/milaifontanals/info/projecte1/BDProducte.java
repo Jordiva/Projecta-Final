@@ -343,7 +343,7 @@ public class BDProducte {
         return alb;
     }
 
-    public List<Producte> getFiltre(String C, String A, String L, String Actiu) throws GestorBDProducteJdbcException {
+    public List<Producte> getFiltre(String titol,String C, String A, String L, String Actiu) throws GestorBDProducteJdbcException {
         List<Producte> alb = new ArrayList<Producte>();
         Statement q = null;
         PreparedStatement ps = null;
@@ -356,6 +356,7 @@ public class BDProducte {
             boolean dos = false;
             boolean tipus = false;
             boolean fet = true;
+
 
             if ((Actiu != null) && (C != null || A != null || L != null) == true) {
 
@@ -637,7 +638,7 @@ public class BDProducte {
                         ps = conn.prepareStatement(sql);
                     }
                 }
-            //    if (C != null || A != null || L != null) {
+                if (C != null || A != null || L != null) {
 
                     sql += " where ";
 
@@ -740,7 +741,13 @@ public class BDProducte {
                     }
 
                     
-                //}
+                }
+               if (titol != null) {
+               sql += " where ";
+               sql += " cat_titol like ?";
+               ps = conn.prepareStatement(sql);
+               ps.setString(1,"%"+titol+"%");
+            }
             }
             
 

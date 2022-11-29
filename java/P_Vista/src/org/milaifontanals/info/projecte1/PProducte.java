@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicListUI.ListSelectionHandler;
 import javax.swing.table.DefaultTableModel;
 import org.milaifontanals.info.projecte1.productes.*;
+import javax.swing.JOptionPane;
 import org.milaifontanals.info.projecte1.reproduccio.AReproduccio;
 import org.milaifontanals.info.projecte1.reproduccio.BReproduccio;
 import org.milaifontanals.info.projecte1.reproduccio.CReproduccio;
@@ -39,7 +40,6 @@ public class PProducte extends javax.swing.JPanel {
         bntFiltre.setEnabled(false);
         ActualitzaBoto.setEnabled(false);
         BorrarBoto.setEnabled(false);
-        
 
     }
     private BDProducte gbd = null;
@@ -55,8 +55,6 @@ public class PProducte extends javax.swing.JPanel {
         AnyTxt.setText("");
         artviw.setVisible(false);
         ArtTxt.setText("");
-        
-
 
     }
 
@@ -166,7 +164,7 @@ public class PProducte extends javax.swing.JPanel {
         RbLlista = new javax.swing.JRadioButton();
         rbCanco = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txbtitiol = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -305,6 +303,12 @@ public class PProducte extends javax.swing.JPanel {
 
         jLabel9.setText("Titol");
 
+        txbtitiol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txbtitiolActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -356,7 +360,7 @@ public class PProducte extends javax.swing.JPanel {
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txbtitiol, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(actiurb)
                             .addComponent(Inactiurb)
                             .addComponent(RbLlista)
@@ -425,7 +429,7 @@ public class PProducte extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txbtitiol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,7 +479,8 @@ public class PProducte extends javax.swing.JPanel {
 
     private void BorrarBotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarBotoActionPerformed
         // TODO add your handling code here:
-        Borrar();
+
+
     }//GEN-LAST:event_BorrarBotoActionPerformed
 
     private void tableProducteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProducteMouseClicked
@@ -493,81 +498,88 @@ public class PProducte extends javax.swing.JPanel {
         AnyTxt.setText("");
         ArtTxt.setText("");
 
-        if (Tipus.equals("L")) {
+        if (tableProducte.getSelectedRowCount() > 1) {
+            JOptionPane.showMessageDialog(null, "No Pots Selecionar mes deuna fila a la vegada", "Error", JOptionPane.ERROR_MESSAGE);
+            tableProducte.clearSelection();
+            borrainfo();
+        } else {
+               
+            if (Tipus.equals("L")) {
 
-            info.setRowCount(0);
-            info.addColumn("Tiol Canço");
-            tableInfo.setModel(info);
-            try {
-                List<Llista> llRep;
-                llRep = gbd.getLlista(titol);
-                List<Llista> ll = gbd.getLlistaCont(titol);
-
-                for (Llista p : llRep) {
-                    DuradaTxt.setText("" + p.getDurada());
-                }
-                for (Llista p : ll) {
-                    info.addRow(new Object[]{p.getTitol()});
-                }
+                info.setRowCount(0);
+                info.addColumn("Tiol Canço");
                 tableInfo.setModel(info);
-                return;
-            } catch (GestorBDProducteJdbcException ex) {
-                ex.printStackTrace();
-                System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
-            }
-            tableInfo.setModel(info);
+                try {
+                    List<Llista> llRep;
+                    llRep = gbd.getLlista(titol);
+                    List<Llista> ll = gbd.getLlistaCont(titol);
 
-        }
-        if (Tipus.equals("C")) {
-
-            artviw.setVisible(true);
-            anyviw.setVisible(true);
-
-            try {
-                List<Canso> ll;
-                ll = gbd.getCanco(titol);
-
-                for (Canso p : ll) {
-
-                    ArtTxt.setText(p.getArt());
-                    AnyTxt.setText(p.getAnyCreacio());
-                    DuradaTxt.setText("" + p.getDurada());
-                }
-
-                return;
-            } catch (GestorBDProducteJdbcException ex) {
-                ex.printStackTrace();
-                System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
-            }
-
-        }
-        if (Tipus.equals("A")) {
-
-            info.setRowCount(0);
-            info.addColumn("Tiol Canço");
-            tableInfo.setModel(info);
-            anyviw.setVisible(true);
-
-            try {
-                List<Album> ll;
-                ll = gbd.getAlbum(titol);
-                List<Album> llRep = gbd.getAlbumCont(titol);
-
-                for (Album p : ll) {
-                    AnyTxt.setText(p.getDataCreacio());
-                    DuradaTxt.setText("" + p.getDurada());
-                }
-                for (Album p : llRep) {
-                    info.addRow(new Object[]{p.getTitol()});
+                    for (Llista p : llRep) {
+                        DuradaTxt.setText("" + p.getDurada());
+                    }
+                    for (Llista p : ll) {
+                        info.addRow(new Object[]{p.getTitol()});
+                    }
+                    tableInfo.setModel(info);
+                    return;
+                } catch (GestorBDProducteJdbcException ex) {
+                    ex.printStackTrace();
+                    System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
                 tableInfo.setModel(info);
 
-                return;
-            } catch (GestorBDProducteJdbcException ex) {
-                ex.printStackTrace();
-                System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
             }
+            if (Tipus.equals("C")) {
 
+                artviw.setVisible(true);
+                anyviw.setVisible(true);
+
+                try {
+                    List<Canso> ll;
+                    ll = gbd.getCanco(titol);
+
+                    for (Canso p : ll) {
+
+                        ArtTxt.setText(p.getArt());
+                        AnyTxt.setText(p.getAnyCreacio());
+                        DuradaTxt.setText("" + p.getDurada());
+                    }
+
+                    return;
+                } catch (GestorBDProducteJdbcException ex) {
+                    ex.printStackTrace();
+                    System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
+                }
+
+            }
+            if (Tipus.equals("A")) {
+
+                info.setRowCount(0);
+                info.addColumn("Tiol Canço");
+                tableInfo.setModel(info);
+                anyviw.setVisible(true);
+
+                try {
+                    List<Album> ll;
+                    ll = gbd.getAlbum(titol);
+                    List<Album> llRep = gbd.getAlbumCont(titol);
+
+                    for (Album p : ll) {
+                        AnyTxt.setText(p.getDataCreacio());
+                        DuradaTxt.setText("" + p.getDurada());
+                    }
+                    for (Album p : llRep) {
+                        info.addRow(new Object[]{p.getTitol()});
+                    }
+                    tableInfo.setModel(info);
+
+                    return;
+                } catch (GestorBDProducteJdbcException ex) {
+                    ex.printStackTrace();
+                    System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
+                }
+
+            }
         }
 
 
@@ -576,23 +588,26 @@ public class PProducte extends javax.swing.JPanel {
     private void bntFiltreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntFiltreActionPerformed
         // TODO add your handling code here:
 
+        String titol = null;
         String Actiu = null;
         String L = null;
         String C = null;
         String A = null;
-        
+
+        titol = txbtitiol.getText().toString();
+
         if (Inactiurb.isSelected()) {
-           // System.out.println("inactiu");
+            // System.out.println("inactiu");
             Actiu = "N";
-            
+
         }
         if (Actiu_inacT_RB.isSelected()) {
-          //  System.out.println("dos");
+            //  System.out.println("dos");
             Actiu = "dos";
 
         }
         if (actiurb.isSelected()) {
-          //  System.out.println("actiu");
+            //  System.out.println("actiu");
             Actiu = "S";
         }
 
@@ -613,7 +628,7 @@ public class PProducte extends javax.swing.JPanel {
         tableProducte.setModel(model);
 
         try {
-            List<Producte> llRep = gbd.getFiltre(C, A, L, Actiu);
+            List<Producte> llRep = gbd.getFiltre(titol, C, A, L, Actiu);
             for (Producte p : llRep) {
                 model.addRow(new Object[]{p.getTitol(), p.getActiu(), p.getEstil(), p.getEstat()});
             }
@@ -630,7 +645,7 @@ public class PProducte extends javax.swing.JPanel {
 
     private void actiurbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actiurbActionPerformed
         // TODO add your handling code here:
-        
+
         bntFiltre.setEnabled(true);
         Inactiurb.setSelected(false);
         Actiu_inacT_RB.setSelected(false);
@@ -640,14 +655,14 @@ public class PProducte extends javax.swing.JPanel {
 
     private void InactiurbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InactiurbActionPerformed
         // TODO add your handling code here:
-         bntFiltre.setEnabled(true);
+        bntFiltre.setEnabled(true);
         actiurb.setSelected(false);
         Actiu_inacT_RB.setSelected(false);
     }//GEN-LAST:event_InactiurbActionPerformed
 
     private void Actiu_inacT_RBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Actiu_inacT_RBActionPerformed
         // TODO add your handling code here:
-         bntFiltre.setEnabled(true);
+        bntFiltre.setEnabled(true);
         Inactiurb.setSelected(false);
         actiurb.setSelected(false);
     }//GEN-LAST:event_Actiu_inacT_RBActionPerformed
@@ -657,7 +672,7 @@ public class PProducte extends javax.swing.JPanel {
         if (RbLlista.isSelected()) {
             bntFiltre.setEnabled(true);
         }
-         
+
     }//GEN-LAST:event_RbLlistaActionPerformed
 
     private void rbAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbAlbumActionPerformed
@@ -665,7 +680,7 @@ public class PProducte extends javax.swing.JPanel {
         if (rbAlbum.isSelected()) {
             bntFiltre.setEnabled(true);
         }
-        
+
     }//GEN-LAST:event_rbAlbumActionPerformed
 
     private void rbCancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCancoActionPerformed
@@ -675,6 +690,15 @@ public class PProducte extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_rbCancoActionPerformed
 
+    private void txbtitiolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txbtitiolActionPerformed
+        // TODO add your handling code here:
+        String titolemp = txbtitiol.getText().toString();
+        if (!titolemp.isEmpty()) {
+
+            bntFiltre.setEnabled(true);
+
+        }
+    }//GEN-LAST:event_txbtitiolActionPerformed
 
     private void Crear() {
         CProducte rep = new CProducte();
@@ -697,7 +721,6 @@ public class PProducte extends javax.swing.JPanel {
         jPanel2.revalidate();
         jPanel2.repaint();
     }
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -731,10 +754,10 @@ public class PProducte extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JRadioButton rbAlbum;
     private javax.swing.JRadioButton rbCanco;
     private javax.swing.JTable tableInfo;
     private javax.swing.JTable tableProducte;
+    private javax.swing.JTextField txbtitiol;
     // End of variables declaration//GEN-END:variables
 }
