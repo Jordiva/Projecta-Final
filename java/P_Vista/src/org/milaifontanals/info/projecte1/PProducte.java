@@ -42,7 +42,6 @@ public class PProducte extends javax.swing.JPanel {
         BorrarBoto.setEnabled(false);
 
     }
-    private BDProducte gbd = null;
     private DefaultTableModel info = new DefaultTableModel();
 
     private void borrainfo() {
@@ -91,9 +90,9 @@ public class PProducte extends javax.swing.JPanel {
     private void Conection() {
 
         try {
-            gbd = new BDProducte();
-        } catch (GestorBDProducteJdbcException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            ConexioGeneral.getConnection();
+        } catch (GestorBDReproduccioJdbcException ex) {
+            Logger.getLogger(PProducte.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -107,7 +106,7 @@ public class PProducte extends javax.swing.JPanel {
         model.addColumn("Tipus");
 
         try {
-            List<Producte> llRep = gbd.getListProducte();
+            List<Producte> llRep = BDProducte.getListProducte();
             for (Producte p : llRep) {
                 model.addRow(new Object[]{p.getTitol(), p.getActiu(), p.getEstil(), p.getEstat()});
             }
@@ -115,7 +114,7 @@ public class PProducte extends javax.swing.JPanel {
             tableProducte.setDefaultEditor(Object.class, null);
             tableProducte.setModel(model);
             return;
-        } catch (GestorBDProducteJdbcException ex) {
+        } catch (GestorBDReproduccioJdbcException ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
 
@@ -503,7 +502,7 @@ public class PProducte extends javax.swing.JPanel {
             tableProducte.clearSelection();
             borrainfo();
         } else {
-               
+
             if (Tipus.equals("L")) {
 
                 info.setRowCount(0);

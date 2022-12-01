@@ -25,72 +25,16 @@ import java.util.logging.Logger;
 public class BDProducte {
 
     private Connection conn;
-
     private PreparedStatement qAddReproduccio;
     private PreparedStatement qUpdReproduccio;
     private PreparedStatement qDelReproduccio;
 
-    public BDProducte() throws GestorBDProducteJdbcException {
-        this("Oracle.properties");
-    }
 
-    public BDProducte(String nomFitxerPropietats) throws GestorBDProducteJdbcException {
-        try {
-            Properties props = new Properties();
-            props.load(new FileInputStream(nomFitxerPropietats));
-            String[] claus = {"url", "user", "password"};
-            String[] valors = new String[3];
-            for (int i = 0; i < claus.length; i++) {
-                valors[i] = props.getProperty(claus[i]);
-                if (valors[i] == null || valors[i].isEmpty()) {
-                    throw new GestorBDProducteJdbcException("L'arxiu " + nomFitxerPropietats + " no troba la clau " + claus[i]);
-                }
-            }
-            conn = DriverManager.getConnection(valors[0], valors[1], valors[2]);
-            conn.setAutoCommit(false);
-        } catch (IOException ex) {
-            throw new GestorBDProducteJdbcException("Problemes en recuperar l'arxiu de configuració " + nomFitxerPropietats + "\n" + ex.getMessage());
-        } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("No es pot establir la connexió.\n" + ex.getMessage());
-        }
-    }
-
-    public void tancar() throws GestorBDProducteJdbcException {
-        if (conn != null) {
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                throw new GestorBDProducteJdbcException("Error en fer rollback final.\n" + ex.getMessage());
-            }
-            try {
-                conn.close();
-            } catch (SQLException ex) {
-                throw new GestorBDProducteJdbcException("Error en tancar la connexió.\n" + ex.getMessage());
-            }
-        }
-    }
-
-    public void validarCanvis() throws GestorBDProducteJdbcException {
-        try {
-            conn.commit();
-        } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en validar els canvis: " + ex.getMessage());
-        }
-    }
-
-    public void desferCanvis() throws GestorBDProducteJdbcException {
-        try {
-            conn.rollback();
-        } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en desfer els canvis: " + ex.getMessage());
-        }
-    }
-
-    public List<Producte> getListProducte() throws GestorBDProducteJdbcException {
+    public static List<Producte> getListProducte() throws GestorBDReproduccioJdbcException {
         List<Producte> llRep = new ArrayList<Producte>();
         Statement q = null;
         try {
-            q = conn.createStatement();
+            q = ConexioGeneral.getConnection().createStatement();
             ResultSet rs = q.executeQuery("select c.cat_titol, c.cat_actiu , e.est_nom  , c.cat_tipus from cataleg c join estil e on e.est_id = c.cat_estil  ");
             while (rs.next()) {
                 llRep.add(new Producte(rs.getString("cat_titol"), rs.getString("cat_actiu"), rs.getString("est_nom"), rs.getString("cat_tipus")) {
@@ -98,13 +42,13 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
+            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
         } finally {
             if (q != null) {
                 try {
                     q.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
             }
         }
@@ -822,7 +766,6 @@ public class BDProducte {
             ps.setInt(3,idestil);
             ps.setString(4,tipus);
             ps.executeUpdate();     
-            validarCanvis();
             ps.close();
         } catch (SQLException ex) {
             throw new GestorBDProducteJdbcException("Error en intentar a fer el update .\n" + ex.getMessage());
