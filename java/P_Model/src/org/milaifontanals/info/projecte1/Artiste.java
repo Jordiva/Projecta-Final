@@ -22,6 +22,12 @@ public abstract class Artiste  {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public Artiste(String nom) {
+        this.nom = nom;
+    }
+    
+    
     
     public Artiste(long id, String nom) {
         this.id = id;
@@ -45,6 +51,12 @@ public abstract class Artiste  {
         
     } 
 
+    @Override
+    public String toString() {
+        return nom;
+    }
+
+    
 
     
     

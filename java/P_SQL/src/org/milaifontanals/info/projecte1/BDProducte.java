@@ -28,6 +28,33 @@ public class BDProducte {
     private PreparedStatement qAddReproduccio;
     private PreparedStatement qUpdReproduccio;
     private PreparedStatement qDelReproduccio;
+    
+    
+    
+    public static List<Artiste> getListInterpret()throws GestorBDExceptionTOT {
+        List<Artiste> llRep = new ArrayList<Artiste>();
+        Statement q = null;
+        try {
+            q = ConexioGeneral.getConnection().createStatement();
+            ResultSet rs = q.executeQuery("select art_nom from  artista where artista.art_tipus like 'I'");
+            while (rs.next()) {
+                llRep.add(new Artiste(rs.getString("art_nom")) {
+                });
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
+        } finally {
+            if (q != null) {
+                try {
+                    q.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+            }
+        }
+        return llRep;
+    }
 
 
     public static List<Producte> getListProducte() throws GestorBDExceptionTOT {

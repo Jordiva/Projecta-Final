@@ -179,15 +179,17 @@ public class PProducte extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tableProducte);
 
+        jPanel2.setPreferredSize(new java.awt.Dimension(488, 300));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 358, Short.MAX_VALUE)
+            .addGap(0, 488, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 226, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         CrearButo.setText("Crear");
@@ -482,7 +484,7 @@ public class PProducte extends javax.swing.JPanel {
                 .addGap(83, 83, 83))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 600));
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 650));
     }// </editor-fold>//GEN-END:initComponents
 
     private void CrearButoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearButoActionPerformed
@@ -745,7 +747,7 @@ public class PProducte extends javax.swing.JPanel {
 
     private void Crear() {
         CProducte rep = new CProducte();
-        rep.setSize(400, 300);
+        rep.setSize(488, 300);
         rep.setLocation(0, 0);
 
         jPanel2.removeAll();
