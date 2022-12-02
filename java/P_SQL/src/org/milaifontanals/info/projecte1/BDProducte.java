@@ -30,7 +30,7 @@ public class BDProducte {
     private PreparedStatement qDelReproduccio;
 
 
-    public static List<Producte> getListProducte() throws GestorBDReproduccioJdbcException {
+    public static List<Producte> getListProducte() throws GestorBDExceptionTOT {
         List<Producte> llRep = new ArrayList<Producte>();
         Statement q = null;
         try {
@@ -42,24 +42,24 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
         } finally {
             if (q != null) {
                 try {
                     q.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDReproduccioJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
             }
         }
         return llRep;
     }
 
-    public List<Producte> getTitol() throws GestorBDProducteJdbcException {
+    public static List<Producte> getTitol() throws GestorBDExceptionTOT {
         List<Producte> llRep = new ArrayList<Producte>();
         Statement q = null;
         try {
-            q = conn.createStatement();
+            q = ConexioGeneral.getConnection().createStatement();
             ResultSet rs = q.executeQuery("select cat_titol from cataleg");
             while (rs.next()) {
                 llRep.add(new Producte(rs.getString("cat_titol")) {
@@ -67,38 +67,38 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
         } finally {
             if (q != null) {
                 try {
                     q.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
             }
         }
         return llRep;
     }
 
-    public List<Estil> getListEstils() throws GestorBDProducteJdbcException {
+    public static List<Estil> getListEstils() throws GestorBDExceptionTOT {
         List<Estil> llest = new ArrayList<Estil>();
         Statement q = null;
         try {
-            q = conn.createStatement();
+            q = ConexioGeneral.getConnection().createStatement();
             ResultSet rs = q.executeQuery(" select est_nom from estil  ");
             while (rs.next()) {
                 llest.add(new Estil(rs.getString("est_nom")));
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
-            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (q != null) {
                 try {
                     q.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -106,45 +106,45 @@ public class BDProducte {
         return llest;
     }
 
-    public int getId(String nom) throws GestorBDProducteJdbcException {
+    public int getId(String nom) throws GestorBDExceptionTOT {
 
         PreparedStatement ps;
         try {
             String sql = "select cat_id from cataleg where cat_titol like ?";
-            ps = conn.prepareStatement(sql);
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setString(1, nom);
             ResultSet rs = ps.executeQuery();
             rs.next();
             // id = rs.getInt("cat_id");
             return rs.getInt("cat_id");
         } catch (SQLException e) {
-            throw new GestorBDProducteJdbcException("Error en la consulta de la llista de get id:\n" + e.getMessage());
+            throw new GestorBDExceptionTOT("Error en la consulta de la llista de get id:\n" + e.getMessage());
         }
     }
 
-    public int getIDestil(String nom) throws GestorBDProducteJdbcException {
+    public int getIDestil(String nom) throws GestorBDExceptionTOT {
 
         PreparedStatement ps;
         try {
             String sql = "select est_id from estil where  est_nom like ?";
-            ps = conn.prepareStatement(sql);
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setString(1, nom);
             ResultSet rs = ps.executeQuery();
             rs.next();
             return rs.getInt("est_id");
         } catch (SQLException e) {
-            throw new GestorBDProducteJdbcException("Error en la consulta de la llista de get id Estil:\n" + e.getMessage());
+            throw new GestorBDExceptionTOT("Error en la consulta de la llista de get id Estil:\n" + e.getMessage());
         }
     }
     
-    public List<Llista> getLlista(String nom) throws GestorBDProducteJdbcException {
+    public static List<Llista> getLlista(String nom) throws GestorBDExceptionTOT {
         List<Llista> llest = new ArrayList<Llista>();
         Statement q = null;
         PreparedStatement ps = null;
         int id = getId(nom);
         try {
             String sql = " select c.cat_titol ,l.lli_durada  from cataleg c join llista l on l.lli_id = c.cat_id where c.cat_id like ?";
-            ps = conn.prepareStatement(sql);
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -152,14 +152,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
-            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -167,14 +167,14 @@ public class BDProducte {
         return llest;
     }
 
-    public List<Canso> getCanco(String nom) throws GestorBDProducteJdbcException {
+    public static List<Canso> getCanco(String nom) throws GestorBDExceptionTOT {
         List<Canso> can = new ArrayList<Canso>();
         Statement q = null;
         PreparedStatement ps = null;
         int id = getId(nom);
         try {
             String sql = " select  ca.can_any_creacio, ar.art_nom ,ca.can_durada  from cataleg c join CANÇO ca on ca.can_id=c.cat_id join artista ar on ar.art_id= c.cat_id where c.cat_id like ?";
-            ps = conn.prepareStatement(sql);
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -182,14 +182,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
-            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -197,14 +197,14 @@ public class BDProducte {
         return can;
     }
 
-    public List<Album> getAlbum(String nom) throws GestorBDProducteJdbcException {
+    public static List<Album> getAlbum(String nom) throws GestorBDExceptionTOT {
         List<Album> alb = new ArrayList<Album>();
         Statement q = null;
         PreparedStatement ps = null;
         int id = getId(nom);
         try {
             String sql = "select c.cat_titol , a.alb_any_creacio , a.alb_durada  from cataleg c join album a on a.alb_id = c.cat_id where c.cat_id like ?";
-            ps = conn.prepareStatement(sql);
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -212,14 +212,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
-            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -227,14 +227,14 @@ public class BDProducte {
         return alb;
     }
 
-    public List<Album> getAlbumCont(String nom) throws GestorBDProducteJdbcException {
+    public static List<Album> getAlbumCont(String nom) throws GestorBDExceptionTOT {
         List<Album> alb = new ArrayList<Album>();
         Statement q = null;
         PreparedStatement ps = null;
         int id = getId(nom);
         try {
             String sql = "select c.cat_titol from cataleg c join album_contingut abc on c.cat_id=abc.alco_id_canço where abc.alco_id_album like ?";
-            ps = conn.prepareStatement(sql);
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -242,14 +242,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
-            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -257,14 +257,14 @@ public class BDProducte {
         return alb;
     }
 
-    public List<Llista> getLlistaCont(String nom) throws GestorBDProducteJdbcException {
+    public static List<Llista> getLlistaCont(String nom) throws GestorBDExceptionTOT {
         List<Llista> alb = new ArrayList<Llista>();
         Statement q = null;
         PreparedStatement ps = null;
         int id = getId(nom);
         try {
             String sql = "select c.cat_titol from cataleg c join llista_contingut ll on ll.llcon_id_catalag = c.cat_id where ll.llcon_id_llista like ?";
-            ps = conn.prepareStatement(sql);
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -272,14 +272,14 @@ public class BDProducte {
             }
             rs.close();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
-            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -287,7 +287,7 @@ public class BDProducte {
         return alb;
     }
 
-    public List<Producte> getFiltre(String titol,String C, String A, String L, String Actiu) throws GestorBDProducteJdbcException {
+    public static List<Producte> getFiltre(String titol,String C, String A, String L, String Actiu) throws GestorBDExceptionTOT {
         List<Producte> alb = new ArrayList<Producte>();
         Statement q = null;
         PreparedStatement ps = null;
@@ -313,7 +313,7 @@ public class BDProducte {
                             sql += " and cat_tipus like ? or cat_tipus like ? or cat_tipus like ? ";
 
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, C);
                             ps.setString(2, A);
                             ps.setString(3, L);
@@ -327,7 +327,7 @@ public class BDProducte {
                             sql += " and cat_tipus like ? or cat_tipus like ?";
 
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, C);
                             ps.setString(2, A);
 
@@ -339,7 +339,7 @@ public class BDProducte {
                             sql += "  cat_actiu like 'S' or  cat_actiu like 'N' ";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, C);
                             ps.setString(2, L);
 
@@ -352,7 +352,7 @@ public class BDProducte {
                             sql += "  cat_actiu like 'S' or  cat_actiu like 'N' ";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, L);
                             ps.setString(2, A);
                         }
@@ -363,7 +363,7 @@ public class BDProducte {
                             sql += "  cat_actiu like 'S' or  cat_actiu like 'N' ";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, L);
                             ps.setString(2, C);
                         }
@@ -375,7 +375,7 @@ public class BDProducte {
                             sql += "  cat_actiu like 'S' or  cat_actiu like 'N' ";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, A);
                             ps.setString(2, C);
                         }
@@ -386,7 +386,7 @@ public class BDProducte {
                             sql += "  cat_actiu like 'S' or  cat_actiu like 'N' ";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, A);
                             ps.setString(2, L);
                         }
@@ -398,7 +398,7 @@ public class BDProducte {
                             sql += "  cat_actiu like 'S' or  cat_actiu like 'N' ";
                             sql += " and cat_tipus like ? ";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, C);
 
                         }
@@ -409,7 +409,7 @@ public class BDProducte {
                             sql += "  cat_actiu like 'S' or  cat_actiu like 'N' ";
                             sql += " and cat_tipus like ? ";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, A);
                         }
                     }
@@ -419,7 +419,7 @@ public class BDProducte {
                             sql += "  cat_actiu like 'S' or  cat_actiu like 'N' ";
                             sql += " and cat_tipus like ? ";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, L);
                         }
                     }
@@ -432,7 +432,7 @@ public class BDProducte {
                             sql += " and cat_tipus like ? or cat_tipus like ? or cat_tipus like ? ";
 
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, C);
                             ps.setString(3, A);
@@ -447,7 +447,7 @@ public class BDProducte {
                             sql += " and cat_tipus like ? or cat_tipus like ?";
 
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, C);
                             ps.setString(3, A);
@@ -460,7 +460,7 @@ public class BDProducte {
                             sql += " cat_actiu like ?";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, C);
                             ps.setString(3, L);
@@ -474,7 +474,7 @@ public class BDProducte {
                             sql += " cat_actiu like ?";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, L);
                             ps.setString(3, A);
@@ -486,7 +486,7 @@ public class BDProducte {
                             sql += " cat_actiu like ?";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, L);
                             ps.setString(3, C);
@@ -499,7 +499,7 @@ public class BDProducte {
                             sql += " cat_actiu like ?";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, A);
                             ps.setString(3, C);
@@ -511,7 +511,7 @@ public class BDProducte {
                             sql += " cat_actiu like ?";
                             sql += " and cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, A);
                             ps.setString(3, L);
@@ -524,7 +524,7 @@ public class BDProducte {
                             sql += " cat_actiu like ?";
                             sql += " and cat_tipus like ? ";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, C);
 
@@ -536,7 +536,7 @@ public class BDProducte {
                             sql += " cat_actiu like ?";
                             sql += " and cat_tipus like ? ";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, A);
                         }
@@ -547,7 +547,7 @@ public class BDProducte {
                             sql += " cat_actiu like ?";
                             sql += " and cat_tipus like ? ";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, Actiu);
                             ps.setString(2, L);
                         }
@@ -576,10 +576,10 @@ public class BDProducte {
                             break;
                     }
                     if (!dos) {
-                        ps = conn.prepareStatement(sql);
+                        ps = ConexioGeneral.getConnection().prepareStatement(sql);
                         ps.setString(1, Actiu);
                     } else {
-                        ps = conn.prepareStatement(sql);
+                        ps = ConexioGeneral.getConnection().prepareStatement(sql);
                     }
                 }
                 if (C != null || A != null || L != null) {
@@ -591,7 +591,7 @@ public class BDProducte {
                             sql += "  cat_tipus like ? or cat_tipus like ? or cat_tipus like ? ";
 
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, C);
                             ps.setString(2, A);
                             ps.setString(3, L);
@@ -603,7 +603,7 @@ public class BDProducte {
                             sql += "  cat_tipus like ? or cat_tipus like ?";
 
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, C);
                             ps.setString(2, A);
 
@@ -613,7 +613,7 @@ public class BDProducte {
                         if (C != null && L != null) {
                             sql += "  cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, C);
                             ps.setString(2, L);
 
@@ -624,7 +624,7 @@ public class BDProducte {
                         if (L != null && A != null) {
                             sql += "  cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, L);
                             ps.setString(2, A);
                         }
@@ -633,7 +633,7 @@ public class BDProducte {
                         if (L != null && C != null) {
                             sql += "  cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, L);
                             ps.setString(2, C);
                         }
@@ -643,7 +643,7 @@ public class BDProducte {
                         if (A != null && C != null) {
                             sql += "  cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, A);
                             ps.setString(2, C);
                         }
@@ -652,7 +652,7 @@ public class BDProducte {
                         if (A != null && L != null) {
                             sql += "  cat_tipus like ? or cat_tipus like ?";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, A);
                             ps.setString(2, L);
                         }
@@ -662,7 +662,7 @@ public class BDProducte {
                         if (C != null) {
                             sql += "  cat_tipus like ? ";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, C);
 
                         }
@@ -671,7 +671,7 @@ public class BDProducte {
                         if (A != null) {
                             sql += "  cat_tipus like ? ";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, A);
                         }
                     }
@@ -679,7 +679,7 @@ public class BDProducte {
                         if (L != null) {
                             sql += "  cat_tipus like ? ";
                             fet = false;
-                            ps = conn.prepareStatement(sql);
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
                             ps.setString(1, L);
                         }
                     }
@@ -689,7 +689,7 @@ public class BDProducte {
                if (titol != null) {
                sql += " where ";
                sql += " cat_titol like ?";
-               ps = conn.prepareStatement(sql);
+               ps = ConexioGeneral.getConnection().prepareStatement(sql);
                ps.setString(1,"%"+titol+"%");
             }
             }
@@ -705,14 +705,14 @@ public class BDProducte {
             rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new GestorBDProducteJdbcException("Error en intentar recuperar la llista .\n" + ex.getMessage());
-            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
 
             }
@@ -728,12 +728,12 @@ public class BDProducte {
     
     
     
-    public void updateProducte(String titol , String actiu , String estil , String tipus ) throws GestorBDProducteJdbcException {
+    public static void updateProducte(String titol , String actiu , String estil , String tipus ) throws GestorBDExceptionTOT {
         Statement q = null;
         PreparedStatement ps = null;
         try {
             String sql = "update cataleg set cat_titol = ?, cat_actiu = ?, cat_estil = (select estil.est_id from estil where estil.est_nom = ?), cat_tipus = ? where cat_id = ?";
-            ps = conn.prepareStatement(sql);
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setString(1,titol);
             ps.setString(2,actiu);
             ps.setString(3,estil);
@@ -741,26 +741,26 @@ public class BDProducte {
             ps.executeUpdate();     
             ps.close();           
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar a fer el update .\n" + ex.getMessage());
-            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar a fer el update .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } finally {
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    throw new GestorBDProducteJdbcException("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
                 }
             }
         }
     }
 
-    public void createProducte(String titol , String actiu , String estil , String tipus ) throws GestorBDProducteJdbcException {
+    public static void createProducte(String titol , String actiu , String estil , String tipus ) throws GestorBDExceptionTOT {
         Statement q = null;
         PreparedStatement ps = null;
         int idestil = getIDestil(estil);
         try {
             String sql = "INSERT INTO CATALEG (CAT_TITOL,CAT_ACTIU,CAT_ESTIL,CAT_TIPUS) VALUES(?,?,?,?)";
-            ps = conn.prepareStatement(sql);
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setString(1,titol);
             ps.setString(2,actiu);
             ps.setInt(3,idestil);
@@ -768,8 +768,8 @@ public class BDProducte {
             ps.executeUpdate();     
             ps.close();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en intentar a fer el update .\n" + ex.getMessage());
-            // throw new GestorBDReproduccioJdbcException("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar a fer el update .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         } 
     }
     
