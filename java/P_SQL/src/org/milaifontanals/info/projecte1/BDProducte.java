@@ -106,7 +106,7 @@ public class BDProducte {
         return llest;
     }
 
-    public int getId(String nom) throws GestorBDExceptionTOT {
+    public static int getId(String nom) throws GestorBDExceptionTOT {
 
         PreparedStatement ps;
         try {
@@ -122,7 +122,7 @@ public class BDProducte {
         }
     }
 
-    public int getIDestil(String nom) throws GestorBDExceptionTOT {
+    public static int getIDestil(String nom) throws GestorBDExceptionTOT {
 
         PreparedStatement ps;
         try {

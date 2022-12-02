@@ -36,9 +36,9 @@ public class Principal extends javax.swing.JFrame {
     private void Conection() {
 
         try {
-            gbd = new BDReproduccio();
-        } catch (GestorBDReproduccioJdbcException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            ConexioGeneral.getConnection();
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Error a connectar "+ex.getMessage());
         }
 
     }

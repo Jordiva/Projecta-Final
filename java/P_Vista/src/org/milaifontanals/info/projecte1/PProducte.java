@@ -89,10 +89,10 @@ public class PProducte extends javax.swing.JPanel {
 
     private void Conection() {
 
-        try {
+       try {
             ConexioGeneral.getConnection();
-        } catch (GestorBDReproduccioJdbcException ex) {
-            Logger.getLogger(PProducte.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Error a connectar "+ex.getMessage());
         }
 
     }
@@ -114,7 +114,7 @@ public class PProducte extends javax.swing.JPanel {
             tableProducte.setDefaultEditor(Object.class, null);
             tableProducte.setModel(model);
             return;
-        } catch (GestorBDReproduccioJdbcException ex) {
+        } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
 
@@ -164,6 +164,8 @@ public class PProducte extends javax.swing.JPanel {
         rbCanco = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
         txbtitiol = new javax.swing.JTextField();
+        cambis = new javax.swing.JButton();
+        Rollback = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -308,49 +310,65 @@ public class PProducte extends javax.swing.JPanel {
             }
         });
 
+        cambis.setText("Validar Cambis");
+        cambis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambisActionPerformed(evt);
+            }
+        });
+
+        Rollback.setText("Rolleback");
+        Rollback.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RollbackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bntFiltre))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(DuradaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(anyviw)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(AnyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(DuradaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(anyviw)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(AnyTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel5))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(Titolbox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(Estilbox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(Actiubox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(Tiposbox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(artviw)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(ArtTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(Titolbox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Estilbox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Actiubox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Tiposbox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(artviw)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ArtTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(cambis)
+                            .addGap(26, 26, 26)
+                            .addComponent(Rollback)
+                            .addGap(223, 223, 223)
+                            .addComponent(bntFiltre))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -419,7 +437,10 @@ public class PProducte extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bntFiltre)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(bntFiltre)
+                            .addComponent(cambis)
+                            .addComponent(Rollback))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
@@ -510,8 +531,8 @@ public class PProducte extends javax.swing.JPanel {
                 tableInfo.setModel(info);
                 try {
                     List<Llista> llRep;
-                    llRep = gbd.getLlista(titol);
-                    List<Llista> ll = gbd.getLlistaCont(titol);
+                    llRep = BDProducte.getLlista(titol);
+                    List<Llista> ll = BDProducte.getLlistaCont(titol);
 
                     for (Llista p : llRep) {
                         DuradaTxt.setText("" + p.getDurada());
@@ -521,7 +542,7 @@ public class PProducte extends javax.swing.JPanel {
                     }
                     tableInfo.setModel(info);
                     return;
-                } catch (GestorBDProducteJdbcException ex) {
+                } catch (GestorBDExceptionTOT ex) {
                     ex.printStackTrace();
                     System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
@@ -535,7 +556,7 @@ public class PProducte extends javax.swing.JPanel {
 
                 try {
                     List<Canso> ll;
-                    ll = gbd.getCanco(titol);
+                    ll = BDProducte.getCanco(titol);
 
                     for (Canso p : ll) {
 
@@ -545,7 +566,7 @@ public class PProducte extends javax.swing.JPanel {
                     }
 
                     return;
-                } catch (GestorBDProducteJdbcException ex) {
+                } catch (GestorBDExceptionTOT ex) {
                     ex.printStackTrace();
                     System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
@@ -560,8 +581,8 @@ public class PProducte extends javax.swing.JPanel {
 
                 try {
                     List<Album> ll;
-                    ll = gbd.getAlbum(titol);
-                    List<Album> llRep = gbd.getAlbumCont(titol);
+                    ll = BDProducte.getAlbum(titol);
+                    List<Album> llRep = BDProducte.getAlbumCont(titol);
 
                     for (Album p : ll) {
                         AnyTxt.setText(p.getDataCreacio());
@@ -573,7 +594,7 @@ public class PProducte extends javax.swing.JPanel {
                     tableInfo.setModel(info);
 
                     return;
-                } catch (GestorBDProducteJdbcException ex) {
+                } catch (GestorBDExceptionTOT ex) {
                     ex.printStackTrace();
                     System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
@@ -627,7 +648,7 @@ public class PProducte extends javax.swing.JPanel {
         tableProducte.setModel(model);
 
         try {
-            List<Producte> llRep = gbd.getFiltre(titol, C, A, L, Actiu);
+            List<Producte> llRep = BDProducte.getFiltre(titol, C, A, L, Actiu);
             for (Producte p : llRep) {
                 model.addRow(new Object[]{p.getTitol(), p.getActiu(), p.getEstil(), p.getEstat()});
             }
@@ -635,7 +656,7 @@ public class PProducte extends javax.swing.JPanel {
             tableProducte.setDefaultEditor(Object.class, null);
             tableProducte.setModel(model);
             return;
-        } catch (GestorBDProducteJdbcException ex) {
+        } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
 
@@ -699,6 +720,29 @@ public class PProducte extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txbtitiolActionPerformed
 
+    private void RollbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RollbackActionPerformed
+        try {
+            ConexioGeneral.desferCanvis();
+            ompletabla();
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Eroor a fer el rrollback");
+        }
+        
+        
+        
+    }//GEN-LAST:event_RollbackActionPerformed
+
+    private void cambisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambisActionPerformed
+        // TODO add your handling code here:
+        try {
+            ConexioGeneral.validarCanvis();
+            ompletabla();
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Eroor a fer el rrollback");
+        }
+        
+    }//GEN-LAST:event_cambisActionPerformed
+
     private void Crear() {
         CProducte rep = new CProducte();
         rep.setSize(400, 300);
@@ -734,12 +778,14 @@ public class PProducte extends javax.swing.JPanel {
     private javax.swing.JLabel Estilbox;
     private javax.swing.JRadioButton Inactiurb;
     private javax.swing.JRadioButton RbLlista;
+    private javax.swing.JButton Rollback;
     private javax.swing.JLabel Tiposbox;
     private javax.swing.JLabel Titolbox;
     private javax.swing.JRadioButton actiurb;
     private javax.swing.JLabel anyviw;
     private javax.swing.JLabel artviw;
     private javax.swing.JButton bntFiltre;
+    private javax.swing.JButton cambis;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

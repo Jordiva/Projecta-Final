@@ -53,34 +53,34 @@ final public class ConexioGeneral {
 
     }
 
-    public static void tancar() throws GestorBDProducteJdbcException {
+    public static void tancar() throws GestorBDExceptionTOT {
         if (conn != null) {
             try {
                 conn.rollback();
             } catch (SQLException ex) {
-                throw new GestorBDProducteJdbcException("Error en fer rollback final.\n" + ex.getMessage());
+                throw new GestorBDExceptionTOT("Error en fer rollback final.\n" + ex.getMessage());
             }
             try {
                 conn.close();
             } catch (SQLException ex) {
-                throw new GestorBDProducteJdbcException("Error en tancar la connexió.\n" + ex.getMessage());
+                throw new GestorBDExceptionTOT("Error en tancar la connexió.\n" + ex.getMessage());
             }
         }
     }
 
-    public static void validarCanvis() throws GestorBDProducteJdbcException {
+    public static void validarCanvis() throws GestorBDExceptionTOT {
         try {
             conn.commit();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en validar els canvis: " + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en validar els canvis: " + ex.getMessage());
         }
     }
 
-    public static void desferCanvis() throws GestorBDProducteJdbcException {
+    public static void desferCanvis() throws GestorBDExceptionTOT {
         try {
             conn.rollback();
         } catch (SQLException ex) {
-            throw new GestorBDProducteJdbcException("Error en desfer els canvis: " + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en desfer els canvis: " + ex.getMessage());
         }
     }
 }

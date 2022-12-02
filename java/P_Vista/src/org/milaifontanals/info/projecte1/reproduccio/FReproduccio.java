@@ -11,8 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.milaifontanals.info.projecte1.BDReproduccio;
 import org.milaifontanals.info.projecte1.Clients;
+import org.milaifontanals.info.projecte1.ConexioGeneral;
 import org.milaifontanals.info.projecte1.Estil;
-import org.milaifontanals.info.projecte1.GestorBDReproduccioJdbcException;
+import org.milaifontanals.info.projecte1.GestorBDExceptionTOT;
 import org.milaifontanals.info.projecte1.Principal;
 
 /**
@@ -38,10 +39,10 @@ public class FReproduccio extends javax.swing.JPanel {
 
      private void Conection() {
 
-        try {
-            gbd = new BDReproduccio();
-        } catch (GestorBDReproduccioJdbcException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+       try {
+            ConexioGeneral.getConnection();
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Error a connectar "+ex.getMessage());
         }
 
     }
@@ -49,12 +50,12 @@ public class FReproduccio extends javax.swing.JPanel {
      
             clientsCombobox.removeAllItems();
                    try {
-                    List<Clients> llCli = gbd.getListIdCliens();
+                    List<Clients> llCli = BDReproduccio.getListIdCliens();
                     for (Clients p : llCli) {
                        clientsCombobox.addItem(p.toString());
                     }
                     return;
-                } catch (GestorBDReproduccioJdbcException ex) {
+                } catch (GestorBDExceptionTOT ex) {
                     System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
                 }
                    
@@ -70,7 +71,7 @@ public class FReproduccio extends javax.swing.JPanel {
                        estilsComboBox.addItem(p.toString());
                     }
                     return;
-                } catch (GestorBDReproduccioJdbcException ex) {
+                } catch (GestorBDExceptionTOT ex) {
                     System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
                 }
     }

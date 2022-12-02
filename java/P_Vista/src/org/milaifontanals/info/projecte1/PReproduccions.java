@@ -31,10 +31,10 @@ public class PReproduccions extends javax.swing.JPanel {
   private void Conection() {
 
         try {
-            gbd = new BDReproduccio();
-        } catch (GestorBDReproduccioJdbcException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+            ConexioGeneral.getConnection();
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Error a connectar "+ex.getMessage());
+        }
     }
     /**
  * This method is called from within the constructor to initialize the form.
@@ -199,13 +199,13 @@ public class PReproduccions extends javax.swing.JPanel {
                 
                 
         try {
-            List<Reproduccio> llRep = gbd.getListReproducio();
+            List<Reproduccio> llRep = BDReproduccio.getListReproducio();
             for (Reproduccio p : llRep) {
               model.addRow(new Object[]{p.getIdCli(), p.getDate(),p.getIdProd()});
             }
             tableReproduccio.setModel(model);
             return;
-        } catch (GestorBDReproduccioJdbcException ex) {
+        } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
         

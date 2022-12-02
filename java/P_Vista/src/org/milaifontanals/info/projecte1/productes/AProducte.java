@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.milaifontanals.info.projecte1.BDProducte;
+import org.milaifontanals.info.projecte1.ConexioGeneral;
 import org.milaifontanals.info.projecte1.Estil;
-import org.milaifontanals.info.projecte1.GestorBDProducteJdbcException;
+import org.milaifontanals.info.projecte1.GestorBDExceptionTOT;
 import org.milaifontanals.info.projecte1.PProducte;
 import org.milaifontanals.info.projecte1.Principal;
 import org.milaifontanals.info.projecte1.reproduccio.*;
@@ -53,9 +54,9 @@ public class AProducte extends javax.swing.JPanel {
     private void Conection() {
 
         try {
-            gbd = new BDProducte();
-        } catch (GestorBDProducteJdbcException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            ConexioGeneral.getConnection();
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Error a connectar "+ex.getMessage());
         }
     }
 
@@ -63,13 +64,13 @@ public class AProducte extends javax.swing.JPanel {
 
         estilsComboBox.removeAllItems();
         try {
-            List<Estil> llEs = gbd.getListEstils();
+            List<Estil> llEs = BDProducte.getListEstils();
             for (Estil p : llEs) {
                 estilsComboBox.addItem(p.toString());
             }
 
             return;
-        } catch (GestorBDProducteJdbcException ex) {
+        } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
     }

@@ -13,8 +13,9 @@ import javax.swing.JOptionPane;
 import org.milaifontanals.info.projecte1.BDProducte;
 import org.milaifontanals.info.projecte1.BDReproduccio;
 import org.milaifontanals.info.projecte1.Clients;
+import org.milaifontanals.info.projecte1.ConexioGeneral;
 import org.milaifontanals.info.projecte1.Estil;
-import org.milaifontanals.info.projecte1.GestorBDProducteJdbcException;
+import org.milaifontanals.info.projecte1.GestorBDExceptionTOT;
 import org.milaifontanals.info.projecte1.Principal;
 
 /**
@@ -32,37 +33,32 @@ public class CProducte extends javax.swing.JPanel {
         OmpleEstils();
     }
 
-    
-           BDProducte gbd = null;
+    BDProducte gbd = null;
 
-     private void Conection() {
+    private void Conection() {
 
         try {
-            gbd = new BDProducte();
-        } catch (GestorBDProducteJdbcException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            ConexioGeneral.getConnection();
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Error a connectar " + ex.getMessage());
         }
     }
-    
-    
-    private void OmpleEstils(){
-        
+
+    private void OmpleEstils() {
+
         estilsComboBox.removeAllItems();
-                   try {
-                    List<Estil> llEs = gbd.getListEstils();
-                    for (Estil p : llEs) {
-                       estilsComboBox.addItem(p.toString());
-                    }
-                    
-                    return;
-                } catch (GestorBDProducteJdbcException ex) {
-                    System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
-                }
+        try {
+            List<Estil> llEs = BDProducte.getListEstils();
+            for (Estil p : llEs) {
+                estilsComboBox.addItem(p.toString());
+            }
+
+            return;
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+        }
     }
-    
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,15 +75,16 @@ public class CProducte extends javax.swing.JPanel {
         Titoltxb = new javax.swing.JTextField();
         Crear = new javax.swing.JButton();
         ActiuComboxob = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        Tipus_combo = new javax.swing.JComboBox<>();
+        btnAlbum = new javax.swing.JRadioButton();
+        btnllista = new javax.swing.JRadioButton();
+        btnCanco = new javax.swing.JRadioButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Titol");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 39, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
 
         estilsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Llista", "Canço", "Artista" }));
         estilsComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -95,22 +92,22 @@ public class CProducte extends javax.swing.JPanel {
                 estilsComboBoxActionPerformed(evt);
             }
         });
-        add(estilsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 94, -1));
+        add(estilsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 94, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Actiu");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Estil");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, -1));
 
         Titoltxb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TitoltxbActionPerformed(evt);
             }
         });
-        add(Titoltxb, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 94, -1));
+        add(Titoltxb, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 94, -1));
 
         Crear.setText("Crear");
         Crear.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -118,7 +115,12 @@ public class CProducte extends javax.swing.JPanel {
                 CrearMouseClicked(evt);
             }
         });
-        add(Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
+        Crear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearActionPerformed(evt);
+            }
+        });
+        add(Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, -1, -1));
 
         ActiuComboxob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "S" }));
         ActiuComboxob.addActionListener(new java.awt.event.ActionListener() {
@@ -126,19 +128,31 @@ public class CProducte extends javax.swing.JPanel {
                 ActiuComboxobActionPerformed(evt);
             }
         });
-        add(ActiuComboxob, new org.netbeans.lib.awtextra.AbsoluteConstraints(178, 77, 94, -1));
+        add(ActiuComboxob, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 94, -1));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Tipus ");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
-
-        Tipus_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Llista", "Canço", "Artista" }));
-        Tipus_combo.addActionListener(new java.awt.event.ActionListener() {
+        btnAlbum.setText("Album");
+        btnAlbum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Tipus_comboActionPerformed(evt);
+                btnAlbumActionPerformed(evt);
             }
         });
-        add(Tipus_combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 94, -1));
+        add(btnAlbum, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+
+        btnllista.setText("Llista");
+        btnllista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnllistaActionPerformed(evt);
+            }
+        });
+        add(btnllista, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+
+        btnCanco.setText("Canço");
+        btnCanco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancoActionPerformed(evt);
+            }
+        });
+        add(btnCanco, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void estilsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estilsComboBoxActionPerformed
@@ -153,62 +167,88 @@ public class CProducte extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_ActiuComboxobActionPerformed
 
-    private void Tipus_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tipus_comboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Tipus_comboActionPerformed
-
     private void CrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearMouseClicked
         // TODO add your handling code here:
-         String titol = Titoltxb.getText();
+        String titol = Titoltxb.getText();
         String actiu = ActiuComboxob.getSelectedItem().toString();
-        String tipos = Tipus_combo.getSelectedItem().toString();
         String estil = estilsComboBox.getSelectedItem().toString();
-        
-       // System.out.println(titol);
-        
-        
+
+        // System.out.println(titol);
         //System.out.println(tipos);
         String sort = null;
-        if (tipos.equals("Canço")) {
-            sort = "C";
-        }
-        if (tipos.equals("Artista")) {
+        if (btnAlbum.isSelected()) {
             sort = "A";
+            System.out.println("A");
         }
-        if (tipos.equals("Llista")) {
-            sort = "L";
-        }
-        
+        if (btnCanco.isSelected()) {
+            sort = "C";
+            System.out.println("C");
 
-        
+        }
+        if (btnllista.isSelected()) {
+            sort = "L";
+            System.out.println("L");
+
+        }
+
         if (titol.equals("")) {
             System.out.println("Tens de ficar un Titol");
+        } else {
+            try {
+                gbd.createProducte(titol, actiu, estil, sort);
+            } catch (GestorBDExceptionTOT ex) {
+                System.out.println("Error al crear el producte " + ex.getMessage());
+            }
+            System.out.println("fi");
+
         }
-        else{
-             try {
-                 gbd.createProducte(titol,actiu,estil,sort);
-             } catch (GestorBDProducteJdbcException ex) {
-                 System.out.println("Error al crear el producte "+ex.getMessage());
-             }
-             System.out.println("fi");
-             
-        }
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_CrearMouseClicked
+
+    private void btnAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumActionPerformed
+        // TODO add your handling code here:
+        btnAlbum.setSelected(true);
+        btnllista.setSelected(false);
+        btnCanco.setSelected(false);
+                    System.out.println("A");
+
+
+    }//GEN-LAST:event_btnAlbumActionPerformed
+
+    private void btnllistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnllistaActionPerformed
+        // TODO add your handling code here:
+            System.out.println("L");
+
+        btnAlbum.setSelected(false);
+        btnllista.setSelected(true);
+        btnCanco.setSelected(false);
+    }//GEN-LAST:event_btnllistaActionPerformed
+
+    private void btnCancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancoActionPerformed
+        // TODO add your handling code here:
+                    System.out.println("C");
+
+        btnAlbum.setSelected(false);
+        btnllista.setSelected(false);
+        btnCanco.setSelected(true);
+    }//GEN-LAST:event_btnCancoActionPerformed
+
+    private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CrearActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ActiuComboxob;
     private javax.swing.JButton Crear;
-    private javax.swing.JComboBox<String> Tipus_combo;
     private javax.swing.JTextField Titoltxb;
+    private javax.swing.JRadioButton btnAlbum;
+    private javax.swing.JRadioButton btnCanco;
+    private javax.swing.JRadioButton btnllista;
     private javax.swing.JComboBox<String> estilsComboBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }
