@@ -19,19 +19,13 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
-        private BDReproduccio gbd = null;
-
     public Principal() {
         
         initComponents();
         Conection();
     }
 
-    public void setConection(BDReproduccio cbd) {
-
-        cbd = gbd;
-
-    }
+    
 
     private void Conection() {
 

@@ -338,10 +338,21 @@ public class BDProducte {
             boolean dos = false;
             boolean tipus = false;
             boolean fet = true;
+            boolean individual = false;
 
+            
 
-
-
+      
+            
+            
+            //*********************************************
+                            //INDIVIDIAL
+            //*********************************************
+            if(titol != null && !titol.equals("")){
+                sql += "where c.cat_titol like ?";
+                ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                ps.setString(1,"%"+titol+"%");
+            }
             if (Actiu != null) {
                 switch (Actiu) {
                     case "dos":
@@ -364,7 +375,109 @@ public class BDProducte {
                 } else {
                     ps = ConexioGeneral.getConnection().prepareStatement(sql);
                 }
-        
+            }
+             if (C != null || A != null || L != null) {
+
+                    sql += " where ";
+
+                    if (fet != false) {
+                        if (C != null && A != null && L != null) {
+                            sql += "  cat_tipus like ? or cat_tipus like ? or cat_tipus like ? ";
+
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, C);
+                            ps.setString(2, A);
+                            ps.setString(3, L);
+
+                        }
+                    }
+                    if (fet != false) {
+                        if (C != null && A != null) {
+                            sql += "  cat_tipus like ? or cat_tipus like ?";
+
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, C);
+                            ps.setString(2, A);
+
+                        }
+                    }
+                    if (fet != false) {
+                        if (C != null && L != null) {
+                            sql += "  cat_tipus like ? or cat_tipus like ?";
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, C);
+                            ps.setString(2, L);
+
+                        }
+                    }
+
+                    if (fet != false) {
+                        if (L != null && A != null) {
+                            sql += "  cat_tipus like ? or cat_tipus like ?";
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, L);
+                            ps.setString(2, A);
+                        }
+                    }
+                    if (fet != false) {
+                        if (L != null && C != null) {
+                            sql += "  cat_tipus like ? or cat_tipus like ?";
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, L);
+                            ps.setString(2, C);
+                        }
+                    }
+
+                    if (fet != false) {
+                        if (A != null && C != null) {
+                            sql += "  cat_tipus like ? or cat_tipus like ?";
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, A);
+                            ps.setString(2, C);
+                        }
+                    }
+                    if (fet != false) {
+                        if (A != null && L != null) {
+                            sql += "  cat_tipus like ? or cat_tipus like ?";
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, A);
+                            ps.setString(2, L);
+                        }
+                    }
+
+                    if (fet != false) {
+                        if (C != null) {
+                            sql += "  cat_tipus like ? ";
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, C);
+
+                        }
+                    }
+                    if (fet != false) {
+                        if (A != null) {
+                            sql += "  cat_tipus like ? ";
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, A);
+                        }
+                    }
+                    if (fet != false) {
+                        if (L != null) {
+                            sql += "  cat_tipus like ? ";
+                            fet = false;
+                            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+                            ps.setString(1, L);
+                        }
+                    }
+             }
 
 
             

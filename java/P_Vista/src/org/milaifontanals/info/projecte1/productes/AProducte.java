@@ -49,7 +49,6 @@ public class AProducte extends javax.swing.JPanel {
         System.out.println(estil);
     }
 
-    BDProducte gbd = null;
 
     private void Conection() {
 
