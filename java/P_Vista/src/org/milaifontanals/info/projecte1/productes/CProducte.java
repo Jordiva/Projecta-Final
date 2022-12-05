@@ -5,6 +5,9 @@
  */
 package org.milaifontanals.info.projecte1.productes;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import org.milaifontanals.info.projecte1.reproduccio.*;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +21,7 @@ import org.milaifontanals.info.projecte1.ConexioGeneral;
 import org.milaifontanals.info.projecte1.Estil;
 import org.milaifontanals.info.projecte1.GestorBDExceptionTOT;
 import org.milaifontanals.info.projecte1.Principal;
+import org.milaifontanals.info.projecte1.TextPrompt;
 
 /**
  *
@@ -32,7 +36,13 @@ public class CProducte extends javax.swing.JPanel {
         initComponents();
         Conection();
         OmpleEstils();
-        
+        ompleArtista();
+        btnCanco.setSelected(true);
+        TextPrompt pruba = new TextPrompt("YY-MM-DD", txbData);
+        CrearCanço.setEnabled(true);
+        CrearAlbum.setEnabled(false);
+        CrearLlista.setEnabled(false);
+
     }
 
     BDProducte gbd = null;
@@ -45,10 +55,10 @@ public class CProducte extends javax.swing.JPanel {
             System.out.println("Error a connectar " + ex.getMessage());
         }
     }
-    
-    private void ompleArtista(){
+
+    private void ompleArtista() {
         cmbInterprets.removeAllItems();
-        
+
         try {
             List<Artiste> llEs = BDProducte.getListInterpret();
             for (Artiste p : llEs) {
@@ -58,9 +68,7 @@ public class CProducte extends javax.swing.JPanel {
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
-        
-        
-        
+
     }
 
     private void OmpleEstils() {
@@ -98,11 +106,14 @@ public class CProducte extends javax.swing.JPanel {
         btnllista = new javax.swing.JRadioButton();
         btnCanco = new javax.swing.JRadioButton();
         txtDate = new javax.swing.JLabel();
-        Titoltxb1 = new javax.swing.JTextField();
+        Titoltxb = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txbDurda = new javax.swing.JTextField();
         cmbInterprets = new javax.swing.JComboBox<>();
         txtInterpret = new javax.swing.JLabel();
+        CrearAlbum = new javax.swing.JButton();
+        CrearCanço = new javax.swing.JButton();
+        CrearLlista = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -134,7 +145,7 @@ public class CProducte extends javax.swing.JPanel {
         });
         add(txbData, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 94, -1));
 
-        Crear.setText("Crear");
+        Crear.setText("Crear Producte");
         Crear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CrearMouseClicked(evt);
@@ -145,7 +156,7 @@ public class CProducte extends javax.swing.JPanel {
                 CrearActionPerformed(evt);
             }
         });
-        add(Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 240, -1, -1));
+        add(Crear, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
 
         ActiuComboxob.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "N", "S" }));
         ActiuComboxob.addActionListener(new java.awt.event.ActionListener() {
@@ -183,17 +194,23 @@ public class CProducte extends javax.swing.JPanel {
         txtDate.setText("Data ");
         add(txtDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, -1, 20));
 
-        Titoltxb1.addActionListener(new java.awt.event.ActionListener() {
+        Titoltxb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Titoltxb1ActionPerformed(evt);
+                TitoltxbActionPerformed(evt);
             }
         });
-        add(Titoltxb1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 94, -1));
+        add(Titoltxb, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 94, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Estil");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, 20));
 
+        txbDurda.setToolTipText("");
+        txbDurda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txbDurdaMouseClicked(evt);
+            }
+        });
         txbDurda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txbDurdaActionPerformed(evt);
@@ -212,6 +229,45 @@ public class CProducte extends javax.swing.JPanel {
         txtInterpret.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtInterpret.setText("Interpret");
         add(txtInterpret, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, 20));
+
+        CrearAlbum.setText("Crear Album");
+        CrearAlbum.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CrearAlbumMouseClicked(evt);
+            }
+        });
+        CrearAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearAlbumActionPerformed(evt);
+            }
+        });
+        add(CrearAlbum, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, -1, -1));
+
+        CrearCanço.setText("Crear Canço");
+        CrearCanço.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CrearCançoMouseClicked(evt);
+            }
+        });
+        CrearCanço.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearCançoActionPerformed(evt);
+            }
+        });
+        add(CrearCanço, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, -1, -1));
+
+        CrearLlista.setText("Crear Llista");
+        CrearLlista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CrearLlistaMouseClicked(evt);
+            }
+        });
+        CrearLlista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearLlistaActionPerformed(evt);
+            }
+        });
+        add(CrearLlista, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void estilsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estilsComboBoxActionPerformed
@@ -228,13 +284,92 @@ public class CProducte extends javax.swing.JPanel {
 
     private void CrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearMouseClicked
         // TODO add your handling code here:
-        String titol = txbData.getText();
-        String actiu = ActiuComboxob.getSelectedItem().toString();
-        String estil = estilsComboBox.getSelectedItem().toString();
+
+
+    }//GEN-LAST:event_CrearMouseClicked
+
+    private void btnAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumActionPerformed
+        // TODO add your handling code here:
+        btnAlbum.setSelected(true);
+        btnllista.setSelected(false);
+        btnCanco.setSelected(false);
+        System.out.println("A");
+        txbData.setVisible(true);
+        txtDurada.setVisible(true);
+        txtDate.setVisible(true);
+        txbDurda.setVisible(true);
+        txtInterpret.setVisible(false);
+        cmbInterprets.setVisible(false);
+
+        CrearCanço.setEnabled(false);
+        CrearAlbum.setEnabled(true);
+        CrearLlista.setEnabled(false);
+
+    }//GEN-LAST:event_btnAlbumActionPerformed
+
+    private void btnllistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnllistaActionPerformed
+        // TODO add your handling code here:
+        System.out.println("L");
+
+        btnAlbum.setSelected(false);
+        btnllista.setSelected(true);
+        btnCanco.setSelected(false);
+
+        CrearCanço.setEnabled(false);
+        CrearAlbum.setEnabled(false);
+        CrearLlista.setEnabled(true);
+
+        txbData.setVisible(false);
+        txtDurada.setVisible(true);
+        txtDate.setVisible(false);
+        txbDurda.setVisible(true);
+        txtInterpret.setVisible(false);
+        cmbInterprets.setVisible(false);
+    }//GEN-LAST:event_btnllistaActionPerformed
+
+    private void btnCancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancoActionPerformed
+        // TODO add your handling code here:
+        System.out.println("C");
+
+        ompleArtista();
+
+        CrearCanço.setEnabled(true);
+        CrearAlbum.setEnabled(false);
+        CrearLlista.setEnabled(false);
+
+        btnAlbum.setSelected(false);
+        btnllista.setSelected(false);
+        btnCanco.setSelected(true);
+
+        txbData.setVisible(true);
+        txtDurada.setVisible(true);
+        txtDate.setVisible(true);
+        txbDurda.setVisible(true);
+        txtInterpret.setVisible(true);
+        cmbInterprets.setVisible(true);
+
+
+    }//GEN-LAST:event_btnCancoActionPerformed
+    String titol;
+    String actiu;
+    String estil;
+    String date;
+    String duradaS;
+    int durada;
+    String sort = null;
+    String interpret;
+
+    private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
+        // TODO add your handling code here:
+
+        titol = Titoltxb.getText();
+
+        actiu = ActiuComboxob.getSelectedItem().toString();
+
+        estil = estilsComboBox.getSelectedItem().toString();
 
         // System.out.println(titol);
         //System.out.println(tipos);
-        String sort = null;
         if (btnAlbum.isSelected()) {
             sort = "A";
             System.out.println("A");
@@ -251,83 +386,20 @@ public class CProducte extends javax.swing.JPanel {
         }
 
         if (titol.equals("")) {
-            System.out.println("Tens de ficar un Titol");
+            JOptionPane.showMessageDialog(null, "Tens de ficar un titol", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                gbd.createProducte(titol, actiu, estil, sort);
+                BDProducte.createProducte(titol, actiu, estil, sort);
+                // ConexioGeneral.validarCanvis();
             } catch (GestorBDExceptionTOT ex) {
                 System.out.println("Error al crear el producte " + ex.getMessage());
             }
-            System.out.println("fi");
-
         }
-
-
-    }//GEN-LAST:event_CrearMouseClicked
-
-    private void btnAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumActionPerformed
-        // TODO add your handling code here:
-        btnAlbum.setSelected(true);
-        btnllista.setSelected(false);
-        btnCanco.setSelected(false);
-                    System.out.println("A");
-        txbData.setVisible(false);
-        txtDurada.setVisible(false);
-        txtDate.setVisible(false);
-        txbDurda.setVisible(false);
-        txtInterpret.setVisible(false);
-        cmbInterprets.setVisible(false);
-
-
-    }//GEN-LAST:event_btnAlbumActionPerformed
-
-    private void btnllistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnllistaActionPerformed
-        // TODO add your handling code here:
-            System.out.println("L");
-
-        btnAlbum.setSelected(false);
-        btnllista.setSelected(true);
-        btnCanco.setSelected(false);
-        
-        txbData.setVisible(false);
-        txtDurada.setVisible(false);
-        txtDate.setVisible(false);
-        txbDurda.setVisible(false);
-        txtInterpret.setVisible(false);
-        cmbInterprets.setVisible(false);
-    }//GEN-LAST:event_btnllistaActionPerformed
-
-    private void btnCancoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancoActionPerformed
-        // TODO add your handling code here:
-        System.out.println("C");
-        
-        ompleArtista();
-        
-        btnAlbum.setSelected(false);
-        btnllista.setSelected(false);
-        btnCanco.setSelected(true);
-        
-        
-        
-        txbData.setVisible(true);
-        txtDurada.setVisible(true);
-        txtDate.setVisible(true);
-        txbDurda.setVisible(true);
-        txtInterpret.setVisible(true);
-        cmbInterprets.setVisible(true);
-        
-        
-        
-        
-    }//GEN-LAST:event_btnCancoActionPerformed
-
-    private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_CrearActionPerformed
 
-    private void Titoltxb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Titoltxb1ActionPerformed
+    private void TitoltxbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TitoltxbActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Titoltxb1ActionPerformed
+    }//GEN-LAST:event_TitoltxbActionPerformed
 
     private void txbDurdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txbDurdaActionPerformed
         // TODO add your handling code here:
@@ -337,11 +409,129 @@ public class CProducte extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbInterpretsActionPerformed
 
+    private void txbDurdaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txbDurdaMouseClicked
+        // TODO add your handling code here
+
+    }//GEN-LAST:event_txbDurdaMouseClicked
+
+    private void CrearAlbumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearAlbumMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CrearAlbumMouseClicked
+
+    private void CrearAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearAlbumActionPerformed
+        // TODO add your handling code here:
+        
+        
+        date = null;
+        date = txbData.getText().toString();
+        duradaS = txbDurda.getText().toString();
+        interpret = cmbInterprets.getSelectedItem().toString();
+
+        boolean fer = true;
+        if (date.equals("")) {
+            JOptionPane.showMessageDialog(null, "Tens de ficar una Data", "Error", JOptionPane.ERROR_MESSAGE);
+            fer = false;
+        }
+        if (duradaS.equals("")) {
+            JOptionPane.showMessageDialog(null, "Tens de ficar un durada", "Error", JOptionPane.ERROR_MESSAGE);
+            fer = false;
+
+        } else {
+            durada = Integer.parseInt(duradaS);
+       
+        
+        }      
+        if (fer) {
+            if (sort.equals("A")) {
+
+                try {
+                    BDProducte.createProducteAlbum(date, durada, titol);
+                } catch (GestorBDExceptionTOT ex) {
+                    System.out.println("Error al crear el producte Canço " + ex.getMessage());
+                }
+            }
+        }
+    }//GEN-LAST:event_CrearAlbumActionPerformed
+
+    private void CrearCançoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearCançoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CrearCançoMouseClicked
+
+    private void CrearCançoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearCançoActionPerformed
+        // TODO add your handling code here:
+
+        date = null;
+        date = txbData.getText().toString();
+        duradaS = txbDurda.getText().toString();
+        interpret = cmbInterprets.getSelectedItem().toString();
+
+        boolean fer = true;
+        if (date.equals("")) {
+            JOptionPane.showMessageDialog(null, "Tens de ficar una Data", "Error", JOptionPane.ERROR_MESSAGE);
+            fer = false;
+        }
+        if (duradaS.equals("")) {
+            JOptionPane.showMessageDialog(null, "Tens de ficar un durada", "Error", JOptionPane.ERROR_MESSAGE);
+            fer = false;
+
+        } else {
+            durada = Integer.parseInt(duradaS);
+
+        }
+        if (fer) {
+            if (sort.equals("C")) {
+
+                try {
+                    BDProducte.createProducteCanço(date, durada, titol, interpret);
+                } catch (GestorBDExceptionTOT ex) {
+                    System.out.println("Error al crear el producte Canço " + ex.getMessage());
+                }
+            }
+        }
+
+    }//GEN-LAST:event_CrearCançoActionPerformed
+
+    private void CrearLlistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearLlistaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CrearLlistaMouseClicked
+
+    private void CrearLlistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearLlistaActionPerformed
+        // TODO add your handling code here:
+        date = null;
+        date = txbData.getText().toString();
+        duradaS = txbDurda.getText().toString();
+        interpret = cmbInterprets.getSelectedItem().toString();
+
+        boolean fer = true;
+
+        if (duradaS.equals("")) {
+            JOptionPane.showMessageDialog(null, "Tens de ficar un durada", "Error", JOptionPane.ERROR_MESSAGE);
+            fer = false;
+        } else {
+            durada = Integer.parseInt(duradaS);
+        }
+        if (fer) {
+            if (sort.equals("L")) {
+
+                try {
+                    BDProducte.createProducteLlista(durada,titol);
+                } catch (GestorBDExceptionTOT ex) {
+                    System.out.println("Error al crear el producte Canço " + ex.getMessage());
+                }
+            }
+        }
+
+
+    }//GEN-LAST:event_CrearLlistaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ActiuComboxob;
     private javax.swing.JButton Crear;
-    private javax.swing.JTextField Titoltxb1;
+    private javax.swing.JButton CrearAlbum;
+    private javax.swing.JButton CrearCanço;
+    private javax.swing.JButton CrearLlista;
+    private javax.swing.JTextField Titoltxb;
     private javax.swing.JRadioButton btnAlbum;
     private javax.swing.JRadioButton btnCanco;
     private javax.swing.JRadioButton btnllista;

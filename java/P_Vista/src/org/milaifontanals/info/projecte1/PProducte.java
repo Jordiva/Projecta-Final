@@ -36,7 +36,7 @@ public class PProducte extends javax.swing.JPanel {
         Conection();
         borrainfo();
         ompletabla();
-        informacio();
+//        informacio();
         bntFiltre.setEnabled(false);
         ActualitzaBoto.setEnabled(false);
         BorrarBoto.setEnabled(false);
@@ -57,42 +57,41 @@ public class PProducte extends javax.swing.JPanel {
 
     }
 
-    public void informacio() {
-
-        ListSelectionModel listSelectionModel = tableProducte.getSelectionModel();
-        listSelectionModel.addListSelectionListener(
-                new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent arg0) {
-
-                Titolbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString());
-                Estilbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 1).toString());
-                Actiubox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString());
-
-                String tip = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
-
-                if (tip.equals("L")) {
-                    Tiposbox.setText("Llista");
-                }
-                if (tip.equals("C")) {
-                    Tiposbox.setText("Canço");
-                }
-                if (tip.equals("A")) {
-                    Tiposbox.setText("Album");
-                }
-
-            }
-
-        });
-
-    }
-
+//    public void informacio() {
+//
+//        ListSelectionModel listSelectionModel = tableProducte.getSelectionModel();
+//        listSelectionModel.addListSelectionListener(
+//                new ListSelectionListener() {
+//            @Override
+//            public void valueChanged(ListSelectionEvent arg0) {
+//
+//                Titolbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString());
+//                Estilbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 1).toString());
+//                Actiubox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString());
+//
+//                String tip = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
+//
+//                if (tip.equals("L")) {
+//                    Tiposbox.setText("Llista");
+//                }
+//                if (tip.equals("C")) {
+//                    Tiposbox.setText("Canço");
+//                }
+//                if (tip.equals("A")) {
+//                    Tiposbox.setText("Album");
+//                }
+//
+//            }
+//
+//        });
+//
+//    }
     private void Conection() {
 
-       try {
+        try {
             ConexioGeneral.getConnection();
         } catch (GestorBDExceptionTOT ex) {
-            System.out.println("Error a connectar "+ex.getMessage());
+            System.out.println("Error a connectar " + ex.getMessage());
         }
 
     }
@@ -104,6 +103,23 @@ public class PProducte extends javax.swing.JPanel {
         model.addColumn("Actiu");
         model.addColumn("Estil");
         model.addColumn("Tipus");
+
+        try {
+            List<Producte> llRep = BDProducte.getListProducte();
+            for (Producte p : llRep) {
+                model.addRow(new Object[]{p.getTitol(), p.getActiu(), p.getEstil(), p.getEstat()});
+            }
+            tableInfo.setDefaultEditor(Object.class, null);
+            tableProducte.setDefaultEditor(Object.class, null);
+            tableProducte.setModel(model);
+            return;
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+        }
+
+    }
+
+    private void ompletablaInformcaio() {
 
         try {
             List<Producte> llRep = BDProducte.getListProducte();
@@ -498,9 +514,60 @@ public class PProducte extends javax.swing.JPanel {
         // TODO add your handling code here:
         Actualitza();
     }//GEN-LAST:event_ActualitzaBotoActionPerformed
+    String titol;
 
     private void BorrarBotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarBotoActionPerformed
         // TODO add your handling code here:
+
+        int i = JOptionPane.showConfirmDialog(null, "Estas Segur de borra ?");
+        String opcions = Tiposbox.getText().toString();
+
+        if (i == 0) {
+            System.out.println("0");
+
+            if (opcions.equals("Canço")) {
+                try {
+                    BDProducte.borraCanço(titol);
+                } catch (GestorBDExceptionTOT ex) {
+                    JOptionPane.showMessageDialog(null, "No sa pugut borrar Canço te contingut", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            if (opcions.equals("Album") ) {
+                 try {
+                    BDProducte.borraAlbum(titol);
+                } catch (GestorBDExceptionTOT ex) {
+                    JOptionPane.showMessageDialog(null, "No sa pugut borrar Album te continugt", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+            if (opcions.equals("Llista") ) {
+                
+                 try {
+                    BDProducte.borraLlista(titol);
+                } catch (GestorBDExceptionTOT ex) {
+                    JOptionPane.showMessageDialog(null, "No sa pugut borrar Llista te contingut", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            
+            try {
+                BDProducte.borra(titol);
+                borrainfo();
+
+                // model.removeRow(tableProducte.getSelectedRow());
+                //tableProducte.setModel(model);
+            } catch (GestorBDExceptionTOT ex) {
+                    JOptionPane.showMessageDialog(null, "No sa pugut borrar", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+            
+           
+        }
+        if (i == 1) {
+            System.out.println("1");
+        }
+        if (i == 2) {
+            System.out.println("3");
+        }
 
 
     }//GEN-LAST:event_BorrarBotoActionPerformed
@@ -509,7 +576,7 @@ public class PProducte extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         String Tipus = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
-        String titol = tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString();
+        titol = tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString();
 
         ActualitzaBoto.setEnabled(true);
         BorrarBoto.setEnabled(true);
@@ -519,6 +586,22 @@ public class PProducte extends javax.swing.JPanel {
         anyviw.setVisible(false);
         AnyTxt.setText("");
         ArtTxt.setText("");
+
+        Titolbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString());
+        Estilbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 1).toString());
+        Actiubox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString());
+
+        String tip = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
+
+        if (tip.equals("L")) {
+            Tiposbox.setText("Llista");
+        }
+        if (tip.equals("C")) {
+            Tiposbox.setText("Canço");
+        }
+        if (tip.equals("A")) {
+            Tiposbox.setText("Album");
+        }
 
         if (tableProducte.getSelectedRowCount() > 1) {
             JOptionPane.showMessageDialog(null, "No Pots Selecionar mes deuna fila a la vegada", "Error", JOptionPane.ERROR_MESSAGE);
@@ -724,25 +807,32 @@ public class PProducte extends javax.swing.JPanel {
 
     private void RollbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RollbackActionPerformed
         try {
+            model.setColumnCount(0);
+
+            model.setRowCount(0);
+            tableProducte.setModel(model);
             ConexioGeneral.desferCanvis();
             ompletabla();
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Eroor a fer el rrollback");
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_RollbackActionPerformed
 
     private void cambisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambisActionPerformed
         // TODO add your handling code here:
         try {
+            model.setColumnCount(0);
+            model.setRowCount(0);
+            tableProducte.setModel(model);
             ConexioGeneral.validarCanvis();
             ompletabla();
+
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Eroor a fer el rrollback");
         }
-        
+
     }//GEN-LAST:event_cambisActionPerformed
 
     private void Crear() {
