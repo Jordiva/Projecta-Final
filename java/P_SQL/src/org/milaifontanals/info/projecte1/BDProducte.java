@@ -1301,7 +1301,7 @@ public class BDProducte {
         PreparedStatement ps = null;
         int id = getId(titol);        
         try {
-            String sql = "INSERT INTO  VALUES (?,DATE '"+date+"',?)";
+            String sql = "INSERT INTO Album VALUES (?,DATE '"+date+"',?)";
             ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ps.setInt(2, durada);
@@ -1427,7 +1427,23 @@ public class BDProducte {
             // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         }
     }
-     
+     public static void Insertar_producteAlbum(String Album ,String prod) throws GestorBDExceptionTOT {
+        Statement q = null;
+        PreparedStatement ps = null;
+        int idllista = getId(Album);
+        int idcan = getId(prod);
+        try {
+            String sql = "insert INTO album_contingut (alco_id_album,alco_id_canço) values (?,?)";
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+            ps.setInt(1, idllista);
+            ps.setInt(2, idcan);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            throw new GestorBDExceptionTOT("Error en intentar a fer la creacio de canço .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        }
+    }
      
  
 
@@ -1439,6 +1455,32 @@ public class BDProducte {
         try {
             q = ConexioGeneral.getConnection().createStatement();
             ResultSet rs = q.executeQuery("select c.cat_titol from cataleg c where c.cat_tipus like 'C' or c.cat_tipus like 'A'");
+            while (rs.next()) {
+                llRep.add(new Producte(rs.getString("cat_titol")) {
+                });
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
+        } finally {
+            if (q != null) {
+                try {
+                    q.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+            }
+        }
+        return llRep;
+    }
+    
+    
+    public static List<Producte> getListAlbumOmpli() throws GestorBDExceptionTOT {
+        List<Producte> llRep = new ArrayList<Producte>();
+        Statement q = null;
+        try {
+            q = ConexioGeneral.getConnection().createStatement();
+            ResultSet rs = q.executeQuery("select * from cataleg where  cat_tipus not like 'L' and cat_tipus not like 'A' and cat_id not in (select c.cat_id from cataleg c join album_contingut a on a.alco_id_canço= c.cat_id) order by cat_id");
             while (rs.next()) {
                 llRep.add(new Producte(rs.getString("cat_titol")) {
                 });
