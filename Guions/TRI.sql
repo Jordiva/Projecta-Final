@@ -20,11 +20,13 @@ BEGIN
   END IF;
 END;
 
+
+/*
 CREATE OR REPLACE TRIGGER trigger_canco_any_creacio
   BEFORE INSERT OR UPDATE ON CANÇO
   FOR EACH ROW
 BEGIN
-  IF (to_number(to_char(sysdate, 'YYYY')) < :new.CAN_ANY_CREACIO)
+  IF (to_number(to_char(sysdate, 'YY-MM-dd')) < :new.CAN_ANY_CREACIO)
   THEN
     RAISE_APPLICATION_ERROR(-20003, 'L''any de creacio no pot ser futur!');
   END IF;
@@ -34,11 +36,14 @@ CREATE OR REPLACE TRIGGER trigger_album_any_creacio
   BEFORE INSERT OR UPDATE ON ALBUM
   FOR EACH ROW
 BEGIN
-  IF (to_number(to_char(sysdate, 'YYYY')) < :new.ALB_ANY_CREACIO)
+  IF (to_number(to_char(sysdate, 'YY-MM-dd')) < :new.ALB_ANY_CREACIO)
   THEN
     RAISE_APPLICATION_ERROR(-20004, 'L''any de creacio no pot ser futur!');
   END IF;
 END;
+
+*/
+
 
 CREATE OR REPLACE TRIGGER trigger_hgrup_data_inici
   BEFORE INSERT OR UPDATE ON H_GRUP
@@ -128,6 +133,9 @@ BEGIN
   END IF;
 END;
 
+/*
+*No funciona no se perque
+*/
 CREATE OR REPLACE TRIGGER trigger_delete_artista
   BEFORE DELETE ON ARTISTA
   FOR EACH ROW
@@ -141,6 +149,8 @@ begin
     RAISE_APPLICATION_ERROR(-20012, 'No es pot esborrar un artista que ha estat utilitzat (interpret o canco)!');
   END IF;
 end;
+
+
 
 
 CREATE OR REPLACE TRIGGER trigger_durada_album_contingut
@@ -182,3 +192,51 @@ BEGIN
                      WHERE ALCO_ID_CANÇO = :old.CAN_ID);
 END;
 
+
+
+create or replace trigger trigger_durada_llista_contingut
+after insert or delete or update of LLCON_ID_CATALAG
+on LLISTA_CONTINGUT
+for each ROW
+declare 
+v_durada number(6);
+v_tipus char(1);
+begin
+    if inserting or updating THEN
+        select CAT_TIPUS into v_tipus from CATALEG where CAT_ID = :new.LLCON_ID_CATALAG;
+        if v_tipus = 'C' THEN
+            select CAN_DURADA into v_durada from CANÇO where CAN_ID = :new.LLCON_ID_CATALAG;
+            update LLISTA set LLI_DURADA = LLI_DURADA + v_durada where LLI_ID = :new.LLCON_ID_LLISTA;
+        end if;
+        if v_tipus = 'A' THEN
+            select alb_durada into v_durada from ALBUM where ALB_ID = :new.LLCON_ID_CATALAG;
+            update LLISTA set LLI_DURADA = LLI_DURADA + v_durada where LLI_ID = :new.LLCON_ID_LLISTA;
+        end if;    
+    end if;    
+
+    if deleting or updating THEN
+        select CAT_TIPUS into v_tipus from CATALEG where CAT_ID = :old.LLCON_ID_CATALAG;
+        if v_tipus = 'C' THEN
+            select CAN_DURADA into v_durada from CANÇO where CAN_ID = :old.LLCON_ID_CATALAG;
+            update LLISTA set LLI_DURADA = LLI_DURADA - v_durada where LLI_ID = :old.LLCON_ID_LLISTA;
+        end if;
+        if v_tipus = 'A' THEN
+            select alb_durada into v_durada from ALBUM where ALB_ID = :old.LLCON_ID_CATALAG;
+            update LLISTA set LLI_DURADA = LLI_DURADA - v_durada where LLI_ID = :old.LLCON_ID_LLISTA;
+        end if;    
+    end if;    
+end;
+
+
+
+create or replace trigger trigger_durada_llista_aft_update_dur_canco
+after update of CAN_DURADA on CANÇO
+for each ROW
+BEGIN
+
+    update LLISTA
+    set LLI_DURADA = LLI_DURADA - :old.CAN_DURADA + :new.CAN_DURADA
+    where LLI_ID in (select LLCON_ID_LLISTA
+                   from LLISTA_CONTINGUT
+                   where LLCON_ID_CATALAG = :old.CAN_ID);
+END;

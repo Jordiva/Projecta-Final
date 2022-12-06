@@ -21,6 +21,7 @@ import org.milaifontanals.info.projecte1.ConexioGeneral;
 import org.milaifontanals.info.projecte1.Estil;
 import org.milaifontanals.info.projecte1.GestorBDExceptionTOT;
 import org.milaifontanals.info.projecte1.Principal;
+import org.milaifontanals.info.projecte1.Producte;
 import org.milaifontanals.info.projecte1.TextPrompt;
 
 /**
@@ -34,6 +35,7 @@ public class CProducte extends javax.swing.JPanel {
      */
     public CProducte() {
         initComponents();
+        ompleAC();
         Conection();
         OmpleEstils();
         ompleArtista();
@@ -42,6 +44,11 @@ public class CProducte extends javax.swing.JPanel {
         CrearCanço.setEnabled(true);
         CrearAlbum.setEnabled(false);
         CrearLlista.setEnabled(false);
+        
+        
+                cmbCreacioLlistaContingut.setVisible(false);
+                txtCA.setVisible(false);
+                butncontingut.setVisible(false);
 
     }
 
@@ -110,10 +117,13 @@ public class CProducte extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         txbDurda = new javax.swing.JTextField();
         cmbInterprets = new javax.swing.JComboBox<>();
-        txtInterpret = new javax.swing.JLabel();
+        txtCA = new javax.swing.JLabel();
         CrearAlbum = new javax.swing.JButton();
         CrearCanço = new javax.swing.JButton();
         CrearLlista = new javax.swing.JButton();
+        cmbCreacioLlistaContingut = new javax.swing.JComboBox<>();
+        txtInterpret = new javax.swing.JLabel();
+        butncontingut = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -128,7 +138,7 @@ public class CProducte extends javax.swing.JPanel {
                 estilsComboBoxActionPerformed(evt);
             }
         });
-        add(estilsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 94, 20));
+        add(estilsComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 94, 20));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Actiu");
@@ -136,14 +146,14 @@ public class CProducte extends javax.swing.JPanel {
 
         txtDurada.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtDurada.setText("Durada");
-        add(txtDurada, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, -1, 20));
+        add(txtDurada, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, -1, 20));
 
         txbData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txbDataActionPerformed(evt);
             }
         });
-        add(txbData, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 94, -1));
+        add(txbData, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, 94, -1));
 
         Crear.setText("Crear Producte");
         Crear.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,7 +174,7 @@ public class CProducte extends javax.swing.JPanel {
                 ActiuComboxobActionPerformed(evt);
             }
         });
-        add(ActiuComboxob, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 94, 20));
+        add(ActiuComboxob, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 94, 20));
 
         btnAlbum.setText("Album");
         btnAlbum.addActionListener(new java.awt.event.ActionListener() {
@@ -192,14 +202,14 @@ public class CProducte extends javax.swing.JPanel {
 
         txtDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtDate.setText("Data ");
-        add(txtDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, -1, 20));
+        add(txtDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, 20));
 
         Titoltxb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TitoltxbActionPerformed(evt);
             }
         });
-        add(Titoltxb, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 94, -1));
+        add(Titoltxb, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 94, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Estil");
@@ -216,7 +226,7 @@ public class CProducte extends javax.swing.JPanel {
                 txbDurdaActionPerformed(evt);
             }
         });
-        add(txbDurda, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 94, -1));
+        add(txbDurda, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 94, -1));
 
         cmbInterprets.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Llista", "Canço", "Artista" }));
         cmbInterprets.addActionListener(new java.awt.event.ActionListener() {
@@ -224,11 +234,11 @@ public class CProducte extends javax.swing.JPanel {
                 cmbInterpretsActionPerformed(evt);
             }
         });
-        add(cmbInterprets, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, 94, 20));
+        add(cmbInterprets, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 94, 20));
 
-        txtInterpret.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtInterpret.setText("Interpret");
-        add(txtInterpret, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, 20));
+        txtCA.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCA.setText("Canço/Album");
+        add(txtCA, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 50, -1, 20));
 
         CrearAlbum.setText("Crear Album");
         CrearAlbum.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -268,6 +278,26 @@ public class CProducte extends javax.swing.JPanel {
             }
         });
         add(CrearLlista, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, -1, -1));
+
+        cmbCreacioLlistaContingut.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCreacioLlistaContingut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCreacioLlistaContingutActionPerformed(evt);
+            }
+        });
+        add(cmbCreacioLlistaContingut, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 100, -1));
+
+        txtInterpret.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtInterpret.setText("Interpret");
+        add(txtInterpret, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, 20));
+
+        butncontingut.setText("Afagi Contingut");
+        butncontingut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butncontingutActionPerformed(evt);
+            }
+        });
+        add(butncontingut, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 200, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void estilsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estilsComboBoxActionPerformed
@@ -298,7 +328,7 @@ public class CProducte extends javax.swing.JPanel {
         txtDurada.setVisible(true);
         txtDate.setVisible(true);
         txbDurda.setVisible(true);
-        txtInterpret.setVisible(false);
+        txtCA.setVisible(false);
         cmbInterprets.setVisible(false);
 
         CrearCanço.setEnabled(false);
@@ -324,6 +354,7 @@ public class CProducte extends javax.swing.JPanel {
         txtDate.setVisible(false);
         txbDurda.setVisible(true);
         txtInterpret.setVisible(false);
+        
         cmbInterprets.setVisible(false);
     }//GEN-LAST:event_btnllistaActionPerformed
 
@@ -345,7 +376,7 @@ public class CProducte extends javax.swing.JPanel {
         txtDurada.setVisible(true);
         txtDate.setVisible(true);
         txbDurda.setVisible(true);
-        txtInterpret.setVisible(true);
+        txtCA.setVisible(true);
         cmbInterprets.setVisible(true);
 
 
@@ -518,12 +549,55 @@ public class CProducte extends javax.swing.JPanel {
                 } catch (GestorBDExceptionTOT ex) {
                     System.out.println("Error al crear el producte Canço " + ex.getMessage());
                 }
+                
+                cmbCreacioLlistaContingut.setVisible(true);
+                txtCA.setVisible(true);
+                butncontingut.setVisible(true);
+                
             }
         }
 
 
     }//GEN-LAST:event_CrearLlistaActionPerformed
 
+    private void cmbCreacioLlistaContingutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCreacioLlistaContingutActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cmbCreacioLlistaContingutActionPerformed
+
+    private void butncontingutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butncontingutActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+         String can = cmbCreacioLlistaContingut.getSelectedItem().toString();
+       
+                try {
+                    BDProducte.Insertar_producteLlista(titol,can);
+                } catch (GestorBDExceptionTOT ex) {
+                    System.out.println("Error al crear el producte Canço " + ex.getMessage());
+                }
+        
+        
+        
+        
+    }//GEN-LAST:event_butncontingutActionPerformed
+
+    
+    
+    private void ompleAC(){
+         cmbCreacioLlistaContingut.removeAllItems();
+
+        try {
+            List<Producte> llEs = BDProducte.getListCancoAlbum();
+            for (Producte p : llEs) {
+                cmbCreacioLlistaContingut.addItem(p.toString());
+            }
+            return;
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ActiuComboxob;
@@ -535,6 +609,8 @@ public class CProducte extends javax.swing.JPanel {
     private javax.swing.JRadioButton btnAlbum;
     private javax.swing.JRadioButton btnCanco;
     private javax.swing.JRadioButton btnllista;
+    private javax.swing.JButton butncontingut;
+    private javax.swing.JComboBox<String> cmbCreacioLlistaContingut;
     private javax.swing.JComboBox<String> cmbInterprets;
     private javax.swing.JComboBox<String> estilsComboBox;
     private javax.swing.JLabel jLabel1;
@@ -542,6 +618,7 @@ public class CProducte extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txbData;
     private javax.swing.JTextField txbDurda;
+    private javax.swing.JLabel txtCA;
     private javax.swing.JLabel txtDate;
     private javax.swing.JLabel txtDurada;
     private javax.swing.JLabel txtInterpret;

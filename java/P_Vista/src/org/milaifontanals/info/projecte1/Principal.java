@@ -272,8 +272,8 @@ public class Principal extends javax.swing.JFrame {
     
     private void productes() {
         PProducte rep = new PProducte();
-        setSize(1103, 767);
-        rep.setSize(1103, 767);
+        setSize(1382, 767);
+        rep.setSize(1382, 767);
         rep.setLocation(0, 0);
 
         jPanel1.removeAll();

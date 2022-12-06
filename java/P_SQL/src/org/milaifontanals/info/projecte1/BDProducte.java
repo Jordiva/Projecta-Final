@@ -61,7 +61,7 @@ public class BDProducte {
         Statement q = null;
         try {
             q = ConexioGeneral.getConnection().createStatement();
-            ResultSet rs = q.executeQuery("select c.cat_titol, c.cat_actiu , e.est_nom  , c.cat_tipus from cataleg c join estil e on e.est_id = c.cat_estil  ");
+            ResultSet rs = q.executeQuery("select cat_id , c.cat_titol, c.cat_actiu , e.est_nom  , c.cat_tipus from cataleg c join estil e on e.est_id = c.cat_estil order BY cat_id ASC ");
             while (rs.next()) {
                 llRep.add(new Producte(rs.getString("cat_titol"), rs.getString("cat_actiu"), rs.getString("est_nom"), rs.getString("cat_tipus")) {
                 });
@@ -1339,7 +1339,6 @@ public class BDProducte {
         try {
             
             
-            String sql_Canço = "DELETE FROM  canço WHERE  can_id = '53'";
 
             String sql = "DELETE FROM cataleg where cat_id = ?";
             ps = ConexioGeneral.getConnection().prepareStatement(sql);
@@ -1405,5 +1404,57 @@ public class BDProducte {
         }
         
     }
+     
+     
+     
+     
+      public static void Insertar_producteLlista(String llista ,String prod) throws GestorBDExceptionTOT {
+        Statement q = null;
+        PreparedStatement ps = null;
+        int idllista = getId(llista);
+        int idcan = getId(prod);
+        
+        
+        try {
+            String sql = "INSERT INTO llista_contingut (llcon_id_llista,llcon_id_catalag ) VALUES (?,?)";
+            ps = ConexioGeneral.getConnection().prepareStatement(sql);
+            ps.setInt(1, idllista);
+            ps.setInt(2, idcan);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            throw new GestorBDExceptionTOT("Error en intentar a fer la creacio de canço .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        }
+    }
+     
+     
+ 
 
+     
+     
+    public static List<Producte> getListCancoAlbum() throws GestorBDExceptionTOT {
+        List<Producte> llRep = new ArrayList<Producte>();
+        Statement q = null;
+        try {
+            q = ConexioGeneral.getConnection().createStatement();
+            ResultSet rs = q.executeQuery("select c.cat_titol from cataleg c where c.cat_tipus like 'C' or c.cat_tipus like 'A'");
+            while (rs.next()) {
+                llRep.add(new Producte(rs.getString("cat_titol")) {
+                });
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de productes.\n" + ex.getMessage());
+        } finally {
+            if (q != null) {
+                try {
+                    q.close();
+                } catch (SQLException ex) {
+                    throw new GestorBDExceptionTOT("Error en intentar tancar la sentència que ha recuperat la llista de productes.\n" + ex.getMessage());
+                }
+            }
+        }
+        return llRep;
+    }
 }

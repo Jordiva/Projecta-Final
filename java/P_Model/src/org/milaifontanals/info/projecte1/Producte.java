@@ -88,6 +88,12 @@ public abstract class Producte {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return titol ;
+    }
+
+    
     
 
 
