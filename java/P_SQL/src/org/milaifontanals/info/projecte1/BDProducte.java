@@ -1228,18 +1228,29 @@ public class BDProducte {
 
     }
 
-    public static void updateProducte(String titol, String actiu, String estil, String tipus) throws GestorBDExceptionTOT {
+    public static void updateProducte( String titolori,String titol, String actiu, String estil, String tipus, int durada) throws GestorBDExceptionTOT {
         Statement q = null;
         PreparedStatement ps = null;
+        PreparedStatement ps1 = null;
+        int  id = getId(titolori); 
         try {
-            String sql = "update cataleg set cat_titol = ?, cat_actiu = ?, cat_estil = (select estil.est_id from estil where estil.est_nom = ?), cat_tipus = ? where cat_id = ?";
+            String sql = "update cataleg set cat_titol = ?, cat_actiu = ?, cat_estil = (select estil.est_id from estil where estil.est_nom like ?), cat_tipus = ? where cat_id = ?";
             ps = ConexioGeneral.getConnection().prepareStatement(sql);
             ps.setString(1, titol);
             ps.setString(2, actiu);
             ps.setString(3, estil);
             ps.setString(4, tipus);
+            ps.setInt(5, id);
             ps.executeUpdate();
+         
             ps.close();
+            
+            String sql1= "update CANÇO set can_durada = ? where can_id = ?";
+            ps1 = ConexioGeneral.getConnection().prepareStatement(sql1);
+            ps1.setInt(1, durada);
+            ps1.setInt(2, id);
+            ps1.executeUpdate();
+
         } catch (SQLException ex) {
             throw new GestorBDExceptionTOT("Error en intentar a fer el update .\n" + ex.getMessage());
             // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
@@ -1423,9 +1434,10 @@ public class BDProducte {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            throw new GestorBDExceptionTOT("Error en intentar a fer la creacio de canço .\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar a fer la creacio de ProducteLlista .\n" + ex.getMessage());
             // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         }
+        
     }
      public static void Insertar_producteAlbum(String Album ,String prod) throws GestorBDExceptionTOT {
         Statement q = null;
@@ -1440,11 +1452,13 @@ public class BDProducte {
             ps.executeUpdate();
             ps.close();
         } catch (SQLException ex) {
-            throw new GestorBDExceptionTOT("Error en intentar a fer la creacio de canço .\n" + ex.getMessage());
+            throw new GestorBDExceptionTOT("Error en intentar a fer la creacio de Album Producte .\n" + ex.getMessage());
             // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
         }
     }
      
+     
+   
  
 
      

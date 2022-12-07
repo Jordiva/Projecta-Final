@@ -42,12 +42,13 @@ public class PProducte extends javax.swing.JPanel {
         bntFiltre.setEnabled(false);
         ActualitzaBoto.setEnabled(false);
         BorrarBoto.setEnabled(false);
-        
+        ACboton.setVisible(false);
+
     }
     private DefaultTableModel info = new DefaultTableModel();
-    
+
     private void borrainfo() {
-        
+
         Titolbox.setText("");
         Actiubox.setText("");
         Estilbox.setText("");
@@ -56,9 +57,9 @@ public class PProducte extends javax.swing.JPanel {
         AnyTxt.setText("");
         artviw.setVisible(false);
         ArtTxt.setText("");
-        
+
     }
-    
+
     private void visible() {
         txtTitol.setVisible(false);
         Edititle.setVisible(false);
@@ -108,23 +109,23 @@ public class PProducte extends javax.swing.JPanel {
 //
 //    }
     private void Conection() {
-        
+
         try {
             ConexioGeneral.getConnection();
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Error a connectar " + ex.getMessage());
         }
-        
+
     }
     DefaultTableModel model = new DefaultTableModel();
-    
+
     private void ompletabla() {
-        
+
         model.addColumn("Titol");
         model.addColumn("Actiu");
         model.addColumn("Estil");
         model.addColumn("Tipus");
-        
+
         try {
             List<Producte> llRep = BDProducte.getListProducte();
             for (Producte p : llRep) {
@@ -137,11 +138,11 @@ public class PProducte extends javax.swing.JPanel {
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
-        
+
     }
-    
+
     private void ompletablaInformcaio() {
-        
+
         try {
             List<Producte> llRep = BDProducte.getListProducte();
             for (Producte p : llRep) {
@@ -154,7 +155,7 @@ public class PProducte extends javax.swing.JPanel {
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
-        
+
     }
 
     /**
@@ -220,6 +221,7 @@ public class PProducte extends javax.swing.JPanel {
         cmbCreacioLlistaContingut = new javax.swing.JComboBox<>();
         txtCA = new javax.swing.JLabel();
         butncontingut = new javax.swing.JButton();
+        ACboton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -464,6 +466,13 @@ public class PProducte extends javax.swing.JPanel {
             }
         });
 
+        ACboton.setText("Actualitza");
+        ACboton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ACbotonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -498,7 +507,9 @@ public class PProducte extends javax.swing.JPanel {
                                 .addComponent(artviw)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(ArtTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(295, 295, 295))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -511,76 +522,78 @@ public class PProducte extends javax.swing.JPanel {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Actiu_inacT_RB)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txbtitiol, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(actiurb)
-                            .addComponent(Inactiurb)
-                            .addComponent(RbLlista)
                             .addComponent(rbCanco)
-                            .addComponent(rbAlbum)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CrearButo)
-                            .addComponent(BorrarBoto)
-                            .addComponent(ActualitzaBoto))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtTitol)
-                                .addGap(22, 22, 22)
-                                .addComponent(Edititle, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(84, 84, 84)
-                                .addComponent(cmbEstil, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(40, 40, 40)
-                                .addComponent(txtCA))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(27, 27, 27)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(txtEstil)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(rAlbum)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(rLlista)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(rCanço)))
-                                        .addGap(31, 31, 31))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtActiu)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(Si)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(No)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(TD)
-                                        .addGap(18, 18, 18)))
-                                .addComponent(txtDurada, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(41, 41, 41)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmbCreacioLlistaContingut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(butncontingut)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(62, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(405, 405, 405)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(684, Short.MAX_VALUE)))
+                                    .addComponent(Actiu_inacT_RB)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txbtitiol, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(actiurb)
+                                    .addComponent(Inactiurb)
+                                    .addComponent(RbLlista)
+                                    .addComponent(rbAlbum)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CrearButo)
+                                    .addComponent(BorrarBoto)
+                                    .addComponent(ActualitzaBoto))))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(50, 50, 50)
+                                            .addComponent(txtTitol)
+                                            .addGap(22, 22, 22)
+                                            .addComponent(Edititle, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(58, 58, 58)
+                                            .addComponent(txtActiu)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(Si)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(No)))
+                                    .addGap(75, 75, 75)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(TD)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(1, 1, 1)
+                                            .addComponent(txtEstil)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtDurada, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cmbEstil, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(100, 100, 100)
+                                    .addComponent(rAlbum)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(rLlista)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(rCanço)))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbCreacioLlistaContingut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(butncontingut)
+                                .addComponent(txtCA)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ACboton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
@@ -593,39 +606,39 @@ public class PProducte extends javax.swing.JPanel {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Actiubox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(Estilbox))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Tiposbox)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(DuradaTxt))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(anyviw)
-                            .addComponent(AnyTxt))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(artviw)
-                            .addComponent(ArtTxt)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(bntFiltre)
-                                .addComponent(cambis)
-                                .addComponent(Rollback))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel9)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(Estilbox))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Tiposbox)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(DuradaTxt))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(anyviw)
+                                    .addComponent(AnyTxt))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(artviw)
+                                    .addComponent(ArtTxt))))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bntFiltre)
+                        .addComponent(cambis)
+                        .addComponent(Rollback))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel9)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(5, 5, 5)
@@ -649,52 +662,56 @@ public class PProducte extends javax.swing.JPanel {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(68, 68, 68))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(CrearButo)
-                                    .addComponent(txtTitol)
-                                    .addComponent(Edititle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEstil)
-                                    .addComponent(cmbEstil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtTitol)
+                                        .addComponent(Edititle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtActiu, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(Si)
-                                        .addComponent(No)
-                                        .addComponent(txtDurada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(TD)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(Si)
+                                    .addComponent(No)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(txtCA)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbCreacioLlistaContingut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(butncontingut)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rAlbum)
-                            .addComponent(rLlista)
-                            .addComponent(rCanço))
-                        .addGap(8, 8, 8)
+                                .addGap(6, 6, 6)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtCA)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cmbCreacioLlistaContingut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(butncontingut))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(txtEstil)
+                                            .addComponent(cmbEstil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(TD)
+                                            .addComponent(txtDurada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, 0)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(ActualitzaBoto)
                                 .addGap(18, 18, 18)
                                 .addComponent(BorrarBoto)
-                                .addGap(96, 96, 96))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(rAlbum)
+                                    .addComponent(rLlista)
+                                    .addComponent(rCanço))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33))))))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(99, 99, 99)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(457, Short.MAX_VALUE)))
+                                .addGap(44, 44, 44))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(ACboton)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1380, 650));
@@ -705,12 +722,14 @@ public class PProducte extends javax.swing.JPanel {
 
         Crear();
     }//GEN-LAST:event_CrearButoActionPerformed
-    
+
     String Atitol;
     int durada;
-    
+    boolean fet = false;
 
     private void ActualitzaBotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualitzaBotoActionPerformed
+
+        fet = true;
 
         // TODO add your handling code here:
         txtTitol.setVisible(true);
@@ -725,32 +744,33 @@ public class PProducte extends javax.swing.JPanel {
         rLlista.setVisible(true);
         rAlbum.setVisible(true);
         rCanço.setVisible(true);
-        
+        ACboton.setVisible(true);
+
         if (Tipus.equals("L")) {
-                 txtCA.setVisible(true);
-                cmbCreacioLlistaContingut.setVisible(true);
-                butncontingut.setVisible(true);
+            txtCA.setVisible(true);
+            cmbCreacioLlistaContingut.setVisible(true);
+            butncontingut.setVisible(true);
         }
         if (Tipus.equals("A")) {
-                 txtCA.setVisible(true);
-                cmbCreacioLlistaContingut.setVisible(true);
-                butncontingut.setVisible(true);
+            txtCA.setVisible(true);
+            cmbCreacioLlistaContingut.setVisible(true);
+            butncontingut.setVisible(true);
         }
         if (Tipus.equals("C")) {
             txtCA.setVisible(false);
-                cmbCreacioLlistaContingut.setVisible(false);
-                butncontingut.setVisible(false);
+            cmbCreacioLlistaContingut.setVisible(false);
+            butncontingut.setVisible(false);
         }
-        
+
         tableInfoLlistaAlbum.setVisible(true);
-        
+
 
     }//GEN-LAST:event_ActualitzaBotoActionPerformed
     String titol;
-    
+
     private void ompleAC() {
         cmbCreacioLlistaContingut.removeAllItems();
-        
+
         try {
             List<Producte> llEs = BDProducte.getListCancoAlbum();
             for (Producte p : llEs) {
@@ -761,10 +781,10 @@ public class PProducte extends javax.swing.JPanel {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
     }
-    
+
     private void ompleACA() {
         cmbCreacioLlistaContingut.removeAllItems();
-        
+
         try {
             List<Producte> llEs = BDProducte.getListAlbumOmpli();
             for (Producte p : llEs) {
@@ -775,16 +795,16 @@ public class PProducte extends javax.swing.JPanel {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
     }
-    
+
     private void OmpleEstils() {
-        
+
         cmbEstil.removeAllItems();
         try {
             List<Estil> llEs = BDProducte.getListEstils();
             for (Estil p : llEs) {
                 cmbEstil.addItem(p.toString());
             }
-            
+
             return;
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
@@ -796,10 +816,10 @@ public class PProducte extends javax.swing.JPanel {
 
         int i = JOptionPane.showConfirmDialog(null, "Estas Segur de borra ?");
         String opcions = Tiposbox.getText().toString();
-        
+
         if (i == 0) {
             System.out.println("0");
-            
+
             if (opcions.equals("Canço")) {
                 try {
                     BDProducte.borraCanço(titol);
@@ -813,17 +833,17 @@ public class PProducte extends javax.swing.JPanel {
                 } catch (GestorBDExceptionTOT ex) {
                     JOptionPane.showMessageDialog(null, "No sa pugut borrar Album te continugt", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                
+
             }
             if (opcions.equals("Llista")) {
-                
+
                 try {
                     BDProducte.borraLlista(titol);
                 } catch (GestorBDExceptionTOT ex) {
                     JOptionPane.showMessageDialog(null, "No sa pugut borrar Llista te contingut", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            
+
             try {
                 BDProducte.borra(titol);
                 borrainfo();
@@ -833,7 +853,7 @@ public class PProducte extends javax.swing.JPanel {
             } catch (GestorBDExceptionTOT ex) {
                 JOptionPane.showMessageDialog(null, "No sa pugut borrar", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         }
         if (i == 1) {
             System.out.println("1");
@@ -841,7 +861,7 @@ public class PProducte extends javax.swing.JPanel {
         if (i == 2) {
             System.out.println("3");
         }
-        
+
 
     }//GEN-LAST:event_BorrarBotoActionPerformed
     String Tipus;
@@ -850,7 +870,7 @@ public class PProducte extends javax.swing.JPanel {
 
         Tipus = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
         titol = tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString();
-        
+
         ActualitzaBoto.setEnabled(true);
         BorrarBoto.setEnabled(true);
         info.setColumnCount(0);
@@ -862,28 +882,40 @@ public class PProducte extends javax.swing.JPanel {
         Titolbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString());
         Actiubox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 1).toString());
         Estilbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString());
-        
-        int dura;
-        
-        int i = info.getRowCount();
-        
-        Atitol = tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString();
-        
-        Edititle.setText(Atitol);
-        
-        String tip = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
-        
-        
-        String a = tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString();
-        if (a.equals("trap"))   
-           cmbEstil.setSelectedIndex(0);
-        if (a.equals("rock")) 
-           cmbEstil.setSelectedIndex(1);
-        if (a.equals("pop")) 
-           cmbEstil.setSelectedIndex(2);
 
-        
-        
+        String act = tableProducte.getValueAt(tableProducte.getSelectedRow(), 1).toString();
+
+        int dura;
+
+        int i = info.getRowCount();
+
+        Atitol = tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString();
+
+        Edititle.setText(Atitol);
+
+        String tip = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
+
+        String a = tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString();
+        if (a.equals("trap")) {
+            cmbEstil.setSelectedIndex(0);
+        }
+        if (a.equals("rock")) {
+            cmbEstil.setSelectedIndex(1);
+        }
+        if (a.equals("pop")) {
+            cmbEstil.setSelectedIndex(2);
+        }
+
+        if (act.equals("S")) {
+            Si.setSelected(true);
+            No.setSelected(false);
+        }
+        if (act.equals("N")) {
+            No.setSelected(true);
+            Si.setSelected(false);
+
+        }
+
         if (tip.equals("L")) {
             Tiposbox.setText("Llista");
         }
@@ -893,17 +925,20 @@ public class PProducte extends javax.swing.JPanel {
         if (tip.equals("A")) {
             Tiposbox.setText("Album");
         }
-        
+
         if (tableProducte.getSelectedRowCount() > 1) {
             JOptionPane.showMessageDialog(null, "No Pots Selecionar mes deuna fila a la vegada", "Error", JOptionPane.ERROR_MESSAGE);
             tableProducte.clearSelection();
             borrainfo();
         } else {
-            
+
             if (Tipus.equals("L")) {
-                txtCA.setVisible(true);
-                cmbCreacioLlistaContingut.setVisible(true);
-                butncontingut.setVisible(true);
+                if (fet) {
+                    txtCA.setVisible(true);
+                    cmbCreacioLlistaContingut.setVisible(true);
+                    butncontingut.setVisible(true);
+                }
+
                 info.setRowCount(0);
                 info.addColumn("Tiol Canço");
                 tableInfo.setModel(info);
@@ -916,13 +951,13 @@ public class PProducte extends javax.swing.JPanel {
                     rLlista.setEnabled(false);
                     rCanço.setEnabled(false);
                     rAlbum.setEnabled(false);
-                }                
+                }
                 ompleAC();
                 try {
                     List<Llista> llRep;
                     llRep = BDProducte.getLlista(titol);
                     List<Llista> ll = BDProducte.getLlistaCont(titol);
-                    
+
                     for (Llista p : llRep) {
                         DuradaTxt.setText("" + p.getDurada());
                     }
@@ -930,60 +965,67 @@ public class PProducte extends javax.swing.JPanel {
                         info.addRow(new Object[]{p.getTitol()});
                     }
                     tableInfo.setModel(info);
+
                     return;
                 } catch (GestorBDExceptionTOT ex) {
                     ex.printStackTrace();
                     System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
                 tableInfo.setModel(info);
-                
+
             }
             if (Tipus.equals("C")) {
-                
-                txtCA.setVisible(false);
-                cmbCreacioLlistaContingut.setVisible(false);
-                butncontingut.setVisible(false);
+                if (fet) {
+                    txtCA.setVisible(false);
+                    cmbCreacioLlistaContingut.setVisible(false);
+                    butncontingut.setVisible(false);
+                }
+
                 artviw.setVisible(true);
                 anyviw.setVisible(true);
-                
+
                 rAlbum.setSelected(false);
                 rCanço.setSelected(true);
                 rLlista.setSelected(false);
                 rLlista.setEnabled(false);
                 rCanço.setEnabled(false);
                 rAlbum.setEnabled(false);
-                
+
                 try {
                     List<Canso> ll;
                     ll = BDProducte.getCanco(titol);
-                    
+
                     for (Canso p : ll) {
-                        
+
                         ArtTxt.setText(p.getArt());
                         AnyTxt.setText(p.getAnyCreacio());
                         DuradaTxt.setText("" + p.getDurada());
                         dura = p.getDurada();
                         txtDurada.setText("" + dura);
                     }
-                    
+
                     return;
                 } catch (GestorBDExceptionTOT ex) {
                     ex.printStackTrace();
                     System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
-                
+
             }
             if (Tipus.equals("A")) {
-                
+
+                if (fet) {
+                    txtCA.setVisible(true);
+                    cmbCreacioLlistaContingut.setVisible(true);
+                    butncontingut.setVisible(true);
+                }
+
                 info.setRowCount(0);
                 info.addColumn("Tiol Canço");
-                txtCA.setVisible(true);
-                cmbCreacioLlistaContingut.setVisible(true);
-                butncontingut.setVisible(true);
+
                 tableInfo.setModel(info);
                 anyviw.setVisible(true);
                 ompleACA();
-                
+
                 if (i > 0) {
                     rAlbum.setSelected(true);
                     rCanço.setSelected(false);
@@ -991,14 +1033,14 @@ public class PProducte extends javax.swing.JPanel {
                     rLlista.setEnabled(false);
                     rCanço.setEnabled(false);
                     rAlbum.setEnabled(false);
-                    
-                }                
-                
+
+                }
+
                 try {
                     List<Album> ll;
                     ll = BDProducte.getAlbum(titol);
                     List<Album> llRep = BDProducte.getAlbumCont(titol);
-                    
+
                     for (Album p : ll) {
                         AnyTxt.setText(p.getDataCreacio());
                         DuradaTxt.setText("" + p.getDurada());
@@ -1007,20 +1049,20 @@ public class PProducte extends javax.swing.JPanel {
                         info.addRow(new Object[]{p.getTitol()});
                     }
                     tableInfo.setModel(info);
-                    
+
                     return;
                 } catch (GestorBDExceptionTOT ex) {
                     ex.printStackTrace();
                     System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
-                
+
             }
-            
+
             if (Tipus.equals("L")) {
-                
+
             }
         }
-        
+
 
     }//GEN-LAST:event_tableProducteMouseClicked
 
@@ -1032,24 +1074,24 @@ public class PProducte extends javax.swing.JPanel {
         String L = null;
         String C = null;
         String A = null;
-        
+
         titol = txbtitiol.getText().toString();
-        
+
         if (Inactiurb.isSelected()) {
             // System.out.println("inactiu");
             Actiu = "N";
-            
+
         }
         if (Actiu_inacT_RB.isSelected()) {
             //  System.out.println("dos");
             Actiu = "dos";
-            
+
         }
         if (actiurb.isSelected()) {
             //  System.out.println("actiu");
             Actiu = "S";
         }
-        
+
         if (RbLlista.isSelected()) {
             // System.out.println("Llista");
             L = "L";
@@ -1062,10 +1104,10 @@ public class PProducte extends javax.swing.JPanel {
             // System.out.println("Canço");
             C = "C";
         }
-        
+
         model.setRowCount(0);
         tableProducte.setModel(model);
-        
+
         try {
             List<Producte> llRep = BDProducte.getFiltre(titol, C, A, L, Actiu);
             for (Producte p : llRep) {
@@ -1078,7 +1120,7 @@ public class PProducte extends javax.swing.JPanel {
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
-        
+
 
     }//GEN-LAST:event_bntFiltreActionPerformed
 
@@ -1088,7 +1130,7 @@ public class PProducte extends javax.swing.JPanel {
         bntFiltre.setEnabled(true);
         Inactiurb.setSelected(false);
         Actiu_inacT_RB.setSelected(false);
-        
+
 
     }//GEN-LAST:event_actiurbActionPerformed
 
@@ -1133,16 +1175,16 @@ public class PProducte extends javax.swing.JPanel {
         // TODO add your handling code here:
         String titolemp = txbtitiol.getText().toString();
         if (!titolemp.isEmpty()) {
-            
+
             bntFiltre.setEnabled(true);
-            
+
         }
     }//GEN-LAST:event_txbtitiolActionPerformed
 
     private void RollbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RollbackActionPerformed
         try {
             model.setColumnCount(0);
-            
+
             model.setRowCount(0);
             tableProducte.setModel(model);
             ConexioGeneral.desferCanvis();
@@ -1150,7 +1192,7 @@ public class PProducte extends javax.swing.JPanel {
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Eroor a fer el rrollback");
         }
-        
+
 
     }//GEN-LAST:event_RollbackActionPerformed
 
@@ -1162,7 +1204,7 @@ public class PProducte extends javax.swing.JPanel {
             tableProducte.setModel(model);
             ConexioGeneral.validarCanvis();
             ompletabla();
-            
+
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Eroor a fer el rrollback");
         }
@@ -1175,28 +1217,46 @@ public class PProducte extends javax.swing.JPanel {
 
     private void cmbCreacioLlistaContingutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCreacioLlistaContingutActionPerformed
         // TODO add your handling code here:
-
     }//GEN-LAST:event_cmbCreacioLlistaContingutActionPerformed
 
     private void butncontingutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butncontingutActionPerformed
         // TODO add your handling code here:
 
         String can = cmbCreacioLlistaContingut.getSelectedItem().toString();
-        
-        if (rLlista.isSelected()) {
-            try {
-                BDProducte.Insertar_producteLlista(titol, can);
-            } catch (GestorBDExceptionTOT ex) {
-                System.out.println("Error al crear el producte Canço " + ex.getMessage());
+
+        if (tt == null) {
+            if (rLlista.isSelected()) {
+                try {
+                    BDProducte.Insertar_producteLlista(titol, can);
+                } catch (GestorBDExceptionTOT ex) {
+                    System.out.println("Error al crear el producte Canço " + ex.getMessage());
+                }
+            }
+            if (rAlbum.isSelected()) {
+                try {
+                    BDProducte.Insertar_producteAlbum(titol, can);
+                } catch (GestorBDExceptionTOT ex) {
+                    System.out.println("Error al crear el producte Canço " + ex.getMessage());
+                }
             }
         }
-        if (rAlbum.isSelected()) {
-            try {
-                BDProducte.Insertar_producteAlbum(titol, can);
-            } catch (GestorBDExceptionTOT ex) {
-                System.out.println("Error al crear el producte Canço " + ex.getMessage());
+        else{
+            if (rLlista.isSelected()) {
+                try {
+                    BDProducte.Insertar_producteLlista(tt, can);
+                } catch (GestorBDExceptionTOT ex) {
+                    System.out.println("Error al crear el producte Canço " + ex.getMessage());
+                }
+            }
+            if (rAlbum.isSelected()) {
+                try {
+                    BDProducte.Insertar_producteAlbum(tt, can);
+                } catch (GestorBDExceptionTOT ex) {
+                    System.out.println("Error al crear el producte Canço " + ex.getMessage());
+                }
             }
         }
+
 
     }//GEN-LAST:event_butncontingutActionPerformed
 
@@ -1236,12 +1296,45 @@ public class PProducte extends javax.swing.JPanel {
         rLlista.setSelected(false);
         rAlbum.setSelected(false);
     }//GEN-LAST:event_rCançoActionPerformed
-    
+    String tt;
+    private void ACbotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ACbotonActionPerformed
+        // TODO add your handling code here:
+
+        String estil = cmbEstil.getSelectedItem().toString();
+        String A = null;
+
+        if (Si.isSelected()) {
+            A = "S";
+        }
+        if (No.isSelected()) {
+            A = "N";
+        }
+
+        durada = Integer.parseInt(txtDurada.getText().toString());
+
+        tt = Edititle.getText().toString();
+
+        System.out.println(tt);
+        System.out.println(A);
+        System.out.println(estil);
+        System.out.println(Tipus);
+        System.out.println(durada);
+
+        try {
+            BDProducte.updateProducte(titol, tt, A, estil, Tipus, durada);
+
+        } catch (GestorBDExceptionTOT e) {
+            System.out.println("Error a update" + e);
+        }
+
+
+    }//GEN-LAST:event_ACbotonActionPerformed
+
     private void Crear() {
         CProducte rep = new CProducte();
         rep.setSize(666, 300);
         rep.setLocation(0, 0);
-        
+
         jPanel2.removeAll();
         jPanel2.add(rep, BorderLayout.CENTER);
         jPanel2.revalidate();
@@ -1250,6 +1343,7 @@ public class PProducte extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ACboton;
     private javax.swing.JRadioButton Actiu_inacT_RB;
     private javax.swing.JLabel Actiubox;
     private javax.swing.JButton ActualitzaBoto;

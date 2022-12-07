@@ -39,7 +39,7 @@ public class CProducte extends javax.swing.JPanel {
         OmpleEstils();
         ompleArtista();
         btnCanco.setSelected(true);
-        TextPrompt pruba = new TextPrompt("YY-MM-DD", txbData);
+        TextPrompt pruba = new TextPrompt("YYYY-MM-DD", txbData);
         CrearCanço.setEnabled(true);
         CrearAlbum.setEnabled(false);
         CrearLlista.setEnabled(false);
@@ -283,7 +283,7 @@ public class CProducte extends javax.swing.JPanel {
                 cmbCreacioLlistaContingutActionPerformed(evt);
             }
         });
-        add(cmbCreacioLlistaContingut, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 100, -1));
+        add(cmbCreacioLlistaContingut, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 100, -1));
 
         txtInterpret.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtInterpret.setText("Interpret");
@@ -295,7 +295,7 @@ public class CProducte extends javax.swing.JPanel {
                 butncontingutActionPerformed(evt);
             }
         });
-        add(butncontingut, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 200, -1, -1));
+        add(butncontingut, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void estilsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estilsComboBoxActionPerformed
