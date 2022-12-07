@@ -36,25 +36,46 @@ public class PProducte extends javax.swing.JPanel {
         Conection();
         borrainfo();
         ompletabla();
+        visible();
+        OmpleEstils();
 //        informacio();
         bntFiltre.setEnabled(false);
         ActualitzaBoto.setEnabled(false);
         BorrarBoto.setEnabled(false);
-
+        
     }
     private DefaultTableModel info = new DefaultTableModel();
-
+    
     private void borrainfo() {
-
+        
         Titolbox.setText("");
-        Estilbox.setText("");
         Actiubox.setText("");
+        Estilbox.setText("");
         Tiposbox.setText("");
         DuradaTxt.setText("");
         AnyTxt.setText("");
         artviw.setVisible(false);
         ArtTxt.setText("");
-
+        
+    }
+    
+    private void visible() {
+        txtTitol.setVisible(false);
+        Edititle.setVisible(false);
+        txtActiu.setVisible(false);
+        Si.setVisible(false);
+        No.setVisible(false);
+        txtEstil.setVisible(false);
+        cmbEstil.setVisible(false);
+        TD.setVisible(false);
+        txtDurada.setVisible(false);
+        txtCA.setVisible(false);
+        cmbCreacioLlistaContingut.setVisible(false);
+        butncontingut.setVisible(false);
+        rLlista.setVisible(false);
+        rAlbum.setVisible(false);
+        rCanço.setVisible(false);
+        tableInfoLlistaAlbum.setVisible(false);
     }
 
 //    public void informacio() {
@@ -87,53 +108,53 @@ public class PProducte extends javax.swing.JPanel {
 //
 //    }
     private void Conection() {
-
+        
         try {
             ConexioGeneral.getConnection();
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Error a connectar " + ex.getMessage());
         }
-
+        
     }
     DefaultTableModel model = new DefaultTableModel();
-
+    
     private void ompletabla() {
-
+        
         model.addColumn("Titol");
         model.addColumn("Actiu");
         model.addColumn("Estil");
         model.addColumn("Tipus");
-
+        
         try {
             List<Producte> llRep = BDProducte.getListProducte();
             for (Producte p : llRep) {
                 model.addRow(new Object[]{p.getTitol(), p.getActiu(), p.getEstil(), p.getEstat()});
             }
-            tableInfo.setDefaultEditor(Object.class, null);
+            tableInfoLlistaAlbum.setDefaultEditor(Object.class, null);
             tableProducte.setDefaultEditor(Object.class, null);
             tableProducte.setModel(model);
             return;
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
-
+        
     }
-
+    
     private void ompletablaInformcaio() {
-
+        
         try {
             List<Producte> llRep = BDProducte.getListProducte();
             for (Producte p : llRep) {
                 model.addRow(new Object[]{p.getTitol(), p.getActiu(), p.getEstil(), p.getEstat()});
             }
-            tableInfo.setDefaultEditor(Object.class, null);
+            tableInfoLlistaAlbum.setDefaultEditor(Object.class, null);
             tableProducte.setDefaultEditor(Object.class, null);
             tableProducte.setModel(model);
             return;
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
-
+        
     }
 
     /**
@@ -157,12 +178,12 @@ public class PProducte extends javax.swing.JPanel {
         Titolbox = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        Estilbox = new javax.swing.JLabel();
         Actiubox = new javax.swing.JLabel();
+        Estilbox = new javax.swing.JLabel();
         Tiposbox = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tableInfo = new javax.swing.JTable();
+        tableInfoLlistaAlbum = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         anyviw = new javax.swing.JLabel();
         DuradaTxt = new javax.swing.JLabel();
@@ -182,6 +203,23 @@ public class PProducte extends javax.swing.JPanel {
         txbtitiol = new javax.swing.JTextField();
         cambis = new javax.swing.JButton();
         Rollback = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableInfo = new javax.swing.JTable();
+        rAlbum = new javax.swing.JRadioButton();
+        rLlista = new javax.swing.JRadioButton();
+        rCanço = new javax.swing.JRadioButton();
+        txtTitol = new javax.swing.JLabel();
+        txtActiu = new javax.swing.JLabel();
+        Edititle = new javax.swing.JTextField();
+        Si = new javax.swing.JRadioButton();
+        No = new javax.swing.JRadioButton();
+        txtEstil = new javax.swing.JLabel();
+        cmbEstil = new javax.swing.JComboBox<>();
+        TD = new javax.swing.JLabel();
+        txtDurada = new javax.swing.JTextField();
+        cmbCreacioLlistaContingut = new javax.swing.JComboBox<>();
+        txtCA = new javax.swing.JLabel();
+        butncontingut = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -237,15 +275,15 @@ public class PProducte extends javax.swing.JPanel {
 
         jLabel4.setText("Estil");
 
-        Estilbox.setText("jLabel3");
-
         Actiubox.setText("jLabel3");
+
+        Estilbox.setText("jLabel3");
 
         Tiposbox.setText("jLabel3");
 
         jLabel5.setText("Tipos");
 
-        tableInfo.setModel(new javax.swing.table.DefaultTableModel(
+        tableInfoLlistaAlbum.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -253,7 +291,7 @@ public class PProducte extends javax.swing.JPanel {
 
             }
         ));
-        jScrollPane2.setViewportView(tableInfo);
+        jScrollPane2.setViewportView(tableInfoLlistaAlbum);
 
         jLabel6.setText("Durada");
 
@@ -342,6 +380,90 @@ public class PProducte extends javax.swing.JPanel {
             }
         });
 
+        tableInfo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane3.setViewportView(tableInfo);
+
+        rAlbum.setText("Album");
+        rAlbum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rAlbumActionPerformed(evt);
+            }
+        });
+
+        rLlista.setText("Llista");
+        rLlista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rLlistaActionPerformed(evt);
+            }
+        });
+
+        rCanço.setText("Canço");
+        rCanço.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rCançoActionPerformed(evt);
+            }
+        });
+
+        txtTitol.setText("Titol");
+
+        txtActiu.setText("Actiu");
+
+        Si.setText("S");
+        Si.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SiActionPerformed(evt);
+            }
+        });
+
+        No.setText("N");
+        No.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NoActionPerformed(evt);
+            }
+        });
+
+        txtEstil.setText("Estil");
+
+        cmbEstil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEstil.setSelectedIndex(1);
+        cmbEstil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbEstilActionPerformed(evt);
+            }
+        });
+
+        TD.setText("Durada");
+
+        txtDurada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDuradaActionPerformed(evt);
+            }
+        });
+
+        cmbCreacioLlistaContingut.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbCreacioLlistaContingut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbCreacioLlistaContingutActionPerformed(evt);
+            }
+        });
+
+        txtCA.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCA.setText("Canço/Album");
+
+        butncontingut.setText("Afagi Contingut");
+        butncontingut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butncontingutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -366,20 +488,17 @@ public class PProducte extends javax.swing.JPanel {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(Titolbox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(Estilbox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(Actiubox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(Tiposbox, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Titolbox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Tiposbox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Actiubox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Estilbox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(artviw)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(ArtTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
+                        .addGap(295, 295, 295))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,19 +521,61 @@ public class PProducte extends javax.swing.JPanel {
                             .addComponent(rbCanco)
                             .addComponent(rbAlbum)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(100, 100, 100)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(CrearButo)
-                            .addComponent(ActualitzaBoto)
-                            .addComponent(BorrarBoto))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(BorrarBoto)
+                            .addComponent(ActualitzaBoto))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtTitol)
+                                .addGap(22, 22, 22)
+                                .addComponent(Edititle, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(84, 84, 84)
+                                .addComponent(cmbEstil, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(txtCA))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(27, 27, 27)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtEstil)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(rAlbum)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(rLlista)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(rCanço)))
+                                        .addGap(31, 31, 31))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtActiu)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(Si)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(No)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(TD)
+                                        .addGap(18, 18, 18)))
+                                .addComponent(txtDurada, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbCreacioLlistaContingut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(butncontingut)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(62, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(405, 405, 405)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(684, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,28 +589,25 @@ public class PProducte extends javax.swing.JPanel {
                             .addComponent(jLabel1)
                             .addComponent(Titolbox))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Estilbox)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(Actiubox, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Tiposbox)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(DuradaTxt))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(anyviw)
-                                    .addComponent(AnyTxt)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Actiubox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(Estilbox))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Tiposbox)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(DuradaTxt))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(anyviw)
+                            .addComponent(AnyTxt))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(artviw)
@@ -457,24 +615,21 @@ public class PProducte extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bntFiltre)
-                            .addComponent(cambis)
-                            .addComponent(Rollback))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(txbtitiol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(bntFiltre)
+                                .addComponent(cambis)
+                                .addComponent(Rollback))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel9)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(txbtitiol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(1, 1, 1)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -491,15 +646,55 @@ public class PProducte extends javax.swing.JPanel {
                                 .addComponent(rbAlbum)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rbCanco))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(68, 68, 68))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(CrearButo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(CrearButo)
+                                    .addComponent(txtTitol)
+                                    .addComponent(Edititle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEstil)
+                                    .addComponent(cmbEstil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtActiu, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(Si)
+                                        .addComponent(No)
+                                        .addComponent(txtDurada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(TD)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(txtCA)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbCreacioLlistaContingut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(butncontingut)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rAlbum)
+                            .addComponent(rLlista)
+                            .addComponent(rCanço))
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
                                 .addComponent(ActualitzaBoto)
                                 .addGap(18, 18, 18)
-                                .addComponent(BorrarBoto))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(96, 96, 96))
+                                .addComponent(BorrarBoto)
+                                .addGap(96, 96, 96))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33))))))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(99, 99, 99)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(457, Short.MAX_VALUE)))
         );
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1380, 650));
@@ -510,23 +705,101 @@ public class PProducte extends javax.swing.JPanel {
 
         Crear();
     }//GEN-LAST:event_CrearButoActionPerformed
+    
+    String Atitol;
+    int durada;
+    
 
     private void ActualitzaBotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualitzaBotoActionPerformed
 
         // TODO add your handling code here:
-        Actualitza();
+        txtTitol.setVisible(true);
+        Edititle.setVisible(true);
+        txtActiu.setVisible(true);
+        Si.setVisible(true);
+        No.setVisible(true);
+        txtEstil.setVisible(true);
+        cmbEstil.setVisible(true);
+        TD.setVisible(true);
+        txtDurada.setVisible(true);
+        rLlista.setVisible(true);
+        rAlbum.setVisible(true);
+        rCanço.setVisible(true);
+        
+        if (Tipus.equals("L")) {
+                 txtCA.setVisible(true);
+                cmbCreacioLlistaContingut.setVisible(true);
+                butncontingut.setVisible(true);
+        }
+        if (Tipus.equals("A")) {
+                 txtCA.setVisible(true);
+                cmbCreacioLlistaContingut.setVisible(true);
+                butncontingut.setVisible(true);
+        }
+        if (Tipus.equals("C")) {
+            txtCA.setVisible(false);
+                cmbCreacioLlistaContingut.setVisible(false);
+                butncontingut.setVisible(false);
+        }
+        
+        tableInfoLlistaAlbum.setVisible(true);
+        
+
     }//GEN-LAST:event_ActualitzaBotoActionPerformed
     String titol;
+    
+    private void ompleAC() {
+        cmbCreacioLlistaContingut.removeAllItems();
+        
+        try {
+            List<Producte> llEs = BDProducte.getListCancoAlbum();
+            for (Producte p : llEs) {
+                cmbCreacioLlistaContingut.addItem(p.toString());
+            }
+            return;
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+        }
+    }
+    
+    private void ompleACA() {
+        cmbCreacioLlistaContingut.removeAllItems();
+        
+        try {
+            List<Producte> llEs = BDProducte.getListAlbumOmpli();
+            for (Producte p : llEs) {
+                cmbCreacioLlistaContingut.addItem(p.toString());
+            }
+            return;
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+        }
+    }
+    
+    private void OmpleEstils() {
+        
+        cmbEstil.removeAllItems();
+        try {
+            List<Estil> llEs = BDProducte.getListEstils();
+            for (Estil p : llEs) {
+                cmbEstil.addItem(p.toString());
+            }
+            
+            return;
+        } catch (GestorBDExceptionTOT ex) {
+            System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
+        }
+    }
 
     private void BorrarBotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarBotoActionPerformed
         // TODO add your handling code here:
 
         int i = JOptionPane.showConfirmDialog(null, "Estas Segur de borra ?");
         String opcions = Tiposbox.getText().toString();
-
+        
         if (i == 0) {
             System.out.println("0");
-
+            
             if (opcions.equals("Canço")) {
                 try {
                     BDProducte.borraCanço(titol);
@@ -534,17 +807,17 @@ public class PProducte extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "No sa pugut borrar Canço te contingut", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            if (opcions.equals("Album") ) {
-                 try {
+            if (opcions.equals("Album")) {
+                try {
                     BDProducte.borraAlbum(titol);
                 } catch (GestorBDExceptionTOT ex) {
                     JOptionPane.showMessageDialog(null, "No sa pugut borrar Album te continugt", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
-            }
-            if (opcions.equals("Llista") ) {
                 
-                 try {
+            }
+            if (opcions.equals("Llista")) {
+                
+                try {
                     BDProducte.borraLlista(titol);
                 } catch (GestorBDExceptionTOT ex) {
                     JOptionPane.showMessageDialog(null, "No sa pugut borrar Llista te contingut", "Error", JOptionPane.ERROR_MESSAGE);
@@ -558,11 +831,9 @@ public class PProducte extends javax.swing.JPanel {
                 // model.removeRow(tableProducte.getSelectedRow());
                 //tableProducte.setModel(model);
             } catch (GestorBDExceptionTOT ex) {
-                    JOptionPane.showMessageDialog(null, "No sa pugut borrar", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No sa pugut borrar", "Error", JOptionPane.ERROR_MESSAGE);
             }
             
-            
-           
         }
         if (i == 1) {
             System.out.println("1");
@@ -570,31 +841,49 @@ public class PProducte extends javax.swing.JPanel {
         if (i == 2) {
             System.out.println("3");
         }
-
+        
 
     }//GEN-LAST:event_BorrarBotoActionPerformed
-
+    String Tipus;
     private void tableProducteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProducteMouseClicked
         // TODO add your handling code here:
 
-        String Tipus = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
+        Tipus = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
         titol = tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString();
-
+        
         ActualitzaBoto.setEnabled(true);
         BorrarBoto.setEnabled(true);
         info.setColumnCount(0);
-        tableInfo.setModel(info);
+        tableInfoLlistaAlbum.setModel(info);
         artviw.setVisible(false);
         anyviw.setVisible(false);
         AnyTxt.setText("");
         ArtTxt.setText("");
-
         Titolbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString());
-        Estilbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 1).toString());
-        Actiubox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString());
-
+        Actiubox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 1).toString());
+        Estilbox.setText(tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString());
+        
+        int dura;
+        
+        int i = info.getRowCount();
+        
+        Atitol = tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString();
+        
+        Edititle.setText(Atitol);
+        
         String tip = tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString();
+        
+        
+        String a = tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString();
+        if (a.equals("trap"))   
+           cmbEstil.setSelectedIndex(0);
+        if (a.equals("rock")) 
+           cmbEstil.setSelectedIndex(1);
+        if (a.equals("pop")) 
+           cmbEstil.setSelectedIndex(2);
 
+        
+        
         if (tip.equals("L")) {
             Tiposbox.setText("Llista");
         }
@@ -604,23 +893,36 @@ public class PProducte extends javax.swing.JPanel {
         if (tip.equals("A")) {
             Tiposbox.setText("Album");
         }
-
+        
         if (tableProducte.getSelectedRowCount() > 1) {
             JOptionPane.showMessageDialog(null, "No Pots Selecionar mes deuna fila a la vegada", "Error", JOptionPane.ERROR_MESSAGE);
             tableProducte.clearSelection();
             borrainfo();
         } else {
-
+            
             if (Tipus.equals("L")) {
-
+                txtCA.setVisible(true);
+                cmbCreacioLlistaContingut.setVisible(true);
+                butncontingut.setVisible(true);
                 info.setRowCount(0);
                 info.addColumn("Tiol Canço");
                 tableInfo.setModel(info);
+                ompleAC();
+                System.out.println(i);
+                if (i > 0) {
+                    rAlbum.setSelected(false);
+                    rCanço.setSelected(false);
+                    rLlista.setSelected(true);
+                    rLlista.setEnabled(false);
+                    rCanço.setEnabled(false);
+                    rAlbum.setEnabled(false);
+                }                
+                ompleAC();
                 try {
                     List<Llista> llRep;
                     llRep = BDProducte.getLlista(titol);
                     List<Llista> ll = BDProducte.getLlistaCont(titol);
-
+                    
                     for (Llista p : llRep) {
                         DuradaTxt.setText("" + p.getDurada());
                     }
@@ -634,43 +936,69 @@ public class PProducte extends javax.swing.JPanel {
                     System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
                 tableInfo.setModel(info);
-
+                
             }
             if (Tipus.equals("C")) {
-
+                
+                txtCA.setVisible(false);
+                cmbCreacioLlistaContingut.setVisible(false);
+                butncontingut.setVisible(false);
                 artviw.setVisible(true);
                 anyviw.setVisible(true);
-
+                
+                rAlbum.setSelected(false);
+                rCanço.setSelected(true);
+                rLlista.setSelected(false);
+                rLlista.setEnabled(false);
+                rCanço.setEnabled(false);
+                rAlbum.setEnabled(false);
+                
                 try {
                     List<Canso> ll;
                     ll = BDProducte.getCanco(titol);
-
+                    
                     for (Canso p : ll) {
-
+                        
                         ArtTxt.setText(p.getArt());
                         AnyTxt.setText(p.getAnyCreacio());
                         DuradaTxt.setText("" + p.getDurada());
+                        dura = p.getDurada();
+                        txtDurada.setText("" + dura);
                     }
-
+                    
                     return;
                 } catch (GestorBDExceptionTOT ex) {
                     ex.printStackTrace();
                     System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
-
+                
             }
             if (Tipus.equals("A")) {
-
+                
                 info.setRowCount(0);
                 info.addColumn("Tiol Canço");
+                txtCA.setVisible(true);
+                cmbCreacioLlistaContingut.setVisible(true);
+                butncontingut.setVisible(true);
                 tableInfo.setModel(info);
                 anyviw.setVisible(true);
-
+                ompleACA();
+                
+                if (i > 0) {
+                    rAlbum.setSelected(true);
+                    rCanço.setSelected(false);
+                    rLlista.setSelected(false);
+                    rLlista.setEnabled(false);
+                    rCanço.setEnabled(false);
+                    rAlbum.setEnabled(false);
+                    
+                }                
+                
                 try {
                     List<Album> ll;
                     ll = BDProducte.getAlbum(titol);
                     List<Album> llRep = BDProducte.getAlbumCont(titol);
-
+                    
                     for (Album p : ll) {
                         AnyTxt.setText(p.getDataCreacio());
                         DuradaTxt.setText("" + p.getDurada());
@@ -679,16 +1007,20 @@ public class PProducte extends javax.swing.JPanel {
                         info.addRow(new Object[]{p.getTitol()});
                     }
                     tableInfo.setModel(info);
-
+                    
                     return;
                 } catch (GestorBDExceptionTOT ex) {
                     ex.printStackTrace();
                     System.out.println("Problemes en efectuar la cerca. " + Tipus + " \n\nMotiu:\n\n" + ex.getMessage());
                 }
-
+                
+            }
+            
+            if (Tipus.equals("L")) {
+                
             }
         }
-
+        
 
     }//GEN-LAST:event_tableProducteMouseClicked
 
@@ -700,24 +1032,24 @@ public class PProducte extends javax.swing.JPanel {
         String L = null;
         String C = null;
         String A = null;
-
+        
         titol = txbtitiol.getText().toString();
-
+        
         if (Inactiurb.isSelected()) {
             // System.out.println("inactiu");
             Actiu = "N";
-
+            
         }
         if (Actiu_inacT_RB.isSelected()) {
             //  System.out.println("dos");
             Actiu = "dos";
-
+            
         }
         if (actiurb.isSelected()) {
             //  System.out.println("actiu");
             Actiu = "S";
         }
-
+        
         if (RbLlista.isSelected()) {
             // System.out.println("Llista");
             L = "L";
@@ -730,10 +1062,10 @@ public class PProducte extends javax.swing.JPanel {
             // System.out.println("Canço");
             C = "C";
         }
-
+        
         model.setRowCount(0);
         tableProducte.setModel(model);
-
+        
         try {
             List<Producte> llRep = BDProducte.getFiltre(titol, C, A, L, Actiu);
             for (Producte p : llRep) {
@@ -746,7 +1078,7 @@ public class PProducte extends javax.swing.JPanel {
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Problemes en efectuar la cerca.\n\nMotiu:\n\n" + ex.getMessage());
         }
-
+        
 
     }//GEN-LAST:event_bntFiltreActionPerformed
 
@@ -756,7 +1088,7 @@ public class PProducte extends javax.swing.JPanel {
         bntFiltre.setEnabled(true);
         Inactiurb.setSelected(false);
         Actiu_inacT_RB.setSelected(false);
-
+        
 
     }//GEN-LAST:event_actiurbActionPerformed
 
@@ -801,16 +1133,16 @@ public class PProducte extends javax.swing.JPanel {
         // TODO add your handling code here:
         String titolemp = txbtitiol.getText().toString();
         if (!titolemp.isEmpty()) {
-
+            
             bntFiltre.setEnabled(true);
-
+            
         }
     }//GEN-LAST:event_txbtitiolActionPerformed
 
     private void RollbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RollbackActionPerformed
         try {
             model.setColumnCount(0);
-
+            
             model.setRowCount(0);
             tableProducte.setModel(model);
             ConexioGeneral.desferCanvis();
@@ -818,7 +1150,7 @@ public class PProducte extends javax.swing.JPanel {
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Eroor a fer el rrollback");
         }
-
+        
 
     }//GEN-LAST:event_RollbackActionPerformed
 
@@ -830,29 +1162,86 @@ public class PProducte extends javax.swing.JPanel {
             tableProducte.setModel(model);
             ConexioGeneral.validarCanvis();
             ompletabla();
-
+            
         } catch (GestorBDExceptionTOT ex) {
             System.out.println("Eroor a fer el rrollback");
         }
 
     }//GEN-LAST:event_cambisActionPerformed
 
+    private void cmbEstilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbEstilActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEstilActionPerformed
+
+    private void cmbCreacioLlistaContingutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCreacioLlistaContingutActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_cmbCreacioLlistaContingutActionPerformed
+
+    private void butncontingutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butncontingutActionPerformed
+        // TODO add your handling code here:
+
+        String can = cmbCreacioLlistaContingut.getSelectedItem().toString();
+        
+        if (rLlista.isSelected()) {
+            try {
+                BDProducte.Insertar_producteLlista(titol, can);
+            } catch (GestorBDExceptionTOT ex) {
+                System.out.println("Error al crear el producte Canço " + ex.getMessage());
+            }
+        }
+        if (rAlbum.isSelected()) {
+            try {
+                BDProducte.Insertar_producteAlbum(titol, can);
+            } catch (GestorBDExceptionTOT ex) {
+                System.out.println("Error al crear el producte Canço " + ex.getMessage());
+            }
+        }
+
+    }//GEN-LAST:event_butncontingutActionPerformed
+
+    private void txtDuradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDuradaActionPerformed
+
+    private void rAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rAlbumActionPerformed
+        // TODO add your handling code here:
+
+        rLlista.setSelected(false);
+        rCanço.setSelected(false);
+
+    }//GEN-LAST:event_rAlbumActionPerformed
+
+    private void SiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiActionPerformed
+        // TODO add your handling code here:
+
+        No.setSelected(false);
+    }//GEN-LAST:event_SiActionPerformed
+
+    private void NoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoActionPerformed
+        // TODO add your handling code here:
+        Si.setSelected(false);
+    }//GEN-LAST:event_NoActionPerformed
+
+    private void rLlistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rLlistaActionPerformed
+        // TODO add your handling code here:
+
+        rCanço.setSelected(false);
+        rAlbum.setSelected(false);
+
+    }//GEN-LAST:event_rLlistaActionPerformed
+
+    private void rCançoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rCançoActionPerformed
+        // TODO add your handling code here:
+        rLlista.setSelected(false);
+        rAlbum.setSelected(false);
+    }//GEN-LAST:event_rCançoActionPerformed
+    
     private void Crear() {
         CProducte rep = new CProducte();
         rep.setSize(666, 300);
         rep.setLocation(0, 0);
-
-        jPanel2.removeAll();
-        jPanel2.add(rep, BorderLayout.CENTER);
-        jPanel2.revalidate();
-        jPanel2.repaint();
-    }
-
-    private void Actualitza() {
-        AProducte rep = new AProducte(tableProducte.getValueAt(tableProducte.getSelectedRow(), 0).toString(), tableProducte.getValueAt(tableProducte.getSelectedRow(), 1).toString(), tableProducte.getValueAt(tableProducte.getSelectedRow(), 2).toString(), tableProducte.getValueAt(tableProducte.getSelectedRow(), 3).toString());
-        rep.setSize(358, 226);
-        rep.setLocation(0, 0);
-
+        
         jPanel2.removeAll();
         jPanel2.add(rep, BorderLayout.CENTER);
         jPanel2.revalidate();
@@ -869,17 +1258,24 @@ public class PProducte extends javax.swing.JPanel {
     private javax.swing.JButton BorrarBoto;
     private javax.swing.JButton CrearButo;
     private javax.swing.JLabel DuradaTxt;
+    private javax.swing.JTextField Edititle;
     private javax.swing.JLabel Estilbox;
     private javax.swing.JRadioButton Inactiurb;
+    private javax.swing.JRadioButton No;
     private javax.swing.JRadioButton RbLlista;
     private javax.swing.JButton Rollback;
+    private javax.swing.JRadioButton Si;
+    private javax.swing.JLabel TD;
     private javax.swing.JLabel Tiposbox;
     private javax.swing.JLabel Titolbox;
     private javax.swing.JRadioButton actiurb;
     private javax.swing.JLabel anyviw;
     private javax.swing.JLabel artviw;
     private javax.swing.JButton bntFiltre;
+    private javax.swing.JButton butncontingut;
     private javax.swing.JButton cambis;
+    private javax.swing.JComboBox<String> cmbCreacioLlistaContingut;
+    private javax.swing.JComboBox<String> cmbEstil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -893,10 +1289,20 @@ public class PProducte extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JRadioButton rAlbum;
+    private javax.swing.JRadioButton rCanço;
+    private javax.swing.JRadioButton rLlista;
     private javax.swing.JRadioButton rbAlbum;
     private javax.swing.JRadioButton rbCanco;
     private javax.swing.JTable tableInfo;
+    private javax.swing.JTable tableInfoLlistaAlbum;
     private javax.swing.JTable tableProducte;
     private javax.swing.JTextField txbtitiol;
+    private javax.swing.JLabel txtActiu;
+    private javax.swing.JLabel txtCA;
+    private javax.swing.JTextField txtDurada;
+    private javax.swing.JLabel txtEstil;
+    private javax.swing.JLabel txtTitol;
     // End of variables declaration//GEN-END:variables
 }
