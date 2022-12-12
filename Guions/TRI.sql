@@ -133,6 +133,7 @@ BEGIN
   END IF;
 END;
 
+
 /*
 *No funciona no se perque
 */
@@ -149,6 +150,7 @@ begin
     RAISE_APPLICATION_ERROR(-20012, 'No es pot esborrar un artista que ha estat utilitzat (interpret o canco)!');
   END IF;
 end;
+
 
 CREATE OR REPLACE TRIGGER trigger_durada_album_contingut
   AFTER INSERT OR DELETE OR UPDATE OF ALCO_ID_CANÇO
