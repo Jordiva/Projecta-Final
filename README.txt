@@ -4,7 +4,7 @@
 
 Els guions de la bd estan a una carpera Guions.
 
-
+El iReport no men e sortit per tems a fer en el java tinc els dos amb una careprta IReport
 
 
 Coses a tenir en compte a l'hora de crear un producte de cualsabol cosa:
@@ -20,6 +20,8 @@ un cop vcalidat
 crear llista boto de crear llista -------> i boto validar validar:
 
 dequeste manera es veura la informacio de les coses.
+
+
 
 
 
