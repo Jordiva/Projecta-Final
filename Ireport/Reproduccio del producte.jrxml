@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reproduccio del producte" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="217e7721-80f3-40e8-94db-46f25e5eed74">
+	<property name="ireport.zoom" value="1.2100000000000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select c.cat_titol Producte, c.cat_estil estil , can.can_durada durada , ll.lli_durada , al.alb_durada , c.cat_actiu actiu , c.cat_tipus tipus from cataleg c
+LEFT JOIN canço can on can.can_id = c.cat_id
+ left join llista ll on ll.lli_id = c.cat_id
+ left join album al on al.alb_id = c.cat_id]]>
+	</queryString>
+	<field name="PRODUCTE" class="java.lang.String"/>
+	<field name="ESTIL" class="java.math.BigDecimal"/>
+	<field name="DURADA" class="java.math.BigDecimal"/>
+	<field name="LLI_DURADA" class="java.math.BigDecimal"/>
+	<field name="ALB_DURADA" class="java.math.BigDecimal"/>
+	<field name="ACTIU" class="java.lang.String"/>
+	<field name="TIPUS" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8b4b6ef2-3761-4ad2-9418-d1fc6029863c" x="0" y="0" width="196" height="42"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Llista Reproduccio]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="769062de-d2b2-4bcc-9108-b8511b759347" x="0" y="0" width="138" height="20"/>
+				<textElement/>
+				<text><![CDATA[PRODUCTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ab4a4fc6-363a-419c-8352-1ee7238187ec" x="138" y="0" width="138" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PRODUCTE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="105" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="06e6365b-a031-4ae2-b2fe-2c2c4a5438da" x="0" y="0" width="138" height="20"/>
+				<textElement/>
+				<text><![CDATA[ESTIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="32bcdfbc-d569-4bcd-b81e-6c956115bf67" x="0" y="20" width="138" height="20"/>
+				<textElement/>
+				<text><![CDATA[ACTIU]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1cdc780e-f3e4-4449-9379-5bf3e6e965fd" x="138" y="20" width="138" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ACTIU}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="614ef847-426c-4524-a0ac-694a1a532df1" x="276" y="0" width="142" height="20"/>
+				<textElement/>
+				<text><![CDATA[DURADA]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1f839194-22cc-4163-afa5-dbebb2895c87" x="418" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{DURADA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0c541d49-1055-4ce2-9a30-00a639a7a2e5" x="418" y="21" width="85" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LLI_DURADA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="99a82ec1-476b-408d-92c7-b3a64680c5a3" x="0" y="40" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[TIPUS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="267b7d59-9c03-4938-b407-ecd76705ca52" x="138" y="41" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{TIPUS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c64a35a5-ed62-4121-8ae4-d8caa7c19d23" x="138" y="0" width="138" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ESTIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d8bf307d-baea-42c8-963e-5aa182873cc3" x="418" y="41" width="109" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ALB_DURADA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f5a81073-b3d2-455b-996c-17c95a470e19" x="0" y="77" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="744bb3f3-3c6f-45bb-a85d-f758b38b92cc" x="138" y="77" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="81836ac3-ab10-4fa9-8516-d601a505a661" x="265" y="77" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Client]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="3825d848-ec32-402c-99c4-5188f6994128" x="0" y="97" width="555" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement uuid="cb9ca76a-49c8-4304-ac3b-905fe73c2c66" x="-348" y="-41" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{TIPUS}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
