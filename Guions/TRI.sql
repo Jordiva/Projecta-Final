@@ -150,9 +150,6 @@ begin
   END IF;
 end;
 
-
-
-
 CREATE OR REPLACE TRIGGER trigger_durada_album_contingut
   AFTER INSERT OR DELETE OR UPDATE OF ALCO_ID_CANÇO
   ON ALBUM_CONTINGUT
@@ -162,56 +159,21 @@ DECLARE
   v_tipus char(1);
 BEGIN
   if inserting or updating THEN
-    SELECT CAT_TIPUS INTO v_tipus FROM CATALEG WHERE CAT_ID = :new.ALCO_ID_ALBUM;
-    IF (v_tipus = 'C') THEN
-      SELECT CAN_DURADA INTO v_durada FROM CANÇO where CAN_ID = :new.ALCO_ID_CANÇO;
+    SELECT CAT_TIPUS INTO v_tipus FROM CATALEG WHERE CAT_ID = :new.ALCO_ID_CANÇO;
+    IF v_tipus = 'C' THEN
+      SELECT canco_durada INTO v_durada FROM CANCO where canco_id = :new.ALCO_ID_CANÇO;
       UPDATE ALBUM SET ALB_DURADA = ALB_DURADA + v_durada WHERE ALB_ID = :new.ALCO_ID_ALBUM;
     END IF;
   END IF;
 
-  if deleting or updating then
-    select CAT_TIPUS into v_tipus from CATALEG where CAT_ID = :old.ALCO_ID_ALBUM;
-    if (v_tipus = 'C') then
-      select CAN_DURADA into v_durada from CANÇO where CAN_ID = :old.ALCO_ID_CANÇO;
+  if deleting or updating THEN
+    select CAT_TIPUS into v_tipus from CATALEG where CAT_ID = :old.ALCO_ID_CANÇO;
+    if v_tipus = 'C' THEN
+      select canco_durada into v_durada from canco where canco_id = :old.ALCO_ID_CANÇO;
       update ALBUM set ALB_DURADA = ALB_DURADA - v_durada where ALB_ID = :old.ALCO_ID_ALBUM;
     end if;
   end if;
 END;
-
-
-
-/*
-
-el que funciona 
-
-CREATE OR REPLACE TRIGGER trigger_durada_album_contingut
-  AFTER INSERT OR DELETE OR UPDATE OF album_con_id_canco
-  ON ALBUM_CONTINGUT
-  FOR EACH ROW
-DECLARE
-  v_durada number;
-  v_tipus char(1);
-BEGIN
-  if inserting or updating THEN
-    SELECT producte_tipus INTO v_tipus FROM producte WHERE producte_id = :new.album_con_id_canco;
-    IF v_tipus = 'C' THEN
-      SELECT canco_durada INTO v_durada FROM CANCO where canco_id = :new.album_con_id_canco;
-      UPDATE ALBUM SET album_durada = album_durada + v_durada WHERE album_id = :new.album_con_id_album;
-    END IF;
-  END IF;
-
-  if deleting or updating THEN
-    select producte_tipus into v_tipus from producte where producte_id = :old.album_con_id_canco;
-    if v_tipus = 'C' THEN
-      select canco_durada into v_durada from canco where canco_id = :old.album_con_id_canco;
-      update album set album_durada = album_durada - v_durada where album_id = :old.album_con_id_album;
-    end if;
-  end if;
-END;
-
-
-
-  */
 
 
 CREATE OR REPLACE TRIGGER trigger_durada_album_after_update_durada_canco
