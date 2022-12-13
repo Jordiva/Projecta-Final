@@ -1377,7 +1377,7 @@ BorraCoontingut.setVisible(true);
 
         if (Tipus.equals("L")) {
             try {
-                BDProducte.borraLlistaContingut(borr, tt);
+                BDProducte.borraLlistaContingut(borr, titol);
             } catch (GestorBDExceptionTOT e) {
                 System.out.println("Borra error llista contingut" + e);
             }
@@ -1385,7 +1385,7 @@ BorraCoontingut.setVisible(true);
         }
         if (Tipus.equals("A")) {
             try {
-                BDProducte.borraAlbuContingut(borr, tt);
+                BDProducte.borraAlbuContingut(borr, titol);
             } catch (GestorBDExceptionTOT e) {
                 System.out.println("Error borra album contingut"+e);
             }
