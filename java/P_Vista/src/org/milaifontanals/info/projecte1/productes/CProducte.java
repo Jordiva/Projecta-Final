@@ -318,6 +318,7 @@ public class CProducte extends javax.swing.JPanel {
 
     private void btnAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlbumActionPerformed
         // TODO add your handling code here:
+        
         btnAlbum.setSelected(true);
         btnllista.setSelected(false);
         btnCanco.setSelected(false);
@@ -332,6 +333,8 @@ public class CProducte extends javax.swing.JPanel {
         CrearCanço.setEnabled(false);
         CrearAlbum.setEnabled(true);
         CrearLlista.setEnabled(false);
+         txbDurda.setText("0");
+        txbDurda.setEditable(false);
 
     }//GEN-LAST:event_btnAlbumActionPerformed
 
@@ -353,6 +356,8 @@ public class CProducte extends javax.swing.JPanel {
         txbDurda.setVisible(true);
         txtInterpret.setVisible(false);
         
+        txbDurda.setText("0");
+        txbDurda.setEditable(false);
         cmbInterprets.setVisible(false);
     }//GEN-LAST:event_btnllistaActionPerformed
 
@@ -361,7 +366,8 @@ public class CProducte extends javax.swing.JPanel {
         System.out.println("C");
         
         ompleArtista();
-        
+         txbDurda.setText("");
+        txbDurda.setEditable(true);
         CrearCanço.setEnabled(true);
         CrearAlbum.setEnabled(false);
         CrearLlista.setEnabled(false);
