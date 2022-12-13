@@ -225,6 +225,7 @@ public class PProducte extends javax.swing.JPanel {
         butncontingut = new javax.swing.JButton();
         ACboton = new javax.swing.JButton();
         BorraCoontingut = new javax.swing.JButton();
+        Imprimir = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -488,6 +489,13 @@ public class PProducte extends javax.swing.JPanel {
             }
         });
 
+        Imprimir.setText("Imprimi");
+        Imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ImprimirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -553,7 +561,8 @@ public class PProducte extends javax.swing.JPanel {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(CrearButo)
                                     .addComponent(BorrarBoto)
-                                    .addComponent(ActualitzaBoto))))))
+                                    .addComponent(ActualitzaBoto)
+                                    .addComponent(Imprimir))))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -711,25 +720,28 @@ public class PProducte extends javax.swing.JPanel {
                                             .addComponent(txtDurada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ActualitzaBoto)
-                                .addGap(18, 18, 18)
-                                .addComponent(BorrarBoto)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(rAlbum)
-                                    .addComponent(rLlista)
-                                    .addComponent(rCanço))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addComponent(ACboton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                                 .addComponent(BorraCoontingut)
-                                .addGap(55, 55, 55))))))
+                                .addGap(55, 55, 55))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ActualitzaBoto)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(BorrarBoto)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(Imprimir))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(rAlbum)
+                                            .addComponent(rLlista)
+                                            .addComponent(rCanço))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(44, 44, 44))))))
         );
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1380, 650));
@@ -1395,6 +1407,41 @@ BorraCoontingut.setVisible(true);
 
     }//GEN-LAST:event_BorraCoontingutActionPerformed
 
+    private void ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImprimirActionPerformed
+        // TODO add your handling code here:
+        
+        String tit = txbtitiol.getText().toString();
+        String ac = "";
+        String tip = "";
+        if (actiurb.isSelected()) 
+            ac = "S";
+        
+        if (Inactiurb.isSelected()) 
+            ac = "N";
+        
+        if (RbLlista.isSelected()) 
+            tip = "L";
+            
+        if (rbAlbum.isSelected()) 
+            tip = "C";
+        
+        if (rbAlbum.isSelected()) 
+            tip = "A";
+        
+        
+        System.out.println(tit);
+        System.out.println(ac);
+        System.out.println(tip);
+        
+        
+        try {
+            IR_Producte.iReport(ac, tip, tit);
+        } catch (Exception e) {
+            System.out.println("Error al mprimir");
+        }
+
+    }//GEN-LAST:event_ImprimirActionPerformed
+
     private void Crear() {
         CProducte rep = new CProducte();
         rep.setSize(666, 300);
@@ -1420,6 +1467,7 @@ BorraCoontingut.setVisible(true);
     private javax.swing.JLabel DuradaTxt;
     private javax.swing.JTextField Edititle;
     private javax.swing.JLabel Estilbox;
+    private javax.swing.JButton Imprimir;
     private javax.swing.JRadioButton Inactiurb;
     private javax.swing.JRadioButton No;
     private javax.swing.JRadioButton RbLlista;
