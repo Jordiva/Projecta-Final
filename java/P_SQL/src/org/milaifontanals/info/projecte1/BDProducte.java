@@ -1415,6 +1415,46 @@ public class BDProducte {
         }
         
     }
+     public static void borraLlistaContingut(String nom , String nom1) throws GestorBDExceptionTOT {
+         Statement q = null;
+        PreparedStatement ps = null;
+        int id = getId(nom);
+        int idL = getId(nom1);
+        
+        try {
+
+            String sql_Canço = "DELETE FROM llista_contingut WHERE llcon_id_catalag = ? and llcon_id_llista = ?";
+       ps = ConexioGeneral.getConnection().prepareStatement(sql_Canço);
+            ps.setInt(1, id);
+            ps.setInt(2, idL);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            throw new GestorBDExceptionTOT("Error en intentar a fer la creacio de canço .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        }
+        
+    }
+     public static void borraAlbuContingut(String nom , String nom1) throws GestorBDExceptionTOT {
+         Statement q = null;
+        PreparedStatement ps = null;
+        int id = getId(nom);
+        int idL = getId(nom1);
+        
+        try {
+
+            String sql_Canço = "DELETE FROM album_contingut WHERE alco_id_canço = ? and alco_id_album = ? ";
+            ps = ConexioGeneral.getConnection().prepareStatement(sql_Canço);
+            ps.setInt(1, id);
+            ps.setInt(2, idL);
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            throw new GestorBDExceptionTOT("Error en intentar a fer la creacio de canço .\n" + ex.getMessage());
+            // throw new GestorBDExceptionTOT("Error en intentar recuperar la llista de Clients.\n" + ex.getMessage());
+        }
+        
+    }
      
      
      

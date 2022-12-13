@@ -43,6 +43,8 @@ public class PProducte extends javax.swing.JPanel {
         ActualitzaBoto.setEnabled(false);
         BorrarBoto.setEnabled(false);
         ACboton.setVisible(false);
+        BorraCoontingut.setVisible(false);
+
 
     }
     private DefaultTableModel info = new DefaultTableModel();
@@ -222,6 +224,7 @@ public class PProducte extends javax.swing.JPanel {
         txtCA = new javax.swing.JLabel();
         butncontingut = new javax.swing.JButton();
         ACboton = new javax.swing.JButton();
+        BorraCoontingut = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -293,6 +296,11 @@ public class PProducte extends javax.swing.JPanel {
 
             }
         ));
+        tableInfoLlistaAlbum.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableInfoLlistaAlbumMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableInfoLlistaAlbum);
 
         jLabel6.setText("Durada");
@@ -473,6 +481,13 @@ public class PProducte extends javax.swing.JPanel {
             }
         });
 
+        BorraCoontingut.setText("Borra Contingut");
+        BorraCoontingut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BorraCoontingutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -584,7 +599,9 @@ public class PProducte extends javax.swing.JPanel {
                         .addGap(27, 27, 27)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(ACboton)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ACboton)
+                            .addComponent(BorraCoontingut))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -636,7 +653,7 @@ public class PProducte extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addComponent(jLabel9)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -691,8 +708,7 @@ public class PProducte extends javax.swing.JPanel {
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(TD)
-                                            .addComponent(txtDurada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, 0)))
+                                            .addComponent(txtDurada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -711,7 +727,9 @@ public class PProducte extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(40, 40, 40)
                                 .addComponent(ACboton)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                                .addComponent(BorraCoontingut)
+                                .addGap(55, 55, 55))))))
         );
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1380, 650));
@@ -730,7 +748,7 @@ public class PProducte extends javax.swing.JPanel {
     private void ActualitzaBotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualitzaBotoActionPerformed
 
         fet = true;
-
+BorraCoontingut.setVisible(true);
         // TODO add your handling code here:
         txtTitol.setVisible(true);
         Edititle.setVisible(true);
@@ -865,6 +883,7 @@ public class PProducte extends javax.swing.JPanel {
 
     }//GEN-LAST:event_BorrarBotoActionPerformed
     String Tipus;
+    String borr;
     private void tableProducteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableProducteMouseClicked
         // TODO add your handling code here:
 
@@ -875,6 +894,7 @@ public class PProducte extends javax.swing.JPanel {
         BorrarBoto.setEnabled(true);
         info.setColumnCount(0);
         tableInfoLlistaAlbum.setModel(info);
+
         artviw.setVisible(false);
         anyviw.setVisible(false);
         AnyTxt.setText("");
@@ -918,12 +938,23 @@ public class PProducte extends javax.swing.JPanel {
 
         if (tip.equals("L")) {
             Tiposbox.setText("Llista");
+            txtDurada.setEditable(false);
+                    BorraCoontingut.setVisible(true);
+
+
         }
         if (tip.equals("C")) {
             Tiposbox.setText("Canço");
+            txtDurada.setEditable(true);
+        BorraCoontingut.setVisible(false);
+
         }
         if (tip.equals("A")) {
             Tiposbox.setText("Album");
+            txtDurada.setEditable(false);
+            BorraCoontingut.setVisible(true);
+
+
         }
 
         if (tableProducte.getSelectedRowCount() > 1) {
@@ -937,6 +968,7 @@ public class PProducte extends javax.swing.JPanel {
                     txtCA.setVisible(true);
                     cmbCreacioLlistaContingut.setVisible(true);
                     butncontingut.setVisible(true);
+
                 }
 
                 info.setRowCount(0);
@@ -960,6 +992,7 @@ public class PProducte extends javax.swing.JPanel {
 
                     for (Llista p : llRep) {
                         DuradaTxt.setText("" + p.getDurada());
+                        txtDurada.setText("" + p.getDurada());
                     }
                     for (Llista p : ll) {
                         info.addRow(new Object[]{p.getTitol()});
@@ -1001,7 +1034,8 @@ public class PProducte extends javax.swing.JPanel {
                         AnyTxt.setText(p.getAnyCreacio());
                         DuradaTxt.setText("" + p.getDurada());
                         dura = p.getDurada();
-                        txtDurada.setText("" + dura);
+                        System.out.println(dura);
+                        txtDurada.setText("" + p.getDurada());
                     }
 
                     return;
@@ -1017,8 +1051,8 @@ public class PProducte extends javax.swing.JPanel {
                     txtCA.setVisible(true);
                     cmbCreacioLlistaContingut.setVisible(true);
                     butncontingut.setVisible(true);
-                }
 
+                }
                 info.setRowCount(0);
                 info.addColumn("Tiol Canço");
 
@@ -1044,6 +1078,7 @@ public class PProducte extends javax.swing.JPanel {
                     for (Album p : ll) {
                         AnyTxt.setText(p.getDataCreacio());
                         DuradaTxt.setText("" + p.getDurada());
+                        txtDurada.setText("" + p.getDurada());
                     }
                     for (Album p : llRep) {
                         info.addRow(new Object[]{p.getTitol()});
@@ -1058,9 +1093,6 @@ public class PProducte extends javax.swing.JPanel {
 
             }
 
-            if (Tipus.equals("L")) {
-
-            }
         }
 
 
@@ -1239,8 +1271,7 @@ public class PProducte extends javax.swing.JPanel {
                     System.out.println("Error al crear el producte Canço " + ex.getMessage());
                 }
             }
-        }
-        else{
+        } else {
             if (rLlista.isSelected()) {
                 try {
                     BDProducte.Insertar_producteLlista(tt, can);
@@ -1330,6 +1361,40 @@ public class PProducte extends javax.swing.JPanel {
 
     }//GEN-LAST:event_ACbotonActionPerformed
 
+    private void tableInfoLlistaAlbumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableInfoLlistaAlbumMouseClicked
+        // TODO add your handling code here:
+
+        borr = tableInfoLlistaAlbum.getValueAt(tableInfoLlistaAlbum.getSelectedRow(), 0).toString();
+        System.out.println(borr);
+
+
+    }//GEN-LAST:event_tableInfoLlistaAlbumMouseClicked
+
+    private void BorraCoontingutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorraCoontingutActionPerformed
+        // TODO add your handling code here:
+
+        System.out.println(titol);
+
+        if (Tipus.equals("L")) {
+            try {
+                BDProducte.borraLlistaContingut(borr, tt);
+            } catch (GestorBDExceptionTOT e) {
+                System.out.println("Borra error llista contingut" + e);
+            }
+
+        }
+        if (Tipus.equals("A")) {
+            try {
+                BDProducte.borraAlbuContingut(borr, tt);
+            } catch (GestorBDExceptionTOT e) {
+                System.out.println("Error borra album contingut"+e);
+            }
+
+        }
+
+
+    }//GEN-LAST:event_BorraCoontingutActionPerformed
+
     private void Crear() {
         CProducte rep = new CProducte();
         rep.setSize(666, 300);
@@ -1349,6 +1414,7 @@ public class PProducte extends javax.swing.JPanel {
     private javax.swing.JButton ActualitzaBoto;
     private javax.swing.JLabel AnyTxt;
     private javax.swing.JLabel ArtTxt;
+    private javax.swing.JButton BorraCoontingut;
     private javax.swing.JButton BorrarBoto;
     private javax.swing.JButton CrearButo;
     private javax.swing.JLabel DuradaTxt;

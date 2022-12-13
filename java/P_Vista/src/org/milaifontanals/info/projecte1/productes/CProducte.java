@@ -295,7 +295,7 @@ public class CProducte extends javax.swing.JPanel {
                 butncontingutActionPerformed(evt);
             }
         });
-        add(butncontingut, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, -1, -1));
+        add(butncontingut, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void estilsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estilsComboBoxActionPerformed
@@ -369,12 +369,12 @@ public class CProducte extends javax.swing.JPanel {
         btnAlbum.setSelected(false);
         btnllista.setSelected(false);
         btnCanco.setSelected(true);
-        
+        txtInterpret.setVisible(true);
         txbData.setVisible(true);
         txtDurada.setVisible(true);
         txtDate.setVisible(true);
         txbDurda.setVisible(true);
-        txtCA.setVisible(true);
+        txtCA.setVisible(false);
         cmbInterprets.setVisible(true);
         
 

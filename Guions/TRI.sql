@@ -136,7 +136,7 @@ END;
 
 /*
 *No funciona no se perque
-*/
+
 CREATE OR REPLACE TRIGGER trigger_delete_artista
   BEFORE DELETE ON ARTISTA
   FOR EACH ROW
@@ -150,32 +150,37 @@ begin
     RAISE_APPLICATION_ERROR(-20012, 'No es pot esborrar un artista que ha estat utilitzat (interpret o canco)!');
   END IF;
 end;
-
+*/
 
 CREATE OR REPLACE TRIGGER trigger_durada_album_contingut
   AFTER INSERT OR DELETE OR UPDATE OF ALCO_ID_CANÇO
   ON ALBUM_CONTINGUT
   FOR EACH ROW
 DECLARE
-  v_durada number;
+  v_durada number(3);
   v_tipus char(1);
 BEGIN
   if inserting or updating THEN
     SELECT CAT_TIPUS INTO v_tipus FROM CATALEG WHERE CAT_ID = :new.ALCO_ID_CANÇO;
     IF v_tipus = 'C' THEN
-      SELECT canco_durada INTO v_durada FROM CANCO where canco_id = :new.ALCO_ID_CANÇO;
-      UPDATE ALBUM SET ALB_DURADA = ALB_DURADA + v_durada WHERE ALB_ID = :new.ALCO_ID_ALBUM;
+      SELECT CAN_DURADA INTO v_durada FROM CANÇO where CAN_ID = :new.ALCO_ID_CANÇO;
+      UPDATE ALBUM SET ALB_DURADA = ALB_DURADA + v_durada WHERE ALB_ID = :new.ALCO_ID_CANÇO;
     END IF;
   END IF;
 
   if deleting or updating THEN
     select CAT_TIPUS into v_tipus from CATALEG where CAT_ID = :old.ALCO_ID_CANÇO;
     if v_tipus = 'C' THEN
-      select canco_durada into v_durada from canco where canco_id = :old.ALCO_ID_CANÇO;
-      update ALBUM set ALB_DURADA = ALB_DURADA - v_durada where ALB_ID = :old.ALCO_ID_ALBUM;
+      select CAN_DURADA into v_durada from CANÇO where CAN_ID = :old.ALCO_ID_CANÇO;
+      update ALBUM set ALB_DURADA = ALB_DURADA - v_durada where ALB_ID = :old.ALCO_ID_CANÇO;
     end if;
   end if;
 END;
+
+
+
+
+
 
 
 CREATE OR REPLACE TRIGGER trigger_durada_album_after_update_durada_canco
