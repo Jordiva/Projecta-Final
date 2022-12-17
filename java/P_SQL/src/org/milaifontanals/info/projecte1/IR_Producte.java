@@ -5,6 +5,10 @@
  */
 package org.milaifontanals.info.projecte1;
 
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,10 +17,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Properties;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+
+
+
+
+
 
 /**
  *
@@ -93,15 +113,7 @@ public class IR_Producte {
         try {
             url +="?Tipus="+ Tipus +"&Estat="+actiu + "&Nom="+Titol;
                     
-                    
-            // Si hagués més paràmetres, cal concatenar-los amb: &nomParàmetre=valor&...
-            // Si algun paràmetre és col·lecció i s'hi vol passar varis valors, cal anar
-            // repetint &nomParàmetre=valor1&nomParàmetre=valor2&...
-//            La documentació diu:
-//            One of the following formats: pdf, html, xls, xlsx, rtf, csv, xml, docx, odt, ods,
-//            jrprint. As of JasperReports Server 6.0, it is also possible to specify json if your
-//            reports are designed for data export.
-//            Però alguns dels formats indicats no funcionen.
+                   
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
             con.setRequestMethod("GET");
@@ -166,4 +178,65 @@ public class IR_Producte {
             ex.printStackTrace();
         }
     }
+    
+    
+    public static void iReport_rep()throws GestorBDExceptionTOT{
+        try {
+            String  nomFitxerPropietats = "JSP_1.properties";
+            Properties props = new Properties();
+            props.load(new FileInputStream(nomFitxerPropietats));
+            String[] claus = {"url", "user", "password"};
+            String[] valors = new String[3];
+            for (int i = 0; i < claus.length; i++) {
+                valors[i] = props.getProperty(claus[i]);
+                if (valors[i] == null || valors[i].isEmpty()) {
+                    throw new GestorBDExceptionTOT("L'arxiu " + nomFitxerPropietats + " no troba la clau " + claus[i]);
+                }
+            }
+            url = valors[0];
+            user = valors[1];
+            password = valors[2];
+            
+            
+        } catch (IOException ex) {
+            throw new GestorBDExceptionTOT("Problemes en recuperar l'arxiu de configuració " + "\n" + ex.getMessage());
+        }
+        
+     
+
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(url, user, password);
+            System.out.println("Connexió establerta");
+            System.out.println(con);
+            
+            
+            // Compila el report
+            JasperReport report = JasperCompileManager.compileReport("Reproducciodelproducte.jrxml");
+            System.out.println("Informe compilat");
+            // Genera el report (sense paràmetres)
+            JasperPrint print = JasperFillManager.fillReport(report, null, con);
+            System.out.println("Informe generat");
+            // Exporta informe a PDF (hi ha diverses opcions)
+            JasperExportManager.exportReportToPdfFile(print, "Reproducciodelproducte.pdf");
+            System.out.println("Informe exportat a PDF");
+            //visualitza l'informe directament pel visor
+            JasperViewer.viewReport(print, false);
+            System.out.println("Informe visualitzat pel visor d'informes");
+        } catch (SQLException | JRException  ex) {
+            System.out.println("Error mentre es genera informe!"+ex.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                    con = null;
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error en tancar la connexió");
+            }
+        }
+        
+        
+    }
+   
 }

@@ -55,6 +55,7 @@ public class PReproduccions extends javax.swing.JPanel {
         ActualitzaBoto = new javax.swing.JButton();
         BorrarBoto = new javax.swing.JButton();
         MostraTotBoto = new javax.swing.JButton();
+        imprimi = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -111,6 +112,13 @@ public class PReproduccions extends javax.swing.JPanel {
             }
         });
 
+        imprimi.setText("Imprimir");
+        imprimi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imprimiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -120,9 +128,14 @@ public class PReproduccions extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(MostraTotBoto))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(MostraTotBoto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(imprimi)
+                                .addGap(102, 102, 102)))
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -147,7 +160,9 @@ public class PReproduccions extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(MostraTotBoto)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(MostraTotBoto)
+                            .addComponent(imprimi))
                         .addGap(40, 40, 40)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,6 +227,16 @@ public class PReproduccions extends javax.swing.JPanel {
         
     }//GEN-LAST:event_MostraTotBotoActionPerformed
 
+    private void imprimiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imprimiActionPerformed
+        // TODO add your handling code here:
+        try{
+        IR_Producte.iReport_rep();
+        }
+        catch(GestorBDExceptionTOT e){
+            System.out.println("Error a imprimi" +e);
+        }
+    }//GEN-LAST:event_imprimiActionPerformed
+
     
     private void filtre(){
         FReproduccio rep = new FReproduccio();
@@ -268,6 +293,7 @@ public class PReproduccions extends javax.swing.JPanel {
     private javax.swing.JButton BotoFiltre;
     private javax.swing.JButton CrearButo;
     private javax.swing.JButton MostraTotBoto;
+    private javax.swing.JButton imprimi;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
